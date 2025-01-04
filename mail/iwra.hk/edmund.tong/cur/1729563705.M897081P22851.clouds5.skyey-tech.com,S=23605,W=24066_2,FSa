@@ -1,0 +1,461 @@
+Return-Path: <kateng@nws.com.hk>
+Delivered-To: edmund.tong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id WGksNTkMF2dDWQAA07NIEQ
+	(envelope-from <kateng@nws.com.hk>)
+	for <edmund.tong@iwra.hk>; Tue, 22 Oct 2024 10:21:45 +0800
+Return-path: <kateng@nws.com.hk>
+Envelope-to: edmund.tong@iwra.hk
+Delivery-date: Tue, 22 Oct 2024 10:21:45 +0800
+Received: from mail-psaapc01on2057.outbound.protection.outlook.com ([40.107.255.57]:2080 helo=APC01-PSA-obe.outbound.protection.outlook.com)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <kateng@nws.com.hk>)
+	id 1t34Wo-0005x2-1M
+	for edmund.tong@iwra.hk;
+	Tue, 22 Oct 2024 10:21:45 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MAgM/MtgHG78YvSts+5r8CACrFsLVLUbp8tF5gmGNo915kOMDKn3CtZoRrpQt+O2wpE3NDHzaO4nlPzpHlT0TsRHdw/ytCH/9/jh6dG8up3LA/VDREsPBhhQezSAyIya92lnBTo+Pk3tu4qmYXdKYtauDWVFoXTvZMIUf5xlWwhh2IlTS5xAILJ3W5oxeT+ltQJBT98pO5sWwL0AoVfuND98+N5QgP4nCR4Dpr/AlYeR7xlo7kqVAE0iaExat5G0kLSZfB4XH9EGiXeWEroYhl7U4YHYMUkCjZruwcYPGYYIZNJTV/WRI6mHfalo+IrWxAg7YmP7OeKXyCVZ0tX6ww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lhK3YXLojjiahiX//lBNLqKRtskjoSIa94a+jV4QTKY=;
+ b=Fz3UeRVzE+2qwP0p1HSjxaC78ENzQFM8UpSLHuNiiWE1+lfH5DcCCuqjXEqcPuOivFiBSJAbSCF/rq8t6Cc6Ur6MTBgIF4tbbJeHd4F8l8olEvBJERid45wiGMpMcNyji44YK6GL1HzqkE3VdnDTCJifAgnhW/Kx0AR7y2f3CINaFRXa1e/NJxa/ufvp+hJpGAVBev94kh3YWT/RlcLrJC9f8X3jTqaHcEwRZyoT5x/S/F5quHZHWqAYnvioAojtICAxHG+ZWk0G88h2ZXxjnvf6piWHtlhNYoqkTi5Zhu0WFwJxpYl0wN0xfcq7eKUkO8MpRwVcnjHSQWToR0rE0Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nws.com.hk; dmarc=pass action=none header.from=nws.com.hk;
+ dkim=pass header.d=nws.com.hk; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nws.com.hk;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lhK3YXLojjiahiX//lBNLqKRtskjoSIa94a+jV4QTKY=;
+ b=bHaUAlPA5fuqjRkvEIqljsNGxwiPrvX3byVqTweOilSkVLpdhDJYupFH+nrwprhJ3WmhgKHocO86xSUZT+XZxQ0il7IyPgawkPHoiPaLfLmyqnLBg9gr3yljYNsmMzl9wZjHY93gckt8kBt6IEi1ap9CGTNMs5nJzzpbBdCO0VbOVxztbCkDC63n+h8LM4BOC35EzNAgySErRABTDXEcLeqtGusUVKu5zE0ASpKzxlNPvAEjM+zwlmqneEdaUBi/ThmO5NIWVgClqdh07eKKubswKA5MzoeizteAISaHUXAnlPPfRcYkSxuvKBArl9hiFzaVzPnoA7sLl/PnDO7i3g==
+Received: from PSAPR03MB5367.apcprd03.prod.outlook.com (2603:1096:301:46::7)
+ by SEZPR03MB8663.apcprd03.prod.outlook.com (2603:1096:101:22a::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.28; Tue, 22 Oct
+ 2024 02:21:38 +0000
+Received: from PSAPR03MB5367.apcprd03.prod.outlook.com
+ ([fe80::3dec:74ee:369d:2d26]) by PSAPR03MB5367.apcprd03.prod.outlook.com
+ ([fe80::3dec:74ee:369d:2d26%7]) with mapi id 15.20.8069.027; Tue, 22 Oct 2024
+ 02:21:38 +0000
+From: Kate Ng Kit Ling <kateng@nws.com.hk>
+To: "edmund.tong@iwra.hk" <edmund.tong@iwra.hk>
+Subject:
+ =?Windows-1252?Q?=93Upcycling_for_New_Life=94_-_Transform_waste_pallets_i?=
+ =?Windows-1252?Q?nto_practical_furniture?=
+Thread-Topic:
+ =?Windows-1252?Q?=93Upcycling_for_New_Life=94_-_Transform_waste_pallets_i?=
+ =?Windows-1252?Q?nto_practical_furniture?=
+Thread-Index: AdskKRVs1UVYJycITfKMNeSO0omi5g==
+Date: Tue, 22 Oct 2024 02:21:38 +0000
+Message-ID:
+ <PSAPR03MB53679BC85498BBF1BFAA6419E04C2@PSAPR03MB5367.apcprd03.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nws.com.hk;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PSAPR03MB5367:EE_|SEZPR03MB8663:EE_
+x-ms-office365-filtering-correlation-id: 00596e29-91f5-4675-e601-08dcf2404246
+x-ld-processed: 1c26f26d-42b9-494f-a05a-eb14f79c4172,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|69100299015|366016|376014|1800799024|8096899003|38070700018;
+x-microsoft-antispam-message-info:
+ =?Windows-1252?Q?2+YTGxx1DFi0t0YFzCsT6WZs/mvq1HQ6vGK6uCmWcq9lR4Mz/pZbqC+W?=
+ =?Windows-1252?Q?btnjcWeTbco3vWkNelhl1/b8LYmwerYzrH4VPIYeJQO/dxHeuS4UZV7F?=
+ =?Windows-1252?Q?dfIJjcs4r5F4sKrmaCXV3krL5CrWrhxKLB+87iCgvdIXwMip8jc9DN3f?=
+ =?Windows-1252?Q?BmbpQiVcL5va8bUWvkOapJfhclWSCCky/kkZuoClTV5JFholhclgSRug?=
+ =?Windows-1252?Q?kLTuSMZUe+AUtYRUDgyUjBKz47ynvHmIcW7m4OgVNtOcQRvyosg1O4Zh?=
+ =?Windows-1252?Q?Kkmym775L6+rQMkB2jeOW+aP+zTlCr4QHtJqbK3EpBCacBcLVta8T6z5?=
+ =?Windows-1252?Q?vRI6oZA8WKsGZ9I7BhWEL0im4bSfymTRMLrbAcE7toVTc3XZ7HBqUefg?=
+ =?Windows-1252?Q?nPC2NrjXVix3FAtzqNNusivTGzbJrcNrvGmQDDs+4tD5zOd4/gCQ3Y4a?=
+ =?Windows-1252?Q?OLXQ/xzCkKbiOCO7asqPhc5czLhBvPoCXR2uB4YUu0qYGIw1slMk2yPV?=
+ =?Windows-1252?Q?tM20K91nSPRgTwfs93Ejgx3jeA2Yz7HpqRr10qXIrxZ9DOYUBDegYh71?=
+ =?Windows-1252?Q?lEz2gWf3njwf/xARrPm4uFkZKduv26hWyzweD/p2Ij549j8lbxq972aU?=
+ =?Windows-1252?Q?fsZ9iPEseMfIvanbjcRRMuydfufbMLCbdflgvokRWxz0qhFZlgu5ORlX?=
+ =?Windows-1252?Q?QJ3BGlxCTjoFGMtftI45S7fRIqqmBWB1ojUDq1QNpQvmS8a0U7OaddqK?=
+ =?Windows-1252?Q?GD1txWOXXnj4TTktaCPD7WniIAhMejcbx8i0OEtFO26j1BLzuqvVpd0V?=
+ =?Windows-1252?Q?TQ8lqx4bMBSgZPnoNLkcUKgRSrLYMT2XPT4AT2JbhWKyBXJi2RI3EiUL?=
+ =?Windows-1252?Q?V4ZjhsJGnEIMSDNakUP3CdBvBpGWEep7RRMLyYH2q5Erj0p+u/11FLwl?=
+ =?Windows-1252?Q?DGNuy8lUso8DHLpGRJKxfColdJ105br856W1Ck7blB7MRmqTRvCVtWhF?=
+ =?Windows-1252?Q?2iuQN6L9TJnnaBwMiuyefzwrQT6BPb+Y6cXKiBjiMUbjMmZVDosXWWgN?=
+ =?Windows-1252?Q?K0XRaIjSRh3iDoOmuJvsvWlIXoUJEss6P3v5AsDCSoVpsA8c8IN0GClJ?=
+ =?Windows-1252?Q?d/G3+sJXpfH5XOpQxgcwWgLWq4dq8ctQXXxR0Yna5fVB8FSGIKuayDdW?=
+ =?Windows-1252?Q?/OtiQoNPRfZn9SOcshU7iZ9lYDr0X5tNTnEtJgFCwvbNRktokhJ3Yyzi?=
+ =?Windows-1252?Q?KTLvFb41U2Sg/ZZSWcdh+UyEC1X09HpjYsA6jIo9DtpFo9oEHfcsNvbn?=
+ =?Windows-1252?Q?l5ikY+W71+uI1ri5ycpIoK0ZhgBd8GEOlgHSxoM9VwP0Owntv5qkMc1K?=
+ =?Windows-1252?Q?+UY1iJxARqO0bK++dlRIZxnJQAMPCZSitseMPCE1nNGJ0383BcpPC/rQ?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PSAPR03MB5367.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(69100299015)(366016)(376014)(1800799024)(8096899003)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?OIhI51SLzEvL91IzErlDX0QPw2skSC4cM+AhMwltAtO2G24hrzVs8xJO?=
+ =?Windows-1252?Q?4n8R9jJsVpcxTlDqUuyC2/CHe3caGZHOSXdA5zcHJT+Uc/9G8sienfMb?=
+ =?Windows-1252?Q?qGfFk6rfmeI8ocOwyUaiJJ693sOmDY2ptCX9ZvCKUm7iJ4FJ9rV5Pvhv?=
+ =?Windows-1252?Q?l7C3DZc7BjgeN3TUxkF4+J5WG7BfgZziQeudX3hTLKHvcj5QYcd5ijk3?=
+ =?Windows-1252?Q?2DM1K3fY9GP9Hc2wj8PZl6o6pE6dZizvMYlGHCom1YCRU1ON6PhBsxtf?=
+ =?Windows-1252?Q?TZDZuURrl6b6Mj3rqZDH8JOimSA/MXHykXf3hZYTk2BFZDlR8RpEodAj?=
+ =?Windows-1252?Q?DtyUlE4GlsbhU6fGvyw+fdtPwHFwTh66QgfCUmgYlh+eolQ/TUC68Unn?=
+ =?Windows-1252?Q?RCqabBxNdjzjDIETU3obtGEZHNAWe7RxrDBgwcPwrSjF64YL1k5R14Ch?=
+ =?Windows-1252?Q?5Gk1bm9rZuMPiWvWlJsayTCb31itMFlEozNe0xUrvEHqIOoPZHnRh3A0?=
+ =?Windows-1252?Q?eRn4yR7fHJ8nkeEvKdOZNQ6npj7ln1rZizecANTGlf+0c80xvro9EetL?=
+ =?Windows-1252?Q?/MtWtBhXuF5uhzyok8ZhB2X+jfpXXXGpdE5DQXfFJnFGdkAvlEq5SVUX?=
+ =?Windows-1252?Q?b074IxiDYfX1woEDbhSLs++mx9rYMB5TlKfZSkbnyN7weQ+oKHKmSglo?=
+ =?Windows-1252?Q?FYY7zF0bbDsv6aoqwvMoauVZ9R4hU5ZjQv86Xmj0KNMJ7eNBj3Bt6uXH?=
+ =?Windows-1252?Q?Xo3WRRJcC4VzQkducjlllHZCFv5DImxo58aTvKE7n9C4MSJ0ZKvaCHUK?=
+ =?Windows-1252?Q?jbr+VSYOKEsrIDoJZv0ED4YbqxJ8SXDr+T76hE/s4T/YXF05BqAj1jyi?=
+ =?Windows-1252?Q?/PiQHkGItkpjZpL/5C+ffjVZrQfbot0ZNzUEWGBtCQyT53b7dkFiLiDh?=
+ =?Windows-1252?Q?1Npy7qa/y/wtvF/FiYduhkwKozuHTU5GqSuR9CkTeL0ss63RGxjD03cQ?=
+ =?Windows-1252?Q?a8NEiI9Bwu1/vFwJ1Fnd+H+5fMeg77Pp2FSg2BrJqcMqnuqCmT8FxZwa?=
+ =?Windows-1252?Q?e+aZBZxqlobBy+KuLFNomYdXlo86shz/jzT3MIdvXWmBvw0hZVx+L5wu?=
+ =?Windows-1252?Q?UeytMCONmtRp9NdJkzu0R0OcjyVCv/z4/VdKcV1uvcdFGDPo3WPS1Jet?=
+ =?Windows-1252?Q?YpiDtIXW3pW/IsEAAsvmBeBC8tU6IRny2Nn2W70HbudYWq7As5nyY3d+?=
+ =?Windows-1252?Q?JYNJb9YKcRfEcK5F/USBv0vFEQF2r55XZkTwjjQ63N80akitLXaT4FzE?=
+ =?Windows-1252?Q?b5vSFdPRvsCvhvSrY3tUHAsyUOWoRVrgKobTj6KHVSknBjpXaLdwZkF6?=
+ =?Windows-1252?Q?r44X98ODA68Ijlb+WTZqxaoUT5o8LCOoBl5nUEDo+uyzOCdKAmezCqo6?=
+ =?Windows-1252?Q?7A2A9REbpWmqjU+8qSBDwUTqC8VxKh/ah4WKjuzTP9BITn7+d2JuXHTA?=
+ =?Windows-1252?Q?Xt5jS8JGi7+ODW/a1/Hfe+US5kx7gSuHgXRJGh0bC/pdkhH4TO711Ts8?=
+ =?Windows-1252?Q?PqoSbvqP64o2sQuDB6a7nvCr+RTvQp5FVHI/iVWijMwu5a6i54GPYTWB?=
+ =?Windows-1252?Q?DNnqTf4rTmzVCrqm9FrgyECpaqNXEjQWPcwV62EekdFNjv0FJoklffFg?=
+ =?Windows-1252?Q?e7aAiBEwhpc=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_PSAPR03MB53679BC85498BBF1BFAA6419E04C2PSAPR03MB5367apcp_"
+MIME-Version: 1.0
+X-OriginatorOrg: nws.com.hk
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PSAPR03MB5367.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00596e29-91f5-4675-e601-08dcf2404246
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Oct 2024 02:21:38.3330
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1c26f26d-42b9-494f-a05a-eb14f79c4172
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: LIiMw5BmW6furug6KecCSYWLDKd0JtMSdk9FEZQ131GTNZ0ldAWk2/+GjSyLncocgM5tQeDetsoPBF2x7r8hLg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR03MB8663
+X-Spam-Status: No, score=-1.9
+X-Spam-Score: -18
+X-Spam-Bar: -
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Dear Edmund, As mentioned, NWS cooperates with St. James Settlement
+    Jockey Club Upcycling Center to host a program Upcycling for New Life” in
+    2022. The program transforms the wooden pallets into furniture that is [...]
+    
+ Content analysis details:   (-1.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was
+                             blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: stheadline.com]
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [40.107.255.57 listed in list.dnswl.org]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+ -0.0 SPF_HELO_PASS          SPF: HELO matches SPF record
+  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE:
+                             The query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [40.107.255.57 listed in sa-accredit.habeas.com]
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [40.107.255.57 listed in bl.score.senderscore.com]
+ -1.7 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [40.107.255.57 listed in wl.mailspike.net]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+ -0.1 DKIM_VALID_EF          Message has a valid DKIM or DK signature from
+                             envelope-from domain
+X-Spam-Flag: NO
+
+--_000_PSAPR03MB53679BC85498BBF1BFAA6419E04C2PSAPR03MB5367apcp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Edmund,
+
+As mentioned, NWS cooperates with St. James Settlement Jockey Club Upcyclin=
+g Center to host a program Upcycling for New Life=94 in 2022. The program t=
+ransforms the wooden pallets into furniture that is placed in a public area=
+ of transitional housing. You may find the following news and social media =
+post for your records. Thanks!
+
+https://www.stheadline.com/esg/3181882/%E6%96%B0%E5%89%B5%E5%BB%BA%E7%82%BA=
+%E9%80%BE%E7%99%BE%E6%88%B6%E5%B1%85%E6%B0%91%E6%89%93%E9%80%A0%E5%AE%B6%E5=
+%85%B7-%E7%89%A9%E6%B5%81%E5%8D%A1%E6%9D%BF%E8%BD%89%E5%BB%A2%E7%82%BA%E5%A=
+F%B6
+
+https://www.nws.com.hk/-/media/nwscorp/media-hub/press-releases/pdf/tc/2022=
+/2022-12-28-chi.pdf?rev=3Dd5405b419c354cacbe4df21ba8b86598&hash=3DC73A493FB=
+C8A46910896C4634CAE1E09
+
+https://www.facebook.com/story.php/?story_fbid=3D536970711800514&id=3D10006=
+4627694179&_rdr
+
+Best regards,
+
+Kate Ng
+Manager =96 Community Engagement, Group ESG
+NWS Holdings Limited
+(incorporated in Bermuda with limited liability)
+
+21/F, NCB Innovation Centre, 888 Lai Chi Kok Road,
+Cheung Sha Wan, Kowloon, Hong Kong
+
+D: (852) 2131 6274
+W: www.nws.com.hk<http://www.nws.com.hk/>
+
+
+
+
+[https://iii.nws.com.hk/images/email_disclaimer/nws.png]
+
+[https://iii.nws.com.hk/images/email_disclaimer/YFhuNJq.jpg]
+
+--_000_PSAPR03MB53679BC85498BBF1BFAA6419E04C2PSAPR03MB5367apcp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+@font-face
+	{font-family:"MS PGothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@MS PGothic";}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:11.0pt;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word;text-justify-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt">Dear=
+ Edmund, <o:p>
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt">As m=
+entioned, NWS cooperates with St. James Settlement Jockey Club Upcycling Ce=
+nter to host a program Upcycling for New Life=94 in 2022. The program trans=
+forms the wooden pallets into furniture
+ that is placed in a public area of transitional housing. You may find the =
+following news and social media post for your records. Thanks!&nbsp;<o:p></=
+o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><a h=
+ref=3D"https://www.stheadline.com/esg/3181882/%E6%96%B0%E5%89%B5%E5%BB%BA%E=
+7%82%BA%E9%80%BE%E7%99%BE%E6%88%B6%E5%B1%85%E6%B0%91%E6%89%93%E9%80%A0%E5%A=
+E%B6%E5%85%B7-%E7%89%A9%E6%B5%81%E5%8D%A1%E6%9D%BF%E8%BD%89%E5%BB%A2%E7%82%=
+BA%E5%AF%B6">https://www.stheadline.com/esg/3181882/%E6%96%B0%E5%89%B5%E5%B=
+B%BA%E7%82%BA%E9%80%BE%E7%99%BE%E6%88%B6%E5%B1%85%E6%B0%91%E6%89%93%E9%80%A=
+0%E5%AE%B6%E5%85%B7-%E7%89%A9%E6%B5%81%E5%8D%A1%E6%9D%BF%E8%BD%89%E5%BB%A2%=
+E7%82%BA%E5%AF%B6</a><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><a h=
+ref=3D"https://www.nws.com.hk/-/media/nwscorp/media-hub/press-releases/pdf/=
+tc/2022/2022-12-28-chi.pdf?rev=3Dd5405b419c354cacbe4df21ba8b86598&amp;hash=
+=3DC73A493FBC8A46910896C4634CAE1E09">https://www.nws.com.hk/-/media/nwscorp=
+/media-hub/press-releases/pdf/tc/2022/2022-12-28-chi.pdf?rev=3Dd5405b419c35=
+4cacbe4df21ba8b86598&amp;hash=3DC73A493FBC8A46910896C4634CAE1E09</a><o:p></=
+o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><a h=
+ref=3D"https://www.facebook.com/story.php/?story_fbid=3D536970711800514&amp=
+;id=3D100064627694179&amp;_rdr">https://www.facebook.com/story.php/?story_f=
+bid=3D536970711800514&amp;id=3D100064627694179&amp;_rdr</a><o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;Aria=
+l&quot;,sans-serif;mso-ligatures:none">Best regards,
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;Aria=
+l&quot;,sans-serif;mso-ligatures:none"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-family:&quot;A=
+rial&quot;,sans-serif;mso-ligatures:none">Kate Ng<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-family:&quot;A=
+rial&quot;,sans-serif">Manager<span style=3D"color:#1F497D"> =96
+</span>Community Engagement, Group ESG <o:p></o:p></span></b></p>
+<p class=3D"MsoNormal" style=3D"layout-grid-mode:char"><span lang=3D"EN-US"=
+ style=3D"font-family:&quot;Arial&quot;,sans-serif">NWS Holdings Limited<o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"layout-grid-mode:char"><i><span lang=3D"EN-=
+US" style=3D"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-f=
+areast-language:ZH-HK">(incorporated in Bermuda with limited liability)</sp=
+an></i><i><span lang=3D"EN-US" style=3D"font-size:9.0pt;font-family:&quot;A=
+rial&quot;,sans-serif">&nbsp;<o:p></o:p></span></i></p>
+<p class=3D"MsoNormal" style=3D"text-autospace:none"><span lang=3D"EN-US" s=
+tyle=3D"font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:bla=
+ck;mso-ligatures:none"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-autospace:none"><span lang=3D"EN-US" s=
+tyle=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligat=
+ures:none">21/F, NCB Innovation Centre, 888 Lai Chi Kok Road,
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"layout-grid-mode:char"><span lang=3D"EN-US"=
+ style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif">Cheung=
+ Sha Wan, Kowloon, Hong Kong<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"layout-grid-mode:char"><span lang=3D"EN-US"=
+ style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif"><o:p>&=
+nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"layout-grid-mode:char"><i><span lang=3D"EN-=
+US" style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif">D</=
+span></i><i><span lang=3D"EN-US" style=3D"font-size:10.0pt;font-family:&quo=
+t;Arial&quot;,sans-serif">: (852)</span></i><i><span lang=3D"EN-US" style=
+=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif">
+ 2131 6274 <o:p></o:p></span></i></p>
+<p class=3D"MsoNormal" style=3D"layout-grid-mode:char"><i><span lang=3D"EN-=
+US" style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif">W:
+<a href=3D"http://www.nws.com.hk/">www.nws.com.hk</a> </span></i><i><span l=
+ang=3D"EN-US" style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-=
+serif;mso-fareast-language:ZH-HK"><o:p></o:p></span></i></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"820" style=3D"width:614.95pt;border-collapse:collapse">
+<tbody>
+<tr>
+<td width=3D"338" valign=3D"bottom" style=3D"width:253.5pt;padding:0cm 5.4p=
+t 0cm 5.4pt">
+</td>
+<td width=3D"482" valign=3D"bottom" style=3D"width:361.45pt;padding:0cm 5.4=
+pt 0cm 5.4pt">
+<p class=3D"MsoNormal" style=3D"margin-left:-5.4pt"><span lang=3D"EN-US" st=
+yle=3D"font-size:12.0pt;font-family:&quot;&#26032;&#32048;&#26126;&#39636;&=
+quot;,serif;mso-fareast-language:JA"><o:p>&nbsp;</o:p></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-HK"><o:p>&nbsp;</o:p></span></p>
+</div>
+<!DOCTYPE html><style>=0A=
+            html,=0A=
+            body {=0A=
+                margin: 0;=0A=
+                width: 100%;=0A=
+            }=0A=
+=0A=
+            p {=0A=
+                margin: 0;=0A=
+                font-size: 10px;=0A=
+                text-align: justify;=0A=
+                -ms-user-select: none;=0A=
+                user-select: none;=0A=
+            }=0A=
+=0A=
+            a,=0A=
+            a:link,=0A=
+            a:visited,=0A=
+            a:hover,=0A=
+            a:active {=0A=
+                font-size: 11px;=0A=
+                font-weight: bold;=0A=
+                text-decoration: none;=0A=
+            }=0A=
+        </style>
+<table border=3D"0" cellpadding=3D"0" width=3D"744" style=3D"background:#19=
+3160">
+<tbody>
+<tr>
+<td style=3D"padding:11.25pt 11.25pt 9.0pt 11.25pt">
+<table border=3D"0" cellpadding=3D"0" width=3D"0" style=3D"width:744.0pt">
+<tbody>
+<tr>
+<td style=3D"padding:15.75pt .75pt 40pt .75pt;">
+<p><span style=3D"font-family:&quot;Times New Roman&quot;,serif;mso-fareast=
+-language:EN-US"><img border=3D"0" width=3D"496" height=3D"65" style=3D"wid=
+th:5.1666666667in;height:0.6770833333in;" src=3D"https://iii.nws.com.hk/ima=
+ges/email_disclaimer/nws.png">
+</span></p>
+</td>
+</tr>
+<tr>
+<td colspan=3D"2" style=3D"padding:.75pt .75pt .75pt .75pt">
+<p><span style=3D"font-family:&quot;Times New Roman&quot;,serif;mso-fareast=
+-language:EN-US"><img border=3D"0" width=3D"992" height=3D"48" style=3D"wid=
+th:10.3333in;height:.5in" src=3D"https://iii.nws.com.hk/images/email_discla=
+imer/YFhuNJq.jpg">
+</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+
+--_000_PSAPR03MB53679BC85498BBF1BFAA6419E04C2PSAPR03MB5367apcp_--

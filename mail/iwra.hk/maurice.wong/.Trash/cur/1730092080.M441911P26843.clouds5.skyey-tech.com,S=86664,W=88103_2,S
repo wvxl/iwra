@@ -1,0 +1,1439 @@
+Return-Path: <tong.edmund@gmail.com>
+Delivered-To: maurice.wong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id ruwMEzugUmbuGAAA07NIEQ
+	(envelope-from <tong.edmund@gmail.com>)
+	for <maurice.wong@iwra.hk>; Sun, 26 May 2024 10:36:43 +0800
+Return-path: <tong.edmund@gmail.com>
+Envelope-to: maurice.wong@iwra.hk
+Delivery-date: Sun, 26 May 2024 10:36:43 +0800
+Received: from mail-lf1-f45.google.com ([209.85.167.45]:52352)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <tong.edmund@gmail.com>)
+	id 1sB3kT-0001eo-2i
+	for maurice.wong@iwra.hk;
+	Sun, 26 May 2024 10:36:43 +0800
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52388d9ca98so15275875e87.0
+        for <maurice.wong@iwra.hk>; Sat, 25 May 2024 19:36:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716690994; x=1717295794; darn=iwra.hk;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WwAbxTc5fTiFt78TIL4pjwebxTvdEXJZyr6bO3WzwBI=;
+        b=VZvAYZ8Ja28FoOstVhAoMO0IeBBDEcBJF06M3MOwhyuyW2zRd+JilyR97WRtZA3ABE
+         OtshvRkAwBs/bS0QcckrEpDxzK8vMoRuNASX/xGRdJB1QudbdSrCKmDjVCFibfpm3/+y
+         tZiH8vJHl5ibN/Q5Q2FYknG3FilbujModsWUMoE0tvEbibigTzIBU+RtXqBN2y3Ma5Hn
+         qnSg2BucEANkyLbZQryViEUlidi0Czo+1d4YNS2WlghYbnrdzdMqOxrMSwRggbizBFRM
+         DxA6OW0dzb08CKzYxBG2/odgkjmGhxFPxuLD91BbrWatNQJZ34/RrdqrMyXq0a7Kv0Jz
+         ympg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716690994; x=1717295794;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WwAbxTc5fTiFt78TIL4pjwebxTvdEXJZyr6bO3WzwBI=;
+        b=SFq9w80ImCw4vSg2Zwc1ivAg/0QiMcvmprKmUM4wOoBI1WJZugUZTATnF59QsqVl99
+         91yYageRq2yx3tdJSkF7+ZgrtEjyteYLX/KTYq83XgWt5dDsRdzuWzDqm31GjvkO8hd5
+         iPzm1LDMHnwYLi/9m80IvGEUA0polrsbYntOAx3n4g9KZpycutBJsyD79yfz8hJ8luZ/
+         841EcsQkgjVr4ICcZV6Ts0z/jmBQNyYGll8lA/JSWrCso6RAo8oBfYZZJlNMZXIANdcr
+         DcmJb7RubCBCeq6mzzleLlK/z7nZWCVpwE4kE1rqYCgDHYInc7jH653gULzeZ1C+f4we
+         ilPw==
+X-Gm-Message-State: AOJu0YzSi1TZDVOWlT+mcL/ef/cAQ64QhTD/j/5dMUMIceAL06w4IPrZ
+	a8wAFaAMDwUMYPgEIRZkuwmpCfgQeTAUfAJq3KeVcJUV7Xp5/PtvLaJaTayOw8YtJ2/EwSk5Uei
+	4b4MG5Fay3RGvyxkqR9af+oKpm58=
+X-Google-Smtp-Source: AGHT+IEVoD07jOe3d3TW03mB9zvaCE0hVsnsS22DELAuqYB0ZlW7kSzIHiDvO1GF5zPC9S+moqfmvgdavSbfHGhJj3A=
+X-Received: by 2002:a05:6512:20d1:b0:522:32d1:d0e with SMTP id
+ 2adb3069b0e04-52967c207a9mr4153457e87.67.1716690993682; Sat, 25 May 2024
+ 19:36:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <OF45CFB093.33B60E8E-ON48258AD7.0022C420-48258AD7.0022C447@intranet.bochk.com>
+ <CAPO=tgUT4VZ=gRRzwfChFy9xxkp911V4vT7Y3Mpd4a3ri_zhWQ@mail.gmail.com>
+ <CAPO=tgUYnBscJszTGQLnzYsMg4OBJ9MB=6DazUhcqi8edQJQ-w@mail.gmail.com>
+ <CAPO=tgVGXOJ1W4q0L0sSWBSXPe2QkfREtTBOnXa6v+rDoMuEOA@mail.gmail.com> <OF31D1E121.960946A7-ON48258B27.0015306D-48258B27.00153E5E@intranet.bochk.com>
+In-Reply-To: <OF31D1E121.960946A7-ON48258B27.0015306D-48258B27.00153E5E@intranet.bochk.com>
+From: Edmund Tong <tong.edmund@gmail.com>
+Date: Sun, 26 May 2024 10:36:22 +0800
+Message-ID: <CAPO=tgW-AeAWC6nmjwJD77ZpeOJZiV5LAJB=hCHJ0VCaVJjZdA@mail.gmail.com>
+Subject: =?UTF-8?B?UmU6IFtFeHRlcm5hbF0gUmU6IEJPQ0hLXyBCdXNpbmVzcyBhY2NvdW50IG9wZW5pbmc=?=
+	=?UTF-8?B?5YWs5Y+46ZaL5oi255Sz6KuLX0lOTk9WQVRJVkUgV09PRCBSRUNZQ0xFIEFTU09DSUFUSU9OIExJTUlU?=
+	=?UTF-8?B?RUQ=?=
+To: yimtszho@bochk.com
+Cc: maurice.wong@iwra.hk
+Content-Type: multipart/related; boundary="000000000000de76a60619524487"
+X-Spam-Status: No, score=-0.2
+X-Spam-Score: -1
+X-Spam-Bar: /
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Hi, Andy, Thanks and I will meet you tmr at 10:00 am in your
+    office. Rgds Edmund 
+ Content analysis details:   (-0.2 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [209.85.167.45 listed in list.dnswl.org]
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was
+                             blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: hkgbc.org.hk]
+ -0.0 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [209.85.167.45 listed in wl.mailspike.net]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  0.0 FREEMAIL_FROM          Sender email is commonly abused enduser mail
+                             provider
+                             [tong.edmund[at]gmail.com]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID_EF          Message has a valid DKIM or DK signature from
+                             envelope-from domain
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.0 KAM_SHORT              Use of a URL Shortener for very short URL
+X-Spam-Flag: NO
+
+--000000000000de76a60619524487
+Content-Type: multipart/alternative; boundary="000000000000de76a40619524486"
+
+--000000000000de76a40619524486
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi, Andy,
+
+Thanks and I will meet you tmr at 10:00 am in your office.
+
+Rgds
+Edmund
+
+On Fri, May 24, 2024 at 11:52=E2=80=AFAM <yimtszho@bochk.com> wrote:
+
+> DEAR MR TONG
+>
+> FYI
+>
+>
+> Regards,
+>
+> YIM TSZ HO ANDY
+>
+> Kowloon West Business Banking Centre
+> Personal Banking and Wealth Management Department
+> Bank of China (Hong Kong) Limited
+> Tel.=EF=BC=9A+852 39828130
+> E-mail=EF=BC=9AYIMTSZHO@BOCHK.COM
+>
+>
+>
+>
+> =E5=AF=84=E4=BB=B6=E8=80=85:         "Edmund Tong" <tong.edmund@gmail.com=
+>
+> =E6=94=B6=E4=BB=B6=E8=80=85:         yimtszho@bochk.com
+> =E5=89=AF=E6=9C=AC=E6=8A=84=E9=80=81:         maurice.wong@iwra.hk
+> =E6=97=A5=E6=9C=9F:         2024/05/16 10:18 =E4=B8=8A=E5=8D=88
+> =E4=B8=BB=E6=97=A8:         [External] Re: BOCHK_ Business account
+> opening=E5=85=AC=E5=8F=B8=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B_INNOVATIVE =
+WOOD RECYCLE ASSOCIATION LIMITED
+> ------------------------------
+>
+>
+>
+> Dear Andy,
+>
+> The last email can't reach you because it was too large. I am resending
+> this email without the attachment of 22Mb, please see below.
+>
+> I will be pleased if I can meet up with you tmr morning and handover a
+> copy to you for your reference.
+>
+> Please advise.
+>
+> Thanks.
+> Regards
+> Edmund Tong
+>
+> On Thu, May 16, 2024 at 9:44=E2=80=AFAM Edmund Tong <*tong.edmund@gmail.c=
+om*
+> <tong.edmund@gmail.com>> wrote:
+> Dear Andy,
+>
+> It was nice meeting you in your office on 3rd April to explain the
+> operation of our association IWRA.
+>
+> Subsequent to that meeting, we have a lot of developments as regards to
+> potential members as below:-
+>
+> 1) Recommended members of the HKGSA (Hong Kong Green Shop Alliance) from
+> the director, Harry Lai of HKGBC (Hong Kong Green Building Council) and
+> details from him as below:-
+> The Hong Kong Green Shop Alliance was established in 2017 with the aim to
+> foster the world=E2=80=99s greenest shopping environment in Hong Kong. Si=
+nce the
+> establishment, we have successfully built a collaborative platform that h=
+as
+> engaged the voluntary participation of 31 Developers / Key Partners, over
+> 180 Malls and 850 Shops. You could find more information in HKGSA website=
+:
+> *https://hkgsa.hkgbc.org.hk/* <https://hkgsa.hkgbc.org.hk/>
+>
+> These members are potential sources for supply of recycled wood and also
+> end users of decoration/product produced from recycled wood.
+>
+> 2) Meeting with HKPC (Hong Kong Productivity Centre) regarding applicatio=
+n
+> of funding:-
+> a) TVP (Technology Voucher Programme) for a maximum of HKD800,000 with 75=
+%
+> funding available, and
+> b) Recycling Fund- as an NPO, we are eligible to apply for ISP fund with =
+a
+> maximum of HKD 15,000,000 (to be applied by phase depending on the projec=
+t
+> scope), with 100% funding from the Environmental Protection Department
+>
+> We will submit applications to both funds by the end of May, 2024.
+>
+> 3) We have also contacted several architects/designers supporting our
+> association and will refer us to members of the HKID (Hong Kong Institute
+> of Architects) and they have been involved in projects using recycle wood
+>
+> 4) We have also started working with one of the biggest woodworking
+> workshops in Hong Kong located in Fotan for the development of using
+> recycled wood -this workshop has already been producing wooden products
+> with recycled wood for some years.
+>
+> 5) We are also discussing with PolyU for the projects with their year 4
+> students of the PolyU School of Design
+>
+> Based on the above progress, we are now ready to invite
+> corporate/companies and individuals to be members of our association and =
+a
+> bank account is essential for receiving membership fees and also the
+> operation of our association.
+>
+> An updated presentation (still to be refined before formal launching) is
+> attached for your further reference.
+>
+> I remembered that I had signed the 2nd page of the application form when =
+I
+> met you on 3rd April but the 1st page was blank.
+>
+> Since there is good progress in terms of the scope of our development, th=
+e
+> estimated turnover should be more than what we had indicated before in th=
+e
+> first application and we expect faster development. Perhaps we should
+> revise our projection in our application to reflect the updated situation=
+.
+>
+> We would appreciate it if we can have your prompt reply to our applicatio=
+n
+> for opening an account with Bank of China.
+>
+> Thanks
+>
+> Regards
+> Edmund Tong
+> Innovative Wood Recycle Association Limited
+>
+>
+>
+>
+> ---------- Forwarded message ---------
+> From: *Edmund Tong* <*tong.edmund@gmail.com* <tong.edmund@gmail.com>>
+> Date: Thu, Mar 14, 2024 at 10:12=E2=80=AFAM
+> Subject: Re: BOCHK_ Business account opening=E5=85=AC=E5=8F=B8=E9=96=8B=
+=E6=88=B6=E7=94=B3=E8=AB=8B_INNOVATIVE WOOD RECYCLE
+> ASSOCIATION LIMITED
+> To: <*chanyeongwo@bochk.com* <chanyeongwo@bochk.com>>
+>
+>
+> Dear Mr. Chan,
+>
+> We are preparing info for the application.
+>
+> Just wanted to clarify with you the followings:-
+>
+> 1) Can we arrange to issue cheque with 1 primary signatory + any one of
+> the other secondary signatory ( total 3 nos. of secondary signatory), if
+> this is the case, where can we specify this?
+>
+> 2) For Online Banking Arrangement
+> a) Is it only one primary user is required for online access - like the
+> company account which I have been using for my E T Engineering Ltd accoun=
+t?
+> b) Can we impose a limit of the transaction for the transfer to others
+> (not internally)?
+>
+>
+> Rgds
+> Edmund Tong
+>
+> On Tue, Mar 5, 2024 at 2:19=E2=80=AFPM <*chanyeongwo@bochk.com*
+> <chanyeongwo@bochk.com>> wrote:
+> Dear Mr Tong,
+>
+> =E5=A4=9A=E8=AC=9D=E9=81=B8=E7=94=A8=E6=9C=AC=E8=A1=8C=E6=9C=8D=E5=8B=99=
+=EF=BC=8C=E7=85=A9=E8=AB=8B=E6=8F=90=E4=BE=9B=E4=BB=A5=E4=B8=8B=E6=96=87=E4=
+=BB=B6=EF=BC=8C=E4=BB=A5=E4=BD=9C=E9=96=8B=E6=88=B6=E5=AF=A9=E6=89=B9=E3=80=
+=82
+> =E7=9B=B8=E9=97=9C=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B=E7=84=A1=E8=AB=96=
+=E6=98=AF=E5=90=A6=E6=88=90=E5=8A=9F=E9=96=8B=E6=88=B6=EF=BC=8C=E6=94=B6=E8=
+=B2=BB=E4=B8=8D=E8=A8=AD=E9=80=80=E9=82=84=E3=80=82
+> =E8=AB=8B=E5=AE=A2=E6=88=B6=E6=96=BC1=E5=80=8B=E6=9C=88=E5=85=A7=E6=8F=90=
+=E4=BA=A4=E7=9B=B8=E9=97=9C=E7=94=B3=E8=AB=8B=E9=96=8B=E6=88=B6=E6=96=87=E4=
+=BB=B6=EF=BC=8C=E9=80=BE=E6=99=82=E6=8F=90=E4=BA=A4=E6=96=87=E4=BB=B6=E8=A6=
+=96=E4=BD=9C=E5=8F=96=E6=B6=88=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B=E3=80=82
+>
+>
+>
+> * (=E8=AB=8B=E8=A9=B3=E7=B4=B0=E5=A1=AB=E5=AF=AB=E4=B8=8B=E8=A1=A8=EF=BC=
+=9A=E5=8C=85=E6=8B=AC=E5=85=AC=E5=8F=B8=E8=B2=A0=E8=B2=AC=E4=BA=BA=E7=9A=84=
+=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E5=85=A7=E5=AE=B9=E5=8F=8A=E5=85=AC=E5=
+=8F=B8=E9=81=8B=E4=BD=9C=E6=A8=A1=E5=BC=8F=EF=BC=8C=E5=A6=82=E5=B0=8D=E5=A1=
+=AB=E5=AF=AB=E5=85=A7=E5=AE=B9=E6=9C=89=E7=96=91=E5=95=8F=EF=BC=8C=E5=8F=AF=
+=E5=92=8C=E6=88=91=E5=80=91=E8=81=AF=E7=B5=A1=E5=8F=8A=E6=BA=9D=E9=80=9A)*
+>
+>
+>
+> =E5=9B=9E=E8=A6=86=E6=99=82=E9=80=A3=E5=90=8C   1.=E5=85=AC=E5=8F=B8KYC=
+=E8=A1=A8=E6=A0=BC(=E9=9B=BB=E9=83=B5=E9=99=84=E4=BB=B6)=E3=80=81
+>                        2.=E8=B2=A0=E8=B2=AC=E4=BA=BA(=E8=91=A3=E4=BA=8B/=
+=E8=82=A1=E6=9D=B1=E5=8F=8A=E7=B0=BD=E5=AD=97=E4=BA=BA)=E8=BA=AB=E4=BB=BD=
+=E8=AD=89=E6=98=8E=E3=80=81
+>                        3.=E4=BD=8F=E5=9D=80=E8=AD=89=E6=98=8E=E6=96=87=E4=
+=BB=B6=E3=80=81
+>                        *4.BR* <http://4.br/>+CI=E3=80=81 INCUMBENCY (CERT=
+IFIED BY
+> CPA/LAWYER)
+>                        5.=E8=82=A1=E4=BB=BD=E8=BD=89=E8=AE=93=E6=96=87=E4=
+=BB=B6(=E5=A6=82=E6=9C=89)=E3=80=81
+>                        8.=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=E4=
+=BB=B6=E5=8F=8A=E6=A5=AD=E5=8B=99=E6=96=87=E4=BB=B6=E9=9B=BB=E9=83=B5=E7=B5=
+=A6=E6=88=91=E5=80=91=E3=80=82
+>
+> ***=E6=A5=AD=E5=8B=99=E6=96=87=E4=BB=B6=E5=8C=85=E6=8B=AC=EF=B8=B0=E7=A7=
+=9F=E7=B4=84=EF=BC=8C=E8=B2=B7=E8=B3=A3=E5=90=88=E5=90=8C=EF=BC=8C=E5=BB=BA=
+=E8=AD=B0=E6=9B=B8=E7=AD=89=E7=AD=89(=E8=AB=8B=E6=8F=90=E4=BE=9B=E6=9C=89=
+=E9=9B=99=E6=96=B9=E8=93=8B=E7=AB=A0=E5=8F=8A=E7=B0=BD=E7=BD=B2=E7=9A=84=E6=
+=96=87=E4=BB=B6)=E5=8F=8A=E7=8F=BE=E6=99=82=E5=85=AC=E5=8F=B8=E7=87=9F=E9=
+=81=8B=E5=9C=B0=E5=9D=80=E7=9A=84=E7=9B=B8=E7=89=87(=E5=A6=82=E6=9C=89) =E7=
+=AD=89=E7=AD=89=E7=9A=84=E6=9C=89=E9=97=9C=E8=B3=87=E6=96=99 **
+> **=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=E4=BB=B6=EF=B8=B0=E7=B3=
+=A7=E5=96=AE=EF=BC=8C=E5=85=AC=E5=8F=B8=E4=BF=A1=EF=BC=8CMPF=EF=BC=8C=E5=90=
+=8D=E7=89=87=E6=96=87=E4=BB=B6=E7=AD=89=E7=AD=89 =E6=88=96 =E6=8C=81=E6=9C=
+=89=E5=85=B6=E4=BB=96=E5=85=AC=E5=8F=B8=E7=9A=84=E8=AD=89=E6=98=8E=E5=A6=82=
+BR=E3=80=81CI=E3=80=81NNC1(=E4=B8=8D=E5=8C=85=E6=8B=AC=E7=94=B3=E8=AB=8B=E5=
+=85=AC=E5=8F=B8=E7=99=BC=E5=87=BA=E7=9A=84=E6=96=87=E4=BB=B6)**
+> **=E5=85=AC=E5=8F=B8=E5=B8=B3=E6=88=B6=E7=B0=BD=E7=BD=B2=E5=AE=89=E6=8E=
+=92**
+>
+> =E5=A6=82=E6=9C=89=E7=9B=B8=E9=97=9C=E6=9F=A5=E8=A9=A2=EF=BC=8C=E6=AD=A1=
+=E8=BF=8E=E9=9A=A8=E6=99=82=E8=87=B4=E9=9B=BB=E6=88=96=E9=9B=BB=E9=83=B5=E7=
+=B5=A6=E6=9C=AC=E4=BA=BA=EF=BC=8C=E8=AC=9D=E8=AC=9D=EF=BC=81
+>
+> Should you have any enquires, feel free to contact me.
+>
+> Thank you so much.
+>
+> Best regards,
+> Chan Yeong Wo, China
+>
+> Kowloon West Business Banking Centre
+> Personal Banking and Wealth Management
+> Direct: (852) 3982 8057
+> Email: *chanyeongwo@bochk.com* <chanyeongwo@bochk.com>
+> Address: 37 Kimberlery Rd, Tsim Sha Tsui, Kowloon
+>
+> BOCHK is named "Bank of the Year in Hong Kong" by The Banker as well as
+> "The Strongest Bank in Hong Kong and Asia Pacific" and "The Second
+> Strongest Bank in the World" by The Asian Banker in 2023.
+>
+> ***********************************************************
+> This message contains confidential information which is intended only for
+> the person or entity to which it is addressed. If you are not the intende=
+d
+> recipient, you should not read, disseminate, distribute or copy this
+> e-mail. Any opinion contained in this message are those of the author and
+> are not given or endorsed by Bank of China (Hong Kong) Limited, its
+> subsidiaries or affiliates unless otherwise stated in this message and th=
+e
+> authority of the author to so bind Bank of China (Hong Kong) Limited, its
+> subsidiaries or affiliates  is duly verified. We do not guarantee that th=
+is
+> e-mail is virus-free or secure and are not liable in respect of any delay
+> or omission in the transmission of this message.
+> ***********************************************************
+> Save paper, Save the Earth
+>
+> BOCHK is named "Bank of the Year in Hong Kong" by The Banker as well as
+> "The Strongest Bank in Hong Kong and Asia Pacific" and "The Second
+> Strongest Bank in the World" by The Asian Banker in 2023.
+>
+>
+> ***********************************************************
+> This message contains confidential information which is intended only for
+> the person or entity to which it is addressed. If you are not the intende=
+d
+> recipient, you should not read, disseminate, distribute or copy this
+> e-mail. Any opinion contained in this message are those of the author and
+> are not given or endorsed by Bank of China (Hong Kong) Limited, its
+> subsidiaries or affiliates unless otherwise stated in this message and th=
+e
+> authority of the author to so bind Bank of China (Hong Kong) Limited, its
+> subsidiaries or affiliates  is duly verified. We do not guarantee that th=
+is
+> e-mail is virus-free or secure and are not liable in respect of any delay
+> or omission in the transmission of this message.
+> ***********************************************************
+> Save paper, Save the Earth
+>
+>
+
+--000000000000de76a40619524486
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi, Andy,<div><br></div><div>Thanks and I will meet you tm=
+r at 10:00 am in your office.</div><div><br></div><div>Rgds</div><div>Edmun=
+d</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
+_attr">On Fri, May 24, 2024 at 11:52=E2=80=AFAM &lt;<a href=3D"mailto:yimts=
+zho@bochk.com" target=3D"_blank">yimtszho@bochk.com</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex"><span style=3D"font-size=
+:10pt;font-family:sans-serif">DEAR MR TONG</span>
+<br>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">FYI </span>
+<br>
+<br>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Regards,<br>
+<br>
+YIM TSZ HO ANDY</span>
+<br><span style=3D"font-size:10pt;font-family:sans-serif"><br>
+Kowloon West Business Banking Centre<br>
+Personal Banking and Wealth Management Department<br>
+Bank of China (Hong Kong) Limited<br>
+Tel.=EF=BC=9A+852 39828130<br>
+E-mail=EF=BC=9A<a href=3D"mailto:YIMTSZHO@BOCHK.COM" target=3D"_blank">YIMT=
+SZHO@BOCHK.COM</a></span>
+<br><img src=3D"cid:ii_18fa8bbb337c204bfcc1" style=3D"border: 0px solid;">
+<br>
+<br>
+<br>
+<br><span style=3D"font-size:9pt;color:rgb(95,95,95);font-family:sans-serif=
+">=E5=AF=84=E4=BB=B6=E8=80=85:
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span><span style=3D"font-size:9pt;font-family=
+:sans-serif">&quot;Edmund
+Tong&quot; &lt;<a href=3D"mailto:tong.edmund@gmail.com" target=3D"_blank">t=
+ong.edmund@gmail.com</a>&gt;</span>
+<br><span style=3D"font-size:9pt;color:rgb(95,95,95);font-family:sans-serif=
+">=E6=94=B6=E4=BB=B6=E8=80=85:
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span><span style=3D"font-size:9pt;font-family=
+:sans-serif"><a href=3D"mailto:yimtszho@bochk.com" target=3D"_blank">yimtsz=
+ho@bochk.com</a></span>
+<br><span style=3D"font-size:9pt;color:rgb(95,95,95);font-family:sans-serif=
+">=E5=89=AF=E6=9C=AC=E6=8A=84=E9=80=81:
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span><span style=3D"font-size:9pt;font-family=
+:sans-serif"><a href=3D"mailto:maurice.wong@iwra.hk" target=3D"_blank">maur=
+ice.wong@iwra.hk</a></span>
+<br><span style=3D"font-size:9pt;color:rgb(95,95,95);font-family:sans-serif=
+">=E6=97=A5=E6=9C=9F:
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span><span style=3D"font-size:9pt;font-family=
+:sans-serif">2024/05/16
+10:18 =E4=B8=8A=E5=8D=88</span>
+<br><span style=3D"font-size:9pt;color:rgb(95,95,95);font-family:sans-serif=
+">=E4=B8=BB=E6=97=A8:
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span><span style=3D"font-size:9pt;font-family=
+:sans-serif">[External]
+Re: BOCHK_ Business account opening=E5=85=AC=E5=8F=B8=E9=96=8B=E6=88=B6=E7=
+=94=B3=E8=AB=8B_INNOVATIVE WOOD RECYCLE
+ASSOCIATION LIMITED</span>
+<br>
+<hr noshade>
+<br>
+<br>
+<br><span style=3D"font-size:12pt">Dear Andy,</span>
+<br>
+<br><span style=3D"font-size:12pt">The last email can&#39;t reach you becau=
+se
+it was too large. I am resending this email without the attachment of 22Mb,
+please see below.</span>
+<br>
+<br><span style=3D"font-size:12pt">I will be pleased if I can meet up with
+you tmr morning and handover a copy to you for your reference.</span>
+<br>
+<br><span style=3D"font-size:12pt">Please advise.</span>
+<br>
+<br><span style=3D"font-size:12pt">Thanks.</span>
+<br><span style=3D"font-size:12pt">Regards</span>
+<br><span style=3D"font-size:12pt">Edmund Tong</span>
+<br>
+<br><span style=3D"font-size:12pt">On Thu, May 16, 2024 at 9:44=E2=80=AFAM =
+Edmund
+Tong &lt;</span><a href=3D"mailto:tong.edmund@gmail.com" target=3D"_blank">=
+<span style=3D"font-size:12pt;color:blue"><u>tong.edmund@gmail.com</u></spa=
+n></a><span style=3D"font-size:12pt">&gt;
+wrote:</span>
+<br><span style=3D"font-size:12pt">Dear Andy,</span>
+<br>
+<br><span style=3D"font-size:12pt">It was nice meeting you in your office=
+=C2=A0on
+3rd April to explain the operation of our association IWRA.</span>
+<br>
+<br><span style=3D"font-size:12pt">Subsequent to that meeting, we have a
+lot of developments as regards to potential members as below:-</span>
+<br>
+<br><span style=3D"font-size:12pt">1) Recommended members of the HKGSA (Hon=
+g
+Kong Green Shop Alliance) from the director, Harry Lai of HKGBC (Hong Kong
+Green Building Council) and details from him as below:-</span>
+<br><span style=3D"font-size:12pt">The Hong Kong Green Shop Alliance was
+established in 2017 with the aim to foster the world=E2=80=99s greenest sho=
+pping
+environment in Hong Kong. Since the establishment, we have successfully
+built a collaborative platform that has engaged the voluntary participation
+of 31 Developers / Key Partners, over 180 Malls and 850 Shops. You could
+find more information in HKGSA website: </span><a href=3D"https://hkgsa.hkg=
+bc.org.hk/" target=3D"_blank"><span style=3D"font-size:12pt;color:blue"><u>=
+https://hkgsa.hkgbc.org.hk/</u></span></a>
+<br><span style=3D"font-size:12pt">=C2=A0</span>
+<br><span style=3D"font-size:12pt">These members are potential sources for
+supply of recycled wood and also end users of decoration/product produced
+from recycled wood.</span>
+<br>
+<br><span style=3D"font-size:12pt">2) Meeting with HKPC (Hong Kong Producti=
+vity
+Centre) regarding application of funding:-</span>
+<br><span style=3D"font-size:12pt">a) TVP (Technology Voucher Programme)
+for a maximum of HKD800,000 with 75% funding available, and=C2=A0</span>
+<br><span style=3D"font-size:12pt">b) Recycling Fund- as an NPO, we are
+eligible to apply for ISP fund with a maximum of HKD 15,000,000 (to be
+applied by phase depending on the project scope), with 100% funding from
+the Environmental Protection Department</span>
+<br>
+<br><span style=3D"font-size:12pt">We will submit applications to both fund=
+s
+by the end of May, 2024.</span>
+<br>
+<br><span style=3D"font-size:12pt">3) We have also contacted several archit=
+ects/designers
+supporting our association and will refer us to members of the HKID (Hong
+Kong Institute of Architects) and they have been involved in projects using
+recycle wood</span>
+<br>
+<br><span style=3D"font-size:12pt">4) We have also started working with
+one of the biggest woodworking workshops in Hong Kong located in Fotan
+for the development of using recycled wood -this workshop has already been
+producing wooden products with recycled wood for some years.</span>
+<br>
+<br><span style=3D"font-size:12pt">5) We are also discussing with PolyU
+for the projects with their year 4 students of the PolyU School of Design</=
+span>
+<br>
+<br><span style=3D"font-size:12pt">Based on the above progress, we are now
+ready to invite corporate/companies and individuals to be members of our
+association and a bank account is essential for receiving membership fees
+and also the operation of our association.</span>
+<br>
+<br><span style=3D"font-size:12pt">An updated presentation (still to be
+refined before formal launching) is attached for your further reference.</s=
+pan>
+<br>
+<br><span style=3D"font-size:12pt">I remembered that I had signed the 2nd
+page of the application form when I met you on 3rd April but the 1st page
+was blank.=C2=A0</span>
+<br>
+<br><span style=3D"font-size:12pt">Since there is good progress in terms
+of the scope of our development, the estimated turnover should be more
+than what we had indicated before in the first application and we expect
+faster development. Perhaps we should revise our projection in our applicat=
+ion
+to reflect the updated situation.</span>
+<br>
+<br><span style=3D"font-size:12pt">We would appreciate it if we can have
+your prompt reply to our application for opening an account with Bank of
+China.</span>
+<br>
+<br><span style=3D"font-size:12pt">Thanks</span>
+<br>
+<br><span style=3D"font-size:12pt">Regards</span>
+<br><span style=3D"font-size:12pt">Edmund Tong</span>
+<br><span style=3D"font-size:12pt">Innovative Wood Recycle Association Limi=
+ted</span>
+<br>
+<br>
+<br>
+<br>
+<br><span style=3D"font-size:12pt">---------- Forwarded message ---------<b=
+r>
+From: <b>Edmund Tong</b> &lt;</span><a href=3D"mailto:tong.edmund@gmail.com=
+" target=3D"_blank"><span style=3D"font-size:12pt;color:blue"><u>tong.edmun=
+d@gmail.com</u></span></a><span style=3D"font-size:12pt">&gt;<br>
+Date: Thu, Mar 14, 2024 at 10:12=E2=80=AFAM<br>
+Subject: Re: BOCHK_ Business account opening=E5=85=AC=E5=8F=B8=E9=96=8B=E6=
+=88=B6=E7=94=B3=E8=AB=8B_INNOVATIVE
+WOOD RECYCLE ASSOCIATION LIMITED<br>
+To: &lt;</span><a href=3D"mailto:chanyeongwo@bochk.com" target=3D"_blank"><=
+span style=3D"font-size:12pt;color:blue"><u>chanyeongwo@bochk.com</u></span=
+></a><span style=3D"font-size:12pt">&gt;</span>
+<br><span style=3D"font-size:12pt"><br>
+</span>
+<br><span style=3D"font-size:12pt">Dear Mr. Chan,</span>
+<br>
+<br><span style=3D"font-size:12pt">We are preparing info for the applicatio=
+n.</span>
+<br>
+<br><span style=3D"font-size:12pt">Just wanted to clarify with you the foll=
+owings:-</span>
+<br>
+<br><span style=3D"font-size:12pt">1) Can we arrange to issue cheque with
+1 primary signatory + any one of the other secondary signatory ( total
+3 nos. of secondary signatory), if this is the case, where can we specify
+this?</span>
+<br>
+<br><span style=3D"font-size:12pt">2) For Online Banking Arrangement=C2=A0<=
+/span>
+<br><span style=3D"font-size:12pt">a) Is it only one primary user is requir=
+ed=C2=A0for
+online access -=C2=A0like the company account which I have been using for
+my E T Engineering Ltd account?</span>
+<br><span style=3D"font-size:12pt">b) Can we impose a limit of the transact=
+ion
+for the transfer to others (not internally)?</span>
+<br>
+<br>
+<br><span style=3D"font-size:12pt">Rgds</span>
+<br><span style=3D"font-size:12pt">Edmund Tong</span>
+<br>
+<br><span style=3D"font-size:12pt">On Tue, Mar 5, 2024 at 2:19=E2=80=AFPM &=
+lt;</span><a href=3D"mailto:chanyeongwo@bochk.com" target=3D"_blank"><span =
+style=3D"font-size:12pt;color:blue"><u>chanyeongwo@bochk.com</u></span></a>=
+<span style=3D"font-size:12pt">&gt;
+wrote:</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">Dear Mr Tong,</span><span style=3D"font-size:12pt">
+<br>
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=E5=A4=9A=E8=AC=9D=E9=81=B8=E7=94=A8=E6=9C=AC=E8=A1=8C=E6=9C=8D=E5=8B=99=EF=
+=BC=8C=E7=85=A9=E8=AB=8B=E6=8F=90=E4=BE=9B=E4=BB=A5=E4=B8=8B=E6=96=87=E4=BB=
+=B6=EF=BC=8C=E4=BB=A5=E4=BD=9C=E9=96=8B=E6=88=B6=E5=AF=A9=E6=89=B9=E3=80=82=
+</span><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=E7=9B=B8=E9=97=9C=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B=E7=84=A1=E8=AB=96=E6=
+=98=AF=E5=90=A6=E6=88=90=E5=8A=9F=E9=96=8B=E6=88=B6=EF=BC=8C</span><span st=
+yle=3D"font-size:12pt;color:red;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=
+=BB=91=E9=AB=94">=E6=94=B6=E8=B2=BB=E4=B8=8D=E8=A8=AD=E9=80=80=E9=82=84</sp=
+an><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=
+=BB=91=E9=AB=94">=E3=80=82</span><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=E8=AB=8B=E5=AE=A2=E6=88=B6=E6=96=BC</span><span style=3D"font-size:12pt;co=
+lor:red;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">1=E5=80=
+=8B=E6=9C=88=E5=85=A7</span><span style=3D"font-size:12pt;font-family:=E5=
+=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">=E6=8F=90=E4=BA=A4=E7=9B=B8=E9=
+=97=9C=E7=94=B3=E8=AB=8B=E9=96=8B=E6=88=B6=E6=96=87=E4=BB=B6=EF=BC=8C=E9=80=
+=BE=E6=99=82=E6=8F=90=E4=BA=A4=E6=96=87=E4=BB=B6=E8=A6=96=E4=BD=9C</span><s=
+pan style=3D"font-size:12pt;color:red;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94">=E5=8F=96=E6=B6=88=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=
+=8B</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=
+=AD=A3=E9=BB=91=E9=AB=94">=E3=80=82</span><span style=3D"font-size:12pt">
+</span>
+<table width=3D"1034" style=3D"border-collapse:collapse">
+<tbody><tr height=3D"8">
+<td width=3D"1032" style=3D"border-style:none;border-color:rgb(0,0,0);borde=
+r-width:0px;padding:1px"></td></tr></tbody></table>
+<p style=3D"margin-top:0px;margin-bottom:0px"><span style=3D"font-size:12pt=
+"><br>
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><b><br>
+(=E8=AB=8B=E8=A9=B3=E7=B4=B0=E5=A1=AB=E5=AF=AB=E4=B8=8B=E8=A1=A8=EF=BC=9A=
+=E5=8C=85=E6=8B=AC=E5=85=AC=E5=8F=B8=E8=B2=A0=E8=B2=AC=E4=BA=BA=E7=9A=84=E5=
+=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E5=85=A7=E5=AE=B9=E5=8F=8A=E5=85=AC=E5=8F=
+=B8=E9=81=8B=E4=BD=9C=E6=A8=A1=E5=BC=8F=EF=BC=8C=E5=A6=82=E5=B0=8D=E5=A1=AB=
+=E5=AF=AB=E5=85=A7=E5=AE=B9=E6=9C=89=E7=96=91=E5=95=8F=EF=BC=8C=E5=8F=AF=E5=
+=92=8C=E6=88=91=E5=80=91=E8=81=AF=E7=B5=A1=E5=8F=8A=E6=BA=9D=E9=80=9A)</b><=
+/span><span style=3D"font-size:12pt">
+<br>
+<br>
+<br>
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=E5=9B=9E=E8=A6=86=E6=99=82=E9=80=A3=E5=90=8C =C2=A0 1.=E5=85=AC=E5=8F=B8KY=
+C=E8=A1=A8=E6=A0=BC(=E9=9B=BB=E9=83=B5=E9=99=84=E4=BB=B6)=E3=80=81</span><s=
+pan style=3D"font-size:12pt">
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0
+=C2=A02.=E8=B2=A0=E8=B2=AC=E4=BA=BA(=E8=91=A3=E4=BA=8B/=E8=82=A1=E6=9D=B1=
+=E5=8F=8A=E7=B0=BD=E5=AD=97=E4=BA=BA)=E8=BA=AB=E4=BB=BD=E8=AD=89=E6=98=8E=
+=E3=80=81</span><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0
+=C2=A03.=E4=BD=8F=E5=9D=80=E8=AD=89=E6=98=8E=E6=96=87=E4=BB=B6=E3=80=81 <br=
+>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0
+=C2=A0</span><a href=3D"http://4.br/" target=3D"_blank"><span style=3D"font=
+-size:12pt;color:blue;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=
+=AB=94"><u>4.BR</u></span></a><span style=3D"font-size:12pt;font-family:=E5=
+=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">+CI=E3=80=81
+INCUMBENCY (CERTIFIED BY CPA/LAWYER)</span><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0
+=C2=A05.=E8=82=A1=E4=BB=BD=E8=BD=89=E8=AE=93=E6=96=87=E4=BB=B6(=E5=A6=82=E6=
+=9C=89)=E3=80=81</span><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0
+=C2=A08.=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=E4=BB=B6=E5=8F=8A=E6=
+=A5=AD=E5=8B=99=E6=96=87=E4=BB=B6=E9=9B=BB=E9=83=B5=E7=B5=A6=E6=88=91=E5=80=
+=91=E3=80=82 <br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
+***=E6=A5=AD=E5=8B=99=E6=96=87=E4=BB=B6=E5=8C=85=E6=8B=AC=EF=B8=B0=E7=A7=9F=
+=E7=B4=84=EF=BC=8C=E8=B2=B7=E8=B3=A3=E5=90=88=E5=90=8C=EF=BC=8C=E5=BB=BA=E8=
+=AD=B0=E6=9B=B8=E7=AD=89=E7=AD=89(=E8=AB=8B=E6=8F=90=E4=BE=9B=E6=9C=89=E9=
+=9B=99=E6=96=B9=E8=93=8B=E7=AB=A0=E5=8F=8A=E7=B0=BD=E7=BD=B2=E7=9A=84=E6=96=
+=87=E4=BB=B6)=E5=8F=8A=E7=8F=BE=E6=99=82=E5=85=AC=E5=8F=B8=E7=87=9F=E9=81=
+=8B=E5=9C=B0=E5=9D=80=E7=9A=84=E7=9B=B8=E7=89=87(=E5=A6=82=E6=9C=89)
+=E7=AD=89=E7=AD=89=E7=9A=84=E6=9C=89=E9=97=9C=E8=B3=87=E6=96=99 **<br>
+**=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=E4=BB=B6=EF=B8=B0=E7=B3=A7=
+=E5=96=AE=EF=BC=8C=E5=85=AC=E5=8F=B8=E4=BF=A1=EF=BC=8CMPF=EF=BC=8C=E5=90=8D=
+=E7=89=87=E6=96=87=E4=BB=B6=E7=AD=89=E7=AD=89 =E6=88=96
+=E6=8C=81=E6=9C=89=E5=85=B6=E4=BB=96=E5=85=AC=E5=8F=B8=E7=9A=84=E8=AD=89=E6=
+=98=8E=E5=A6=82BR=E3=80=81CI=E3=80=81NNC1(=E4=B8=8D=E5=8C=85=E6=8B=AC=E7=94=
+=B3=E8=AB=8B=E5=85=AC=E5=8F=B8=E7=99=BC=E5=87=BA=E7=9A=84=E6=96=87=E4=BB=B6=
+)**</span><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+**=E5=85=AC=E5=8F=B8=E5=B8=B3=E6=88=B6=E7=B0=BD=E7=BD=B2=E5=AE=89=E6=8E=92*=
+*</span><span style=3D"font-size:12pt"> <br>
+</span><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=
+=A3=E9=BB=91=E9=AB=94"><br>
+=E5=A6=82=E6=9C=89=E7=9B=B8=E9=97=9C=E6=9F=A5=E8=A9=A2=EF=BC=8C=E6=AD=A1=E8=
+=BF=8E=E9=9A=A8=E6=99=82=E8=87=B4=E9=9B=BB=E6=88=96=E9=9B=BB=E9=83=B5=E7=B5=
+=A6=E6=9C=AC=E4=BA=BA=EF=BC=8C=E8=AC=9D=E8=AC=9D=EF=BC=81</span><span style=
+=3D"font-size:12pt">
+<br>
+</span><span style=3D"font-size:10pt;font-family:Arial"><br>
+Should you have any enquires, feel free to contact me. </span><span style=
+=3D"font-size:12pt"><br>
+</span><span style=3D"font-size:10pt;font-family:sans-serif"><br>
+Thank you so much.</span><span style=3D"font-size:12pt"> <br>
+</span><span style=3D"font-size:10pt;font-family:sans-serif"><br>
+Best regards,</span><span style=3D"font-size:12pt"> </span><span style=3D"f=
+ont-size:10pt;font-family:sans-serif"><br>
+Chan Yeong Wo, China </span><span style=3D"font-size:12pt"><br>
+</span><span style=3D"font-size:10pt;font-family:sans-serif"><br>
+Kowloon West Business Banking Centre</span><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:10pt;font-family:sans-serif"><br>
+Personal Banking and Wealth Management</span><span style=3D"font-size:12pt"=
+>
+</span><span style=3D"font-size:10pt;font-family:sans-serif"><br>
+Direct: (852) 3982 8057</span><span style=3D"font-size:12pt"> </span><span =
+style=3D"font-size:10pt;font-family:sans-serif"><br>
+Email: </span><a href=3D"mailto:chanyeongwo@bochk.com" target=3D"_blank"><s=
+pan style=3D"font-size:10pt;color:blue;font-family:sans-serif"><u>chanyeong=
+wo@bochk.com</u></span></a><span style=3D"font-size:12pt">
+</span><span style=3D"font-size:10pt;font-family:sans-serif"><br>
+Address: 37 Kimberlery Rd, Tsim Sha Tsui, Kowloon</span><span style=3D"font=
+-size:12pt">
+</span></p>
+<br><span style=3D"font-size:12pt;font-family:Arial">BOCHK is named &quot;B=
+ank
+of the Year in Hong Kong&quot; by The Banker as well as &quot;The Strongest
+Bank in Hong Kong and Asia Pacific&quot; and &quot;The Second Strongest
+Bank in the World&quot; by The Asian Banker in 2023.</span>
+<br>
+<br><span style=3D"font-size:12pt;font-family:Arial">**********************=
+*************************************<br>
+This message contains confidential information which is intended only for
+the person or entity to which it is addressed. If you are not the intended
+recipient, you should not read, disseminate, distribute or copy this e-mail=
+.
+Any opinion contained in this message are those of the author and are not
+given or endorsed by Bank of China (Hong Kong) Limited, its subsidiaries
+or affiliates unless otherwise stated in this message and the authority
+of the author to so bind Bank of China (Hong Kong) Limited, its subsidiarie=
+s
+or affiliates=C2=A0 is duly verified. We do not guarantee that this e-mail
+is virus-free or secure and are not liable in respect of any delay or omiss=
+ion
+in the transmission of this message.<br>
+***********************************************************<br>
+Save paper, Save the Earth</span>
+<br>
+<table width=3D"7" style=3D"border-collapse:collapse">
+<tbody><tr height=3D"8">
+<td width=3D"5" bgcolor=3D"white" style=3D"border-style:none;border-color:r=
+gb(0,0,0);border-width:0px;padding:1px"></td></tr></tbody></table>
+<p style=3D"margin-top:0px;margin-bottom:0px"></p>
+<p style=3D"margin-top:0px;margin-bottom:0px"></p>
+<p style=3D"margin-top:0px;margin-bottom:0px"></p>
+<p><span style=3D"font-family:Arial">BOCHK is named &quot;Bank of the Year =
+in Hong Kong&quot; by The Banker as well as &quot;The Strongest Bank in Hon=
+g Kong and Asia Pacific&quot; and &quot;The Second Strongest Bank in the Wo=
+rld&quot; by The Asian Banker in 2023.</span></p><p><span style=3D"font-fam=
+ily:Arial"><br></span></p><p><span style=3D"font-family:Arial"><span style=
+=3D"font-family:Arial">****************************************************=
+*******<br>This message contains confidential information which is intended=
+ only for the person or entity to which it is addressed. If you are not the=
+ intended recipient, you should not read, disseminate, distribute or copy t=
+his e-mail. Any opinion contained in this message are those of the author a=
+nd are not given or endorsed by Bank of China (Hong Kong) Limited, its subs=
+idiaries or affiliates unless otherwise stated in this message and the auth=
+ority of the author to so bind Bank of China (Hong Kong) Limited, its subsi=
+diaries or affiliates=C2=A0 is duly verified. We do not guarantee that this=
+ e-mail is virus-free or secure and are not liable in respect of any delay =
+or omission in the transmission of this message.<br>***********************=
+************************************<br>Save paper, Save the Earth</span></=
+span></p><p></p></blockquote></div>
+
+--000000000000de76a40619524486--
+--000000000000de76a60619524487
+Content-Type: image/jpeg; name=noname
+Content-Disposition: inline; filename=noname
+Content-Transfer-Encoding: base64
+Content-ID: <ii_18fa8bbb337c204bfcc1>
+X-Attachment-Id: ii_18fa8bbb337c204bfcc1
+
+/9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAEAAAAAAAD/
+2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwM
+BwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM
+DAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCADsAV4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEA
+AAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJx
+FDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNk
+ZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJ
+ytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQF
+BgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMz
+UvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3
+eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna
+4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKACiml+cd68/
+8SftS/DnwVJ40TWPHnhTTW+G9vbXfioXOpRR/wDCOxXAZrd7rLfuhIFYrvxuxxmgD0LNFeV/tN/t
+l/Db9jvwNpviT4jeJk8N6Hq90tlaXjWF1dxyzMpcL+4icrlVYgsACAea8Gg/4L8/sp6j4st/D+l/
+EjWPEXiC7gNxb6ZofgfxBqd3MmSuVjgsnPLDHOBmgD7NzzRmvMf2ff2ntP8A2iPhheeK7Xwr8SvC
+NtY3M9u+n+LPCN7ouqSCIZ8xLWaMSyI68oVBLfdwG+WvLB/wWD+Acv7HmqfHC38bw3Xg7RfMi1G0
+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
+--000000000000de76a60619524487--

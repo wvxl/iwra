@@ -1,0 +1,221 @@
+Return-Path: <account-security-noreply@accountprotection.microsoft.com>
+Delivered-To: iwra@clouds5.skyey-tech.com
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id 2LOLEM/SEWeXTAAA07NIEQ
+	(envelope-from <account-security-noreply@accountprotection.microsoft.com>)
+	for <iwra@clouds5.skyey-tech.com>; Fri, 18 Oct 2024 11:15:27 +0800
+Return-path: <account-security-noreply@accountprotection.microsoft.com>
+Envelope-to: edmund@iwra.hk
+Delivery-date: Fri, 18 Oct 2024 11:15:27 +0800
+Received: from mail-mw2nam12on2103.outbound.protection.outlook.com ([40.107.244.103]:54567 helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <account-security-noreply@accountprotection.microsoft.com>)
+	id 1t1dSY-00057M-0b
+	for edmund@iwra.hk;
+	Fri, 18 Oct 2024 11:15:27 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QxWvoxFgfQ/RzARd7EhvS/a+5823LbozWU8P++o66OA/MA4Us+82ezNjBiQUzZ8Dq5TDWbvGFVUWYOO6JmPrfLbi33g466PrDhTFWs53D/vLV5Xpcgkto3VILbJ/bbw0wPF8a7Q+BrhuO7AFcjUtcrwYjKIuXTIpuADR0Cnh0x08mLK4COtHuc1kIvLqpdOdQZxqAK+24Yw6FtsMZrSdxNawUXGzgZmrsGtLr4oPcbkVgVkQcZXxCDrFHeGPNYF2ky+dMDzoThhm0Uxd7CGh8wAqV/c99RFPIemXTcCzAwzCgjf143OSn3hr+nUS6ZKfh9DHVo3ehXqWjOX0tuiOGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SMkePvtMePdnMF6PaRBzvD2rW6F5gYX+aJC9KiUttSc=;
+ b=n1EggFcY1zhh91cbjLz0PPVKZR7DgNEUEfKZyag6KV8vnLXxRRjN1F7AtYN2M/hqZUDW59v48gknIIxa5z/RTqTLaipIWTVT8qAqXt7FkO4RKHZ2TiOAt6RbHwNK0/k/CKjKD2iGKpBFFzEQL5nNsQz5dVMQ7jVuI8G+WA00qo+2iagpWuRpSHsdkDLULThKh1kKjyh9W5QYydJaYjxoH15c3E1nHNOyxO0oQNUKNceHZVNkMejulaWmTeovtfkGKi7EIu39HgAiwOyOoQcxVrOYjXltniJUKBkMcv5DKXQsd4pKQMg41LC/zcwIdazh7h3/QbDOgfI8AMtzlTkaJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none
+ action=none header.from=accountprotection.microsoft.com; dkim=none (message
+ not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=accountprotection.microsoft.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SMkePvtMePdnMF6PaRBzvD2rW6F5gYX+aJC9KiUttSc=;
+ b=VyqjU1i/R8cd/DxN/r6HNStNc6l6sayVCrOOHbaY0Q28pJxdg8TvaJvbmQMsW3GWYnxRysiVujYI00ZTT65wMYFftwXNgqcC5M4Cj+QlZ1Y31T23ThvFEsVSg2QCxv8xl97TUkdGhrbv7mTUGJtkSgzWpPc9PFw/SKuHnCuIiEM=
+Received: from BL6PEPF0001640E.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:22e:400:0:1004:0:15) by LV3PR16MB6267.namprd16.prod.outlook.com
+ (2603:10b6:408:1d4::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.18; Fri, 18 Oct
+ 2024 03:15:20 +0000
+Received: from BN1PEPF00006002.namprd05.prod.outlook.com
+ (2a01:111:f403:c803::2) by BL6PEPF0001640E.outlook.office365.com
+ (2603:1036:903:4::a) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.21 via Frontend
+ Transport; Fri, 18 Oct 2024 03:15:20 +0000
+X-MS-Exchange-Authentication-Results: spf=none (sender IP is 20.168.74.105)
+ smtp.mailfrom=accountprotection.microsoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none
+ header.from=accountprotection.microsoft.com;
+Received: from accountprotection.microsoft.com (20.168.74.105) by
+ BN1PEPF00006002.mail.protection.outlook.com (10.167.243.234) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8069.17 via Frontend Transport; Fri, 18 Oct 2024 03:15:19 +0000
+From: Microsoft account team
+	<account-security-noreply@accountprotection.microsoft.com>
+Date: Thu, 17 Oct 2024 20:15:19 -0700
+Subject: Verify your email address
+To: edmund@iwra.hk
+X-Priority: 3
+X-MSAPipeline: MessageDispatcherEOP
+Message-ID: <IPXD3DOSDOU4.5QRGRBWO1H9X2@PH1PEPF00017360>
+X-MSAMetaData:
+ =?us-ascii?q?DnAWD7!yoKA5OSBrTMsR4*dKmJlillnVVlJdtyZCIh8MROJEOKpxH8hEyGLkW?=
+ =?us-ascii?q?B6AXF4jdjv0XHWKef4ndgtzLyfBpB*La9NiC5dcCygLE2zLnF7qSGzvqzp*Yo?=
+ =?us-ascii?q?5!WiKmJw$$?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="=-JZtyCe2WdF+e+KBHmD6Y2Q=="
+X-MS-TrafficTypeDiagnostic:
+	BN1PEPF00006002:EE_FirstParty-MicrosoftAccount-V3-System|LV3PR16MB6267:EE_FirstParty-MicrosoftAccount-V3-System
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 98de32d6-e614-4613-10c9-08dcef2318af
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|61400799027|376014|8096899003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?b3Y1VDA5RnFnWFZoYzVicGtXR0YyWldnKzkxaWhGeTJYdE9pRzFBZnJocU92?=
+ =?utf-8?B?MFcwdUNuNVM0N0tMOVQ2VEYrQS80LzMrd0l3ZmdXM2xlcmNrRVk5KzBtanda?=
+ =?utf-8?B?UHlhcnM2QmhpQ2RoVzlyem0yRGlmc2twUE8zMnhMUXFldE9UWkNsMGFlWndB?=
+ =?utf-8?B?Um1TdHo1NVNkazVkTUUzdHV3Z0pEc1d5SkQvZ3VvVk5KUVUraHA3dzVqRkZB?=
+ =?utf-8?B?WCtWTFNMRDFiNWNhejVvK3c3ZUFWMXoxQk9pWVFDMEJMYzJVdTAvUnZadWRC?=
+ =?utf-8?B?YThUcDVZUmk1TjFWdjFVWUJqK0toSEpkWGJrWWhlcnV6NWIvOCs0WG1iMEhW?=
+ =?utf-8?B?a1I3SnJ5MTZhTHlkeVpndGZ2OGNqVzJBWDdMbFpCUzZRNDVFbEhQRTIwYzZD?=
+ =?utf-8?B?MEFyY3ExZ2k5eVRqYVdQR2RIazViNFo2TjEraDN0ZWFXS2hzTnUrTkZ5dE9k?=
+ =?utf-8?B?TFlxMHlNeHJ3ck1wTloxOGszVGorSGpaYTRtb3Zjdmp0WHUzckJUOXNQdFFX?=
+ =?utf-8?B?OU53MGRVeWgraXNIQmhteGxleUpuZ1NuUVRGUTB6d2xoZ2pZTXBxd0FDeUhX?=
+ =?utf-8?B?cWNTNHE0ZWkxbjFaOXhFMEZ3K3VGSzF3ellVYUVmUWlYcloxbDVoZWlpMWl3?=
+ =?utf-8?B?ZjRLOE9GSm9teGtzVjJobnhXR0VuK3d3dkZqRDhpQkhPS1V2RTUzWXpBRVJ6?=
+ =?utf-8?B?Q1RBalRJQkgxVm16UWtxblVjUzd3aTk2WDR3aWJTV0Jmck4waWVhc1htVDkr?=
+ =?utf-8?B?TCtpWjg2S3F5QTdkbDd2ZllZQnp1dDNLWDNnLzEwdGFOMG5sZEhoWnFITlN3?=
+ =?utf-8?B?d3Jna2w5cExTQng1azdWNlNxZTdWVlBTR2pKajVMd29MZjB1Mk9zSi8zQVY4?=
+ =?utf-8?B?TjE0QkQ4cjV4SFArWnJ0SGxBNUtyYnRFQkNhYVlKb3h3c0Jnam5KMVdGWUt3?=
+ =?utf-8?B?endVSUxqd2gwL1lSYndVNmFQendMQ05JMnhUUWl4OVFCdk1GdFBicktUdmRl?=
+ =?utf-8?B?RWtKQTFNdXhuM1RRV1dDZFFHTjBFa2YwVzdpSzhFQlZ1dFFmanBQMG91OE15?=
+ =?utf-8?B?b1dGTmxYUzZjS29KYkdSalhCbmZyMDVrb1M2YnpEUUVKQkQ3RjVuQW5ZQms4?=
+ =?utf-8?B?ZlIrZVRGY1pxZVJXUEprZ1BndlRHQ1h5VEIrY0MwOHJwajM2K1RTWjM3SUo3?=
+ =?utf-8?B?cmFhcEtkcTBTUUs2UCtYN2pXT2FrL3d2STlXWkR4WFVoWE90VVc0WmZvMDlB?=
+ =?utf-8?B?c2JZeE5hZ0RvNkVGQjRhNHMwaDErNVBFN25vVTZSV09jL2I4MURGMmxMaS9R?=
+ =?utf-8?B?YmRkTW94K2I5RVZVajhJZDRsSmNrbGxMbFZXckNKUkhZM0hWU1dUNGRZbDAw?=
+ =?utf-8?B?NVZJY2ZVK1pVZHZQRm5IL0RpVjNoWkkvMnpvaisraUpGWXF2VGgrcG5YSVlK?=
+ =?utf-8?B?bTc2ZENtZGFVbmF3cm5XUHJLeWVCZkdSa041NVpISGtsbTZHMHZ0L3ROb252?=
+ =?utf-8?B?dTJLTGF5TWplRmtYcHlMMFE4SE9rMHRJd0wzU2ZTV1haWXdTOW0xZ1NLKzBH?=
+ =?utf-8?B?dDhKWU1PUFdFOFRYQkNvNGdaTTF2TW45UjlrdHpwUFlJM2ljT0xtZ1ZDTWRi?=
+ =?utf-8?B?ZmdoYmtMcXdTTUpyRW5QVkw3eCtNL2dNaUdvblQ1SVdIazFpbFZTWnZ4cCt0?=
+ =?utf-8?B?VGdHTEtjRHJQM25pdnMyM0R4dU5JcXFWMzBSQzlrMDdtQ0dVYjNQUjZGY3h6?=
+ =?utf-8?B?Nm03SDRmcHluY3F5WkY2TFlwdW4yOUlwYklqN2t3dFFDMUNSaWErNi9DZnhN?=
+ =?utf-8?B?d1ZRSWxDK1dsamdKaGxZalBmWTJrQXJDbW1nYzAxV09HRFhWSWZ1cWYybXZ3?=
+ =?utf-8?B?Zk5sWUtJOFBiVlRjMkdNK2QxTU1VTFRVV2dqRTlyRGt4dENuMFNmMy82Wm5Y?=
+ =?utf-8?B?YnVIYkJYcFVlQmlHbnF6QnFrRUZhcnJIYkdLeXAvOEVodXFWR0lsQXZUZXZB?=
+ =?utf-8?B?aVlTL1ZLMXhnPT0=?=
+X-Forefront-Antispam-Report:
+	CIP:20.168.74.105;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:accountprotection.microsoft.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(61400799027)(376014)(8096899003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	A6sMRBe+Qj68M9JD3w6dfdRg7n4rE/rjVEWTI3G5mfsPeip8RJTEn2PSFrpi7n/0tAkZ/DzO41T4q3zyQFVVm45c/TJk4wAvNk9woBhehRKy1wUIYRa7AfiS7NxZGxm5EiSyGwcffXKVxkHScEyX4cePqcFZNdiYJIYeYO/mbq2pBxLhHVQLG3bZnzoP458Ki2HLvx48iELWgoO4N/BlmNg2j/4rSZR6Tgon0R7VEJpAA9by9MHLcIoRviSTZtekORaskGTw/KZz0NdXflqaATHe/Bfsf9kTUpBJwmEJNW2b9cP2DUYEwMYaOcimqdeiqCCA785rwj8Q26dQZE33naRJk2N66Af7o1m2d9UED0bPr9mjDXEaihdR3bCKpDCjmQWaDh+5oszi6NNDGJIqyU5gxnGWpanE5l73S1KtrIj4DJ6V7bXbR6kSbPMjN7k2ofLwN548Rp5NaLTG0+3+/lIxIm6+944/4Fi8dH1KJgczskclLYvbojXnzGvQwk5ykYCP5X3jwcEMcP+K5w6nXQ==
+X-OriginatorOrg: accountprotection.microsoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Oct 2024 03:15:19.4756
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98de32d6-e614-4613-10c9-08dcef2318af
+X-MS-Exchange-CrossTenant-Id: 5ba90553-c2cd-460e-b5fd-ab93ad9155c7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5ba90553-c2cd-460e-b5fd-ab93ad9155c7;Ip=[20.168.74.105];Helo=[accountprotection.microsoft.com]
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-BN1PEPF00006002.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR16MB6267
+X-Spam-Status: No, score=-16.9
+X-Spam-Score: -168
+X-Spam-Bar: ----------------
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Microsoft account Verify your email address To finish setting
+    up your Microsoft account, we just need to make sure this email address is
+    yours. 
+ Content analysis details:   (-16.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [40.107.244.103 listed in list.dnswl.org]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+ -0.0 SPF_HELO_PASS          SPF: HELO matches SPF record
+ -7.5 USER_IN_DEF_DKIM_WL    From: address is in the default DKIM
+                             welcome-list
+ -7.5 USER_IN_DEF_SPF_WL     From: address is in the default SPF
+                             welcome-list
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+  0.0 RCVD_IN_VALIDITY_SAFE_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [40.107.244.103 listed in sa-accredit.habeas.com]
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                            [40.107.244.103 listed in bl.score.senderscore.com]
+ -1.3 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [40.107.244.103 listed in wl.mailspike.net]
+ -0.5 ENV_AND_HDR_SPF_MATCH  Env and Hdr From used in default SPF WL
+                             Match
+ -0.1 DKIMWL_WL_HIGH         DKIMwl.org - High trust sender
+X-Spam-Flag: NO
+
+--=-JZtyCe2WdF+e+KBHmD6Y2Q==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Microsoft account
+
+Verify your email address
+
+To finish setting up your Microsoft account, we just need to make sure this email address is yours.
+
+To verify your email address use this security code: 672792
+
+If you didn't request this code, you can safely ignore this email. Someone else might have typed your email address by mistake.
+
+Thanks,
+The Microsoft account team 
+Privacy Statement: https://go.microsoft.com/fwlink/?LinkId=521839
+Microsoft Corporation, One Microsoft Way, Redmond, WA 98052
+
+--=-JZtyCe2WdF+e+KBHmD6Y2Q==
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr"> 
+<head>
+<style type="text/css">
+ .link:link, .link:active, .link:visited {
+       color:#2672ec !important;
+       text-decoration:none !important;
+ }
+
+ .link:hover {
+       color:#4284ee !important;
+       text-decoration:none !important;
+ }
+</style>
+<title></title>
+</head>
+<body>
+<table dir="ltr">
+      <tr><td id="i1" style="padding:0; font-family:'Segoe UI Semibold', 'Segoe UI Bold', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif; font-size:17px; color:#707070;">Microsoft account</td></tr>
+      <tr><td id="i2" style="padding:0; font-family:'Segoe UI Light', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif; font-size:41px; color:#2672ec;">Verify your email address</td></tr>
+      <tr><td id="i4" style="padding:0; padding-top:25px; font-family:'Segoe UI', Tahoma, Verdana, Arial, sans-serif; font-size:14px; color:#2a2a2a;">To finish setting up your Microsoft account, we just need to make sure this email address is yours.</td></tr>
+      <tr><td style="padding:0; padding-top:25px; font-family:'Segoe UI', Tahoma, Verdana, Arial, sans-serif; font-size:14px; color:#2a2a2a;">To verify your email address use this security code: <span style="font-family:'Segoe UI Bold', 'Segoe UI Semibold', 'Segoe UI', 'Helvetica Neue Medium', Arial, sans-serif; font-size:14px; font-weight:bold; color:#2a2a2a;">672792</span></td></tr>
+      <tr><td id="i6" style="padding:0; padding-top:25px; font-family:'Segoe UI', Tahoma, Verdana, Arial, sans-serif; font-size:14px; color:#2a2a2a;">If you didn't request this code, you can safely ignore this email. Someone else might have typed your email address by mistake.</td></tr>
+      <tr><td style="padding:0; padding-top:25px; font-family:'Segoe UI', Tahoma, Verdana, Arial, sans-serif; font-size:14px; color:#2a2a2a;">Thanks,</td></tr>
+      <tr><td id="i8" style="padding:0; font-family:'Segoe UI', Tahoma, Verdana, Arial, sans-serif; font-size:14px; color:#2a2a2a;">The Microsoft account team</td></tr>
+</table>
+<div lang="en" style="margin-top:20px;margin-bottom:10px;"><a class="link" href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy Statement</a><div style="margin-top:10px;">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052</div></div></body>
+</html>
+--=-JZtyCe2WdF+e+KBHmD6Y2Q==--

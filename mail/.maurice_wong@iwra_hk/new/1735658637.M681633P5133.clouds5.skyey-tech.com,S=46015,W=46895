@@ -1,0 +1,880 @@
+Return-Path: <>
+Delivered-To: maurice.wong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id INlbKI0MdGcNFAAA07NIEQ
+	(envelope-from <>)
+	for <maurice.wong@iwra.hk>; Tue, 31 Dec 2024 23:23:57 +0800
+Return-path: <>
+Envelope-to: maurice.wong@iwra.hk
+Delivery-date: Tue, 31 Dec 2024 23:23:57 +0800
+Received: from mail-japanwestazhn15010003.outbound.protection.outlook.com ([52.102.194.3]:26709 helo=OS0P286CU011.outbound.protection.outlook.com)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	id 1tSe69-0001QG-2G
+	for maurice.wong@iwra.hk;
+	Tue, 31 Dec 2024 23:23:57 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xeDZG8higmAP6g5jEZPp03jjQ+0AQeMS+W5Fe2cdbVl7HnNC2kx8JisqJrMFkzo03llQShhbnMnmBgkDAdw09C2yzrj+87VdpXUSDvM/IdyMd57ws6DX+C6h21MEuMAotvd6mgHLyzjRmZBETk8+1mDS+BcY2av2CIvUU2pACY3lvrqzdO8qduIuU+Y8QRkop4bHh9obfBhvztGEbQYM1XHf4LybRtQDE4LjtJvXB26Vm/nnMdHLAJIndGXAkgkP0kXaLD01GquelxCKuIJezTzTYEK2xt9XL5ksyDVN4tb9kSxLgHAQGmbLXKWdu88yzcr4tI8Ncd2HQ5SirLMGBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=V9vU75rjWacXXi0AF/k4TwFq5eB8ptPBT3XdMr2U8sk=;
+ b=OirlUrHv0cUmDlr2fimF3oqasCJTgfvkkcr2/UAv9j6hwiiycJw/b/s9vkSjXqhrCPPAY6ySZs+4VLU51K5F6XxhbE3SURQVJUdh6xLKj7B4Yc2/VSgHBDDKEtuqDnTsBiirMyDQqBX6Kw+/iFHtge9yGhjVxSbVxp5ZmW14ndIKGJYuRTa0yIUuHaZ/zXYBsaRbN4YfVbmFKHrexlvjdfYd1W6b7VZArnMidXm02hhFpA4tciimZ0aTFXuT8CD8MOJE1tX1/5jwNInK0dot/SHaZFbEGgpeiKw34jTbCI/CgWmo6g7Io1OXdveTCVfuUbGFs0wIjSxpoUYZMThwBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none (sender ip is
+ 202.130.162.5) smtp.rcpttodomain=iwra.hk smtp.helo=internalmail.hktdc.org;
+ dmarc=fail (p=none sp=quarantine pct=100) action=none header.from=hktdc.org;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hktdc.org;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=V9vU75rjWacXXi0AF/k4TwFq5eB8ptPBT3XdMr2U8sk=;
+ b=mvh22lJuN0VHx4f9W0YmAoUpF9GMGy4sJArHVexhIQo5SnK8oLlpGWYjyQRq82FphoblUIO9qhdKsanN1X/rTmryiIGlJRHsAFEFd+QRHl19iiyLky4jL0ukvuPz6gPAZmsbfcMa4+prGD/0IBS6hzrwmrdF5JEgBU21Ql/TwyE=
+Received: from PS2PR01CA0003.apcprd01.prod.exchangelabs.com
+ (2603:1096:300:2d::15) by TYWP286MB2006.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:165::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8293.20; Tue, 31 Dec
+ 2024 15:23:51 +0000
+Received: from HK2PEPF00006FAF.apcprd02.prod.outlook.com
+ (2603:1096:300:2d:cafe::ee) by PS2PR01CA0003.outlook.office365.com
+ (2603:1096:300:2d::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8293.19 via Frontend Transport; Tue,
+ 31 Dec 2024 15:23:52 +0000
+X-MS-Exchange-Authentication-Results: spf=none (sender IP is 202.130.162.5)
+ smtp.helo=internalmail.hktdc.org; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=hktdc.org;
+Received-SPF: None (protection.outlook.com: internalmail.hktdc.org does not
+ designate permitted sender hosts)
+Received: from internalmail.hktdc.org (202.130.162.5) by
+ HK2PEPF00006FAF.mail.protection.outlook.com (10.167.8.5) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8314.11 via Frontend Transport; Tue, 31 Dec 2024 15:23:51 +0000
+MIME-Version: 1.0
+From: <postmaster@hktdc.org>
+To: <maurice.wong@iwra.hk>
+Date: Tue, 31 Dec 2024 23:23:17 +0800
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="193131f9-7887-4bef-aa9f-6ac977361130"
+X-MS-Exchange-Message-Is-Ndr:
+Content-Language: en-US
+Message-ID: <3b8b4ee2-84b8-4969-8c43-f41583dcd082@EXCH16MS2.hktdc.org>
+In-Reply-To: <1735658593.lEY33LDamiXdFYUj@clouds5.skyey-tech.com>
+References: <1735658593.lEY33LDamiXdFYUj@clouds5.skyey-tech.com>
+Subject: Undeliverable: Reply to your email will be done within 24 hrs
+Auto-Submitted: auto-replied
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: HK2PEPF00006FAF:EE_|TYWP286MB2006:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7bbaf002-84ff-4705-53bb-08dd29af217a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|50650200027|82310400026|1930700014|35950700016|376014|1800799024|4022899009|8096899003;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?8T9eH1WkuoDs2H02DOtwwUD6XTJd6mteV298X5eeXSzKwTm6e4K3GhN2gCzs?=
+ =?us-ascii?Q?jbhEQqzSbc/0e/QoMOg63rzqhjck//z334ByGCD9B7mAit1G1lIOWpy3bO+4?=
+ =?us-ascii?Q?uJBwXYN++//XjpUYuz5s9KsuC01gs/yXndsbu+Cu7R75IS/8SOao9dj9ZmwI?=
+ =?us-ascii?Q?JbdElzz+mMabQXZd96jnBenXDyo8WQMDnit2TZQnvgLf+AC05Wi+u31+1m2j?=
+ =?us-ascii?Q?Jesr26s3KDSZ8m6QlE/xHU+m4sRxY77iVTKetgqfqpxAAg45sWDY8p6lmdTd?=
+ =?us-ascii?Q?TOzNj+4UVf9IJ9tBgixUDLi9+iKW6lhPh3ydsGBlTiW3VmD7sQiwFFbdGDmx?=
+ =?us-ascii?Q?1bwRZarlXc768Lf4ahcz7i0JM61bFWm9pj/JPTXEOM37sME68JzI5uz+lAVF?=
+ =?us-ascii?Q?ZRFKQdtKQM4zWuYl2G5wNZimyebKLB8H52Y+uq5ZIZCxRohyquDu0LNQK9dP?=
+ =?us-ascii?Q?QyDGYa/4Hz2GNj7st4HoVWbzU3coOgSS870/+43c24mF8j3eZUneyUhpJMae?=
+ =?us-ascii?Q?ZkrnTC/ZDKeLEpOSzrJ/FQBnZDocYQPNdCF2QicJn8yjQhiqWKqqZKXSncgC?=
+ =?us-ascii?Q?JIN4E2PP6gsbkzSzg/vbZiLv0T2j39xiEeqPaIBLPL1rcOIY23AEk6R9aUsE?=
+ =?us-ascii?Q?H1XhHJ4IXnMlvt/qOboeYxueM+CIOzok4x7P+NDkAOV7H4WXm2I0Qn3gRVCO?=
+ =?us-ascii?Q?IRhhoi27a2+/Nm5aojG0sb7X/95favsRymwDq3OQWGhRXuJtx3yHvRaRAjzu?=
+ =?us-ascii?Q?0NlhHlSofyT8XK1RonJe92yBFdWI1t6H4hPd9cat/OsGQQ55xJen3bQkVxIN?=
+ =?us-ascii?Q?3VYm4tiBnvwvbTPiio9dinb9uhwk5z4rscaNmBlV9CzcG3rjdl6zTrbWlwUC?=
+ =?us-ascii?Q?4k3EffrhczSQdkJ5N1jmcYKtISTRMowMLW5Lo6KrtfgexIkGc+Wr46VwGCkd?=
+ =?us-ascii?Q?NDKOhA9vFeGewTLXgYr06ao91u3oR7C9okwzQ1nBTcN98Z3Dvnuvbqo/kbov?=
+ =?us-ascii?Q?nhine9rsIeRWYmDhmKIYyeCqgGxqnUa0T52KLC7avkYkNJKDKR1vbK41qPps?=
+ =?us-ascii?Q?D66ymG33X8ATjnKLQJ3/6VASPlb5zUWm12aZ9qQ1SqWCcLDsBjBWUnW8wGqQ?=
+ =?us-ascii?Q?Ivc6iYclb+8ku4NJp4gFhGvHmssAsc6+ENC+6nxiXV0Ge74KGVGLobUcYuZ2?=
+ =?us-ascii?Q?c1Hcju+VdaO+Pun9aOWjBb1ev96AC8rnFOeLXJkymNKs7ja2tXGNUxISpqCT?=
+ =?us-ascii?Q?+FyBLMjbWIlTIExabKuUAZcSYRLZbc5Dhl9RECAzGCOlS/uI5VcNlirFiCeT?=
+ =?us-ascii?Q?g8LcNIA05rw3+KCjlc5bQagmgeXJ/+8Fm6k4dlJzysG0n9fw7gAO8wux6ylI?=
+ =?us-ascii?Q?DErlx8wNMNo6xlSvm8CXwlUwcJbbCdVCPhheP/v9DiGicJ+kf5hm6g5scgky?=
+ =?us-ascii?Q?INZDc/fDhiM=3D?=
+X-Forefront-Antispam-Report:
+	CIP:202.130.162.5;CTRY:HK;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:internalmail.hktdc.org;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(50650200027)(82310400026)(1930700014)(35950700016)(376014)(1800799024)(4022899009)(8096899003);DIR:OUT;SFP:1501;
+X-OriginatorOrg: hktdc.org
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Dec 2024 15:23:51.4002
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7bbaf002-84ff-4705-53bb-08dd29af217a
+X-MS-Exchange-CrossTenant-Id: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=de180f95-eee8-42a4-9cab-dc2dd6ce3ed0;Ip=[202.130.162.5];Helo=[internalmail.hktdc.org]
+X-MS-Exchange-CrossTenant-AuthSource:
+	HK2PEPF00006FAF.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWP286MB2006
+X-Spam-Status: No, score=2.5
+X-Spam-Score: 25
+X-Spam-Bar: ++
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Delivery has failed to these recipients or groups: postmaster@hktdc.org<mailto:postmaster@hktdc.org>
+    The recipient's mailbox is full and can't accept messages now. Please try
+    resending your message later, or contact the recipient directly. 
+ Content analysis details:   (2.5 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was
+                             blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: skyey-tech.com]
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [52.102.194.3 listed in list.dnswl.org]
+  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE:
+                             The query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [52.102.194.3 listed in sa-accredit.habeas.com]
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [52.102.194.3 listed in bl.score.senderscore.com]
+ -0.0 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [52.102.194.3 listed in wl.mailspike.net]
+ -0.0 SPF_HELO_PASS          SPF: HELO matches SPF record
+  1.5 KAM_MXURI              URI: URI begins with a mail exchange prefix, i.e.
+                             mx.[...]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.1 MIME_HTML_MOSTLY       BODY: Multipart message mostly text/html MIME
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+  1.0 FORGED_SPF_HELO        No description available.
+X-Spam-Flag: NO
+
+--193131f9-7887-4bef-aa9f-6ac977361130
+Content-Type: multipart/alternative; differences=Content-Type;
+	boundary="e126f09c-bea5-44e7-a90c-787e300a6073"
+
+--e126f09c-bea5-44e7-a90c-787e300a6073
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Delivery has failed to these recipients or groups:
+
+postmaster@hktdc.org<mailto:postmaster@hktdc.org>
+The recipient's mailbox is full and can't accept messages now. Please try r=
+esending your message later, or contact the recipient directly.
+
+
+The following organization rejected your message: EXCH16MS2.hktdc.org.
+
+
+
+
+
+
+
+Diagnostic information for administrators:
+
+Generating server: hktdc.org
+
+postmaster@hktdc.org
+EXCH16MS2.hktdc.org
+Remote Server returned '554 5.2.2 mailbox full; STOREDRV.Deliver.Exception:=
+QuotaExceededException.MapiExceptionShutoffQuotaExceeded; Failed to process=
+ message due to a permanent exception with message Cannot get ID from name.=
+ 16.55847:C80C0000, 17.43559:000000008C000000000000000000000000000000, 20.5=
+2176:010FCB892C000011B0000000, 20.50032:010FCB899C17000000000000, 0.35180:0=
+0000000, 255.23226:51010000, 255.27962:56000000, 255.17082:B9040000, 0.1699=
+3:DD040000, 4.21921:B9040000, 255.31418:DD040000, 0.22753:FA000000, 255.218=
+17:B9040000, 0.37224:00000000, 4.40808:DD040000, 0.24529:352D3462, 4.18385:=
+DD040000, 0.36864:38343566, 4.37120:DD040000 [Stage: CreateMessage]'
+
+Original message headers:
+
+Received: from exch10ed2.hktdc.org (10.50.32.57) by EXCH16MS2.hktdc.org
+ (10.50.8.185) with Microsoft SMTP Server (version=3DTLS1_2,
+ cipher=3DTLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2507.44; Tue, 31 D=
+ec
+ 2024 23:23:17 +0800
+Received: from OS0P286CU010.outbound.protection.outlook.com (10.50.33.5) by
+ exch10ed2.hktdc.org (10.50.32.57) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.48 via Frontend Transport; Tue, 31 Dec 2024 23:23:17 +0800
+ARC-Seal: i=3D1; a=3Drsa-sha256; s=3Darcselector10001; d=3Dmicrosoft.com; c=
+v=3Dnone;
+ b=3DdOWjYQAitqJ3BM4FXb4hcdwscKrJavkSl1xr18wy5+/p9cQGToXrAzsrrk7uy8/kfogvO5=
+WpnXNrHhle7eMsmadd0+dVb4nMEFpoWnytIbDSWiXvbvLq5eF1RD7HkzxTl2JQOM36d+qNzDFSu=
+DXxkQIBG1uMl0NNwqItP2cE5jv9ZPmPJsyY8H2kht6ypa8NnUlUCwaiALFwyUQ/qea9eMokvMpq=
+W5+wXM6dbh/toCX5WLdbANmK09gP9kSmkna4Mwe5kyaADWHlbBogfHfjwTwdlm1ud6Ma6m6gWB0=
+9EA4UQqoB6/xECuPYTwcA9jlycpMZPz2YGjZTa4mIPWAFVQ=3D=3D
+ARC-Message-Signature: i=3D1; a=3Drsa-sha256; c=3Drelaxed/relaxed; d=3Dmicr=
+osoft.com;
+ s=3Darcselector10001;
+ h=3DFrom:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-A=
+ntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Ex=
+change-AntiSpam-MessageData-1;
+ bh=3DWjk2mC+VzikmoVKxq9XodFXJRMg877cE4j5NYJKCjY8=3D;
+ b=3DMHilP4mnZxLi23RDeNhVK+Ia5gXUFxP2c0RiWB4ZHSDv7KiMUluZwqyFgZAg8tCWwz7FwB=
+WOzKI/AECNjnoGAnFtgENL4vkieyLeaesEH6y2xNjlfibBeDBO4PFtUahKuxMD2uKYaEzQab9LX=
+ajKiErR3aCDFmdtfdcZIamxk7ygds3iqy/g+f37kQmLgEsMwcBR/J/RTaGJpJ1EWi98GVMCBEu4=
+8bOZH9JEvSSUHYp44ApC0qLMNaBP/cTuHMMKHN1OLZAAEwZM+Jp3C89ZD7X8A4A49nDnAgS3O5N=
+JAPv2A1mnFozYjfwVwlDYVqFloQFZ5ClKMb4I7HVOcRhFUw=3D=3D
+ARC-Authentication-Results: i=3D1; mx.microsoft.com 1; spf=3Dpass (sender i=
+p is
+ 182.239.55.22) smtp.rcpttodomain=3Dhktdc.org smtp.mailfrom=3Diwra.hk;
+ dmarc=3Dbestguesspass action=3Dnone header.from=3Diwra.hk; dkim=3Dpass (si=
+gnature was
+ verified) header.d=3Diwra.hk; arc=3Dnone (0)
+Received: from KL1PR01CA0056.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:5::20) by TY3P286MB3662.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:3d7::12) with Microsoft SMTP Server (version=3DTLS1_2,
+ cipher=3DTLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8293.20; Tue, 31 =
+Dec
+ 2024 15:23:16 +0000
+Received: from HK3PEPF0000021D.apcprd03.prod.outlook.com
+ (2603:1096:820:5:cafe::9b) by KL1PR01CA0056.outlook.office365.com
+ (2603:1096:820:5::20) with Microsoft SMTP Server (version=3DTLS1_3,
+ cipher=3DTLS_AES_256_GCM_SHA384) id 15.20.8293.16 via Frontend Transport; =
+Tue,
+ 31 Dec 2024 15:23:17 +0000
+Authentication-Results: spf=3Dpass (sender IP is 182.239.55.22)
+ smtp.mailfrom=3Diwra.hk; dkim=3Dpass (signature was verified)
+ header.d=3Diwra.hk;dmarc=3Dbestguesspass action=3Dnone
+ header.from=3Diwra.hk;compauth=3Dpass reason=3D109
+Received-SPF: Pass (protection.outlook.com: domain of iwra.hk designates
+ 182.239.55.22 as permitted sender) receiver=3Dprotection.outlook.com;
+ client-ip=3D182.239.55.22; helo=3Dclouds5.skyey-tech.com; pr=3DC
+Received: from clouds5.skyey-tech.com (182.239.55.22) by
+ HK3PEPF0000021D.mail.protection.outlook.com (10.167.8.39) with Microsoft S=
+MTP
+ Server (version=3DTLS1_2, cipher=3DTLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) =
+id
+ 15.20.8314.11 via Frontend Transport; Tue, 31 Dec 2024 15:23:14 +0000
+DKIM-Signature: v=3D1; a=3Drsa-sha256; q=3Ddns/txt; c=3Drelaxed/relaxed; d=
+=3Diwra.hk;
+        s=3Ddefault; h=3DContent-Transfer-Encoding:Content-Type:Mime-Versio=
+n:To:Subject:
+        Message-Id:From:Date:Sender:Reply-To:Cc:Content-ID:Content-Descript=
+ion:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Me=
+ssage-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subs=
+cribe:
+        List-Post:List-Owner:List-Archive;
+        bh=3DWjk2mC+VzikmoVKxq9XodFXJRMg877cE4j5NYJKCjY8=3D; b=3DbYxojxfmTe=
+TqBKiD2dQVkyVnq8
+        BBSH5fDTGQgE5TPCz1n82Hzeue+zMLxvPnggrgJTcXvPSYl94MafDuQ+k0t8+dMNUlH=
+Kqk22MvX2I
+        dJYsyPNYvKZqyVr1dFvq5eDcUhhvC7bizwrUAGnGPNRFwe6RkJXtV4tl49pv/nxn9yn=
+AKmxU4Jh1N
+        lUeTnsaTVzj74PFALYeX3/LxxQhmvlWxYm3wuci28cqY/9pVhcszlVc7VBW7O68Y7CU=
+n4zp/lgKvC
+        Ul8lqiHnPjBS/ggYslVGzbMeBA5LCzx5I3h5OuSV0fVCzY41T9ajFIQqlG7nJ3n9fnu=
+MxE+F5296Z
+        mxgjJt4w=3D=3D;
+Received: from iwra by clouds5.skyey-tech.com with local (Exim 4.96.2)
+        (envelope-from <maurice.wong@iwra.hk>)
+        id 1tSe5R-0001Ox-2Y
+        for postmaster@hktdc.org;
+        Tue, 31 Dec 2024 23:23:14 +0800
+Date: Tue, 31 Dec 2024 15:23:13 +0000
+From: Maurice Wong <maurice.wong@iwra.hk>
+Message-ID: <1735658593.lEY33LDamiXdFYUj@clouds5.skyey-tech.com>
+Precedence: auto_reply
+Subject: Reply to your email will be done within 24 hrs
+To: <postmaster@hktdc.org>
+X-Autorespond: Undeliverable: Reply to your email will be done within 24 hr=
+s
+X-Loop: postmaster@hktdc.org
+X-Precedence: auto_reply
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3D"utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-AntiAbuse: This header was added to track abuse, please include it with a=
+ny abuse report
+X-AntiAbuse: Primary Hostname - clouds5.skyey-tech.com
+X-AntiAbuse: Original Domain - hktdc.org
+X-AntiAbuse: Originator/Caller UID/GID - [1028 993] / [47 12]
+X-AntiAbuse: Sender Address Domain - iwra.hk
+X-Get-Message-Sender-Via: clouds5.skyey-tech.com: authenticated_id: iwra/fr=
+om_h
+X-Authenticated-Sender: clouds5.skyey-tech.com: maurice.wong@iwra.hk
+X-Source: /usr/local/cpanel/bin/autorespond
+X-Source-Args: /usr/local/cpanel/bin/autorespond maurice.wong@iwra.hk /home=
+/iwra/.autorespond
+X-Source-Dir: /home/iwra
+Return-Path: maurice.wong@iwra.hk
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0:0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: HK3PEPF0000021D:EE_|TY3P286MB3662:EE_
+X-MS-Office365-Filtering-Correlation-Id: cec27740-fcbc-4288-0d02-08dd29af0b=
+bf
+X-LD-Processed: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0,ExtAddr
+X-MS-Exchange-AtpMessageProperties: SA|SL
+X-Microsoft-Antispam: BCL:0;ARA:13230040;
+X-Microsoft-Antispam-Message-Info: =3D?utf-8?B?cUFvblZYTzN3MVBldXhNVk94UTZu=
+ZU13U3BIRjVYYnpVZlNwcnVBMmhHMDhC?=3D
+ =3D?utf-8?B?MjNwRSt5cFJ3ZkJnUnBhZ253MzJUTFM5OEp6czBJcGdsS2JYNms3SS9MVldF?=
+=3D
+ =3D?utf-8?B?UUY3Rm5OSUxmMkV2M0J0WjIrOWtKL3JiSmFHaHBpRmszQmh6Um9TTHhMMHZv?=
+=3D
+ =3D?utf-8?B?Y0wxSmRnYVIxZlVyNkNWMDFKZGo0a2FxNFJYME9jTExKNDBvWU1jWG5OYXV1?=
+=3D
+ =3D?utf-8?B?THptcnBBVGhjMnVkYUJsU3E2U0VCVkh1MWp2dDB6TVphK1BXdk5ZVnhXbHBW?=
+=3D
+ =3D?utf-8?B?QmZqM0FCQ3lIN2EwcE1wVkdrZGZaemdUWnNNckpNVitzVVI3d28xaTNKb0FE?=
+=3D
+ =3D?utf-8?B?YkVxS2gxRmpVbWR2MWJnK3Q0WjZiTCtUUWRzTnBSWU9LbmZwSmdCQXZkSkw1?=
+=3D
+ =3D?utf-8?B?VHQwZUcyalpTRGtZWGI5STQxdHRuSUw2ZzVuOUx5bWlLQXdiZTFnYWt1TW9O?=
+=3D
+ =3D?utf-8?B?N21lQ2dlTkZiaDU5QjBxbGpUNVdNbmJGbjFXSExMOER5eG45MCt3VWl3ekNn?=
+=3D
+ =3D?utf-8?B?RG82cEJ5ZFE3bUtodUprS2JycW1UVFRCcTJZQW9BWEdGRFpDdnpnRXdFVi9Y?=
+=3D
+ =3D?utf-8?B?MnhNRUhtOTNEeWJ6TUw1ZjRuWXJESG9HTnlWMFQyU25IRHV4c2YxZHhzZmM3?=
+=3D
+ =3D?utf-8?B?a3pRSXQzcXFXeGFzK3NNVDZVRW5yZDgyOC9BUEZSWlRZZktESFBCSVA4TldL?=
+=3D
+ =3D?utf-8?B?R1BwcWJjbWtkVEdHdWFTd29KK3ZmL1lIaGlRaWt5NDRFc0lDOHdUVkp4RGlL?=
+=3D
+ =3D?utf-8?B?YUR4WGQvSjd6ajFlV1QveXNIaklEWmZKcTZvTWRMUlZ6SldrVFpBMnNvbWRh?=
+=3D
+ =3D?utf-8?B?aXZpcXNlUStBTUhrd1lDKzRrT3ptTXh6SCtUSlRqakYxS1k0YUVUek83RjNP?=
+=3D
+ =3D?utf-8?B?MjhKUDI0VVFIU1hobW1jUmFHZnZHaC8zUEdGVTVKRE1qKzhXSEtzaXJpN3M0?=
+=3D
+ =3D?utf-8?B?TmtoNnZmZTU2RkZvNUdkb28zWmlSamc5aFZDOUs2ZnZVSUlXLzZWUkd3dVps?=
+=3D
+ =3D?utf-8?B?RlB3WURUUTkvclZoQWQrUG1WZjMrY1NYMFVoUkVVWWZ4MktZSVZqdzlxUlFq?=
+=3D
+ =3D?utf-8?B?bndlQWFHaE5jQk0zQkdKSDhhWkM0L2xIZGMveUEvclF0Wk5OMEdSWThiZURs?=
+=3D
+ =3D?utf-8?B?c1hpVFo3bG5uS0xXZHZKM0I1WHFGTjhRLzk2MFpPTnE5cCtFcTZmNGczTFdO?=
+=3D
+ =3D?utf-8?B?WGRlRlY0SzA2czRlMjVqWFB3c0NHakJjVncybW5BZGpOby8rUFdTZVZzSXFl?=
+=3D
+ =3D?utf-8?B?b21NQ1hoMnNyajM1NE1MZk1pdE5DaC9wTTRMbHJDZUVreWhndXFMY3p4UTZF?=
+=3D
+ =3D?utf-8?B?MmwwaU9tTlh5cVEyNitSNTBOMjhvRzU1Q3I1eHZ4bDByZG44RWJFK2RCWi9O?=
+=3D
+ =3D?utf-8?B?U0VCOXk2bkxXaFloNzVaaFJHekdOemJmeVlQTXJSV1g4L1I5WnZUOFQxU2Ez?=
+=3D
+ =3D?utf-8?B?T2xFOHVGNmxYQ0dZemMzUGxIYmE0QStoQ1BJa1RkSXFkeDF2a1ZhRFpkVWxy?=
+=3D
+ =3D?utf-8?B?NWh1bUZuenM0ZW1BSEVZcmFIbDhzZ0ZRdmExTGRiWkQ1V0UvOUVZRjVFdGYx?=
+=3D
+ =3D?utf-8?B?UzRSVWE0Z0orV3FTN2k0OU1pMzVieHhsZDgwanpjK0ZmL0pIbTVkOWFXTE9T?=
+=3D
+ =3D?utf-8?B?T0xBVWgyNkR0dzNQbEorS25BeVJyQnNaV2pqaXdUZUFzeCtscEd4ZWxBSExI?=
+=3D
+ =3D?utf-8?B?SHRwSERDQXdUZnNtejVhOFZ1MUVya1U1c3A1WWt0RkVMU3duUWR3T0VJVXBj?=
+=3D
+ =3D?utf-8?B?OGxFSVNYNFk3N3JlMkxET0sxa0w5Rkp6SnNyS0RBNVJhM2lDakdZaE9UbmpW?=
+=3D
+ =3D?utf-8?B?bFozdE5rV0pxblNnV1A1Y3JrbUs0Y29VZGtKMU9LN1JqUzFJa0tuSmdRcGxa?=
+=3D
+ =3D?utf-8?B?bHVQK09PRTVoNFd4NlZKQXVSSDByc01xZkJGekpnTEFFdEhDaDlkVUNTUkR4?=
+=3D
+ =3D?utf-8?B?Z3FnWVdZUWtVSWZXQlc5cXU3aWdRKzI0MWtJTzQ5U0lTK3NDeWpob0lCSlgz?=
+=3D
+ =3D?utf-8?B?T0VVUmFhZWZhQ2w4RU9kdytlUUxQUjdFRGRJcVdaNktydUw3MkZJVWZwWjNt?=
+=3D
+ =3D?utf-8?B?b01MeHhweU1Cem9DQzYwY3BlMzhzeFVHQWZNdEh0REVqTFdTU3BWTE5vYTN2?=
+=3D
+ =3D?utf-8?B?MTlGZlhURFA1eGJlOE5lWHdKTmd0Y1MvMm9EZzlEZ1UzNjZnblZjeG12RUhu?=
+=3D
+ =3D?utf-8?B?N2IxQVRVU0srcHU1aW80ZWVHaHQ5eno4WjBwVTM2dGRCUGFkdkNCbUN6RWJH?=
+=3D
+ =3D?utf-8?B?R29tRzQxZS8wYmc4c3JsTWhHN2RzWnRYd0RhWFQrdzZ5R2ZpbGZpZFBCeFJS?=
+=3D
+ =3D?utf-8?B?MGFac2FWTWw3WlRFV2xBVHRncktRcGd0VUVlQjl5eUZYb0FiN1EybUJXV2Zl?=
+=3D
+ =3D?utf-8?B?T0VTalQzK3YyQk4xS3YxYjhWY2l1aTR0ZEdnMGEwa2oydTA0cFl4eGdNL3Fv?=
+=3D
+ =3D?utf-8?B?dElJY0phT1p4NXgvNHNSL3pIYURjWmhYM25FZFdNSGdyem01TTg5dlBRSUJC?=
+=3D
+ =3D?utf-8?B?ZEdiRDZSSXFGeEM5THNjSHI3YjZuY01lOEtrN1hXV2NYdjZrZ3ljRFlvbWY3?=
+=3D
+ =3D?utf-8?B?TEdETzZaQnBRbzJESGphZVlkUW1hOGdwNC9mOEVkS25MRkFTQTdmZkFhYlMx?=
+=3D
+ =3D?utf-8?B?c0lZNnZJekUzV3dBVjYrb2JJQ04vSHViYTlleXQ3dUtjb2owck9IV09qY0NR?=
+=3D
+ =3D?utf-8?B?ZmE4c1p5QXRuSTVkS1BnSkE1ZWsxQU5WQWcvTEQ2ZytITzhCc0ZoWlFxa3E2?=
+=3D
+ =3D?utf-8?Q?lVaKHg//bTACdFX/gs0EcPv?=3D
+X-Forefront-Antispam-Report: CIP:182.239.55.22;CTRY:HK;LANG:en;SCL:1;SRV:;I=
+PV:NLI;SFV:NSPM;H:clouds5.skyey-tech.com;PTR:clouds5.skyey-tech.com;CAT:NON=
+E;SFS:(13230040);DIR:INB;
+X-MS-Exchange-ATPSafeLinks-Stat: 0
+X-MS-Exchange-ATPSafeLinks-BitVector: 0:0x0|0x0|0x0|0x0|0x0|0x0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Dec 2024 15:23:14.9095
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cec27740-fcbc-4288-0d02-08dd2=
+9af0bbf
+X-MS-Exchange-CrossTenant-Id: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0
+X-MS-Exchange-CrossTenant-AuthSource: HK3PEPF0000021D.apcprd03.prod.outlook=
+.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3P286MB3662
+X-OrganizationHeadersPreserved: TY3P286MB3662.JPNP286.PROD.OUTLOOK.COM
+X-CrossPremisesHeadersPromoted: exch10ed2.hktdc.org
+X-CrossPremisesHeadersFiltered: exch10ed2.hktdc.org
+X-OriginatorOrg: hktdc.onmicrosoft.com
+
+
+--e126f09c-bea5-44e7-a90c-787e300a6073
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<Head></head><body>
+<p><b><font color=3D"#000066" size=3D"3" face=3D"Arial">Delivery has failed=
+ to these recipients or groups:</font></b></p>
+<font color=3D"#000000" size=3D"2" face=3D"Tahoma"><p><a href=3D"mailto:pos=
+tmaster@hktdc.org">postmaster@hktdc.org</a><br>
+</font>
+<font color=3D"#000000" size=3D"3" face=3D"Arial">The recipient's mailbox i=
+s full and can't accept messages now. Please try resending your message lat=
+er, or contact the recipient directly.<br>
+</font>
+<font color=3D"#000000" size=3D"2" face=3D"Tahoma"><br>
+</p>
+<p>The following organization rejected your message: EXCH16MS2.hktdc.org.</=
+p>
+</font>
+<br><br><br><br><br><br>
+<font color=3D"#808080" size=3D"2" face=3D"Tahoma"><p><b>Diagnostic informa=
+tion for administrators:</b></p>
+<p>Generating server: hktdc.org<br>
+</p>
+<p>postmaster@hktdc.org<br>
+EXCH16MS2.hktdc.org<br>
+Remote Server  returned '554 5.2.2 mailbox full; STOREDRV.Deliver.Exception=
+:QuotaExceededException.MapiExceptionShutoffQuotaExceeded; Failed to proces=
+s message due to a permanent exception with message Cannot get ID from name=
+. 16.55847:C80C0000, 17.43559:000000008C000000000000000000000000000000, 20.=
+52176:010FCB892C000011B0000000, 20.50032:010FCB899C17000000000000, 0.35180:=
+00000000, 255.23226:51010000, 255.27962:56000000, 255.17082:B9040000, 0.169=
+93:DD040000, 4.21921:B9040000, 255.31418:DD040000, 0.22753:FA000000, 255.21=
+817:B9040000, 0.37224:00000000, 4.40808:DD040000, 0.24529:352D3462, 4.18385=
+:DD040000, 0.36864:38343566, 4.37120:DD040000 [Stage: CreateMessage]'<br>
+</p>
+<p>Original message headers:</p>
+<pre>Received: from exch10ed2.hktdc.org (10.50.32.57) by EXCH16MS2.hktdc.or=
+g
+ (10.50.8.185) with Microsoft SMTP Server (version=3DTLS1_2,
+ cipher=3DTLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2507.44; Tue, 31 D=
+ec
+ 2024 23:23:17 +0800
+Received: from OS0P286CU010.outbound.protection.outlook.com (10.50.33.5) by
+ exch10ed2.hktdc.org (10.50.32.57) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.48 via Frontend Transport; Tue, 31 Dec 2024 23:23:17 +0800
+ARC-Seal: i=3D1; a=3Drsa-sha256; s=3Darcselector10001; d=3Dmicrosoft.com; c=
+v=3Dnone;
+ b=3DdOWjYQAitqJ3BM4FXb4hcdwscKrJavkSl1xr18wy5+/p9cQGToXrAzsrrk7uy8/kfogvO5=
+WpnXNrHhle7eMsmadd0+dVb4nMEFpoWnytIbDSWiXvbvLq5eF1RD7HkzxTl2JQOM36d+qNzDFSu=
+DXxkQIBG1uMl0NNwqItP2cE5jv9ZPmPJsyY8H2kht6ypa8NnUlUCwaiALFwyUQ/qea9eMokvMpq=
+W5+wXM6dbh/toCX5WLdbANmK09gP9kSmkna4Mwe5kyaADWHlbBogfHfjwTwdlm1ud6Ma6m6gWB0=
+9EA4UQqoB6/xECuPYTwcA9jlycpMZPz2YGjZTa4mIPWAFVQ=3D=3D
+ARC-Message-Signature: i=3D1; a=3Drsa-sha256; c=3Drelaxed/relaxed; d=3Dmicr=
+osoft.com;
+ s=3Darcselector10001;
+ h=3DFrom:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-A=
+ntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Ex=
+change-AntiSpam-MessageData-1;
+ bh=3DWjk2mC+VzikmoVKxq9XodFXJRMg877cE4j5NYJKCjY8=3D;
+ b=3DMHilP4mnZxLi23RDeNhVK+Ia5gXUFxP2c0RiWB4ZHSDv7KiMUluZwqyFgZAg8tCWwz7FwB=
+WOzKI/AECNjnoGAnFtgENL4vkieyLeaesEH6y2xNjlfibBeDBO4PFtUahKuxMD2uKYaEzQab9LX=
+ajKiErR3aCDFmdtfdcZIamxk7ygds3iqy/g+f37kQmLgEsMwcBR/J/RTaGJpJ1EWi98GVMCBEu4=
+8bOZH9JEvSSUHYp44ApC0qLMNaBP/cTuHMMKHN1OLZAAEwZM+Jp3C89ZD7X8A4A49nDnAgS3O5N=
+JAPv2A1mnFozYjfwVwlDYVqFloQFZ5ClKMb4I7HVOcRhFUw=3D=3D
+ARC-Authentication-Results: i=3D1; mx.microsoft.com 1; spf=3Dpass (sender i=
+p is
+ 182.239.55.22) smtp.rcpttodomain=3Dhktdc.org smtp.mailfrom=3Diwra.hk;
+ dmarc=3Dbestguesspass action=3Dnone header.from=3Diwra.hk; dkim=3Dpass (si=
+gnature was
+ verified) header.d=3Diwra.hk; arc=3Dnone (0)
+Received: from KL1PR01CA0056.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:5::20) by TY3P286MB3662.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:3d7::12) with Microsoft SMTP Server (version=3DTLS1_2,
+ cipher=3DTLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8293.20; Tue, 31 =
+Dec
+ 2024 15:23:16 +0000
+Received: from HK3PEPF0000021D.apcprd03.prod.outlook.com
+ (2603:1096:820:5:cafe::9b) by KL1PR01CA0056.outlook.office365.com
+ (2603:1096:820:5::20) with Microsoft SMTP Server (version=3DTLS1_3,
+ cipher=3DTLS_AES_256_GCM_SHA384) id 15.20.8293.16 via Frontend Transport; =
+Tue,
+ 31 Dec 2024 15:23:17 +0000
+Authentication-Results: spf=3Dpass (sender IP is 182.239.55.22)
+ smtp.mailfrom=3Diwra.hk; dkim=3Dpass (signature was verified)
+ header.d=3Diwra.hk;dmarc=3Dbestguesspass action=3Dnone
+ header.from=3Diwra.hk;compauth=3Dpass reason=3D109
+Received-SPF: Pass (protection.outlook.com: domain of iwra.hk designates
+ 182.239.55.22 as permitted sender) receiver=3Dprotection.outlook.com;
+ client-ip=3D182.239.55.22; helo=3Dclouds5.skyey-tech.com; pr=3DC
+Received: from clouds5.skyey-tech.com (182.239.55.22) by
+ HK3PEPF0000021D.mail.protection.outlook.com (10.167.8.39) with Microsoft S=
+MTP
+ Server (version=3DTLS1_2, cipher=3DTLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) =
+id
+ 15.20.8314.11 via Frontend Transport; Tue, 31 Dec 2024 15:23:14 +0000
+DKIM-Signature: v=3D1; a=3Drsa-sha256; q=3Ddns/txt; c=3Drelaxed/relaxed; d=
+=3Diwra.hk;
+	s=3Ddefault; h=3DContent-Transfer-Encoding:Content-Type:Mime-Version:To:Su=
+bject:
+	Message-Id:From:Date:Sender:Reply-To:Cc:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-I=
+D:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=3DWjk2mC+VzikmoVKxq9XodFXJRMg877cE4j5NYJKCjY8=3D; b=3DbYxojxfmTeTqBKiD2=
+dQVkyVnq8
+	BBSH5fDTGQgE5TPCz1n82Hzeue+zMLxvPnggrgJTcXvPSYl94MafDuQ+k0t8+dMNUlHKqk22Mv=
+X2I
+	dJYsyPNYvKZqyVr1dFvq5eDcUhhvC7bizwrUAGnGPNRFwe6RkJXtV4tl49pv/nxn9ynAKmxU4J=
+h1N
+	lUeTnsaTVzj74PFALYeX3/LxxQhmvlWxYm3wuci28cqY/9pVhcszlVc7VBW7O68Y7CUn4zp/lg=
+KvC
+	Ul8lqiHnPjBS/ggYslVGzbMeBA5LCzx5I3h5OuSV0fVCzY41T9ajFIQqlG7nJ3n9fnuMxE+F52=
+96Z
+	mxgjJt4w=3D=3D;
+Received: from iwra by clouds5.skyey-tech.com with local (Exim 4.96.2)
+	(envelope-from &lt;maurice.wong@iwra.hk&gt;)
+	id 1tSe5R-0001Ox-2Y
+	for postmaster@hktdc.org;
+	Tue, 31 Dec 2024 23:23:14 +0800
+Date: Tue, 31 Dec 2024 15:23:13 +0000
+From: Maurice Wong &lt;maurice.wong@iwra.hk&gt;
+Message-ID: &lt;1735658593.lEY33LDamiXdFYUj@clouds5.skyey-tech.com&gt;
+Precedence: auto_reply
+Subject: Reply to your email will be done within 24 hrs
+To: &lt;postmaster@hktdc.org&gt;
+X-Autorespond: Undeliverable: Reply to your email will be done within 24 hr=
+s
+X-Loop: postmaster@hktdc.org
+X-Precedence: auto_reply
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3D&quot;utf-8&quot;
+Content-Transfer-Encoding: quoted-printable
+X-AntiAbuse: This header was added to track abuse, please include it with a=
+ny abuse report
+X-AntiAbuse: Primary Hostname - clouds5.skyey-tech.com
+X-AntiAbuse: Original Domain - hktdc.org
+X-AntiAbuse: Originator/Caller UID/GID - [1028 993] / [47 12]
+X-AntiAbuse: Sender Address Domain - iwra.hk
+X-Get-Message-Sender-Via: clouds5.skyey-tech.com: authenticated_id: iwra/fr=
+om_h
+X-Authenticated-Sender: clouds5.skyey-tech.com: maurice.wong@iwra.hk
+X-Source: /usr/local/cpanel/bin/autorespond
+X-Source-Args: /usr/local/cpanel/bin/autorespond maurice.wong@iwra.hk /home=
+/iwra/.autorespond=20
+X-Source-Dir: /home/iwra
+Return-Path: maurice.wong@iwra.hk
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0:0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: HK3PEPF0000021D:EE_|TY3P286MB3662:EE_
+X-MS-Office365-Filtering-Correlation-Id: cec27740-fcbc-4288-0d02-08dd29af0b=
+bf
+X-LD-Processed: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0,ExtAddr
+X-MS-Exchange-AtpMessageProperties: SA|SL
+X-Microsoft-Antispam: BCL:0;ARA:13230040;
+X-Microsoft-Antispam-Message-Info: =3D?utf-8?B?cUFvblZYTzN3MVBldXhNVk94UTZu=
+ZU13U3BIRjVYYnpVZlNwcnVBMmhHMDhC?=3D
+ =3D?utf-8?B?MjNwRSt5cFJ3ZkJnUnBhZ253MzJUTFM5OEp6czBJcGdsS2JYNms3SS9MVldF?=
+=3D
+ =3D?utf-8?B?UUY3Rm5OSUxmMkV2M0J0WjIrOWtKL3JiSmFHaHBpRmszQmh6Um9TTHhMMHZv?=
+=3D
+ =3D?utf-8?B?Y0wxSmRnYVIxZlVyNkNWMDFKZGo0a2FxNFJYME9jTExKNDBvWU1jWG5OYXV1?=
+=3D
+ =3D?utf-8?B?THptcnBBVGhjMnVkYUJsU3E2U0VCVkh1MWp2dDB6TVphK1BXdk5ZVnhXbHBW?=
+=3D
+ =3D?utf-8?B?QmZqM0FCQ3lIN2EwcE1wVkdrZGZaemdUWnNNckpNVitzVVI3d28xaTNKb0FE?=
+=3D
+ =3D?utf-8?B?YkVxS2gxRmpVbWR2MWJnK3Q0WjZiTCtUUWRzTnBSWU9LbmZwSmdCQXZkSkw1?=
+=3D
+ =3D?utf-8?B?VHQwZUcyalpTRGtZWGI5STQxdHRuSUw2ZzVuOUx5bWlLQXdiZTFnYWt1TW9O?=
+=3D
+ =3D?utf-8?B?N21lQ2dlTkZiaDU5QjBxbGpUNVdNbmJGbjFXSExMOER5eG45MCt3VWl3ekNn?=
+=3D
+ =3D?utf-8?B?RG82cEJ5ZFE3bUtodUprS2JycW1UVFRCcTJZQW9BWEdGRFpDdnpnRXdFVi9Y?=
+=3D
+ =3D?utf-8?B?MnhNRUhtOTNEeWJ6TUw1ZjRuWXJESG9HTnlWMFQyU25IRHV4c2YxZHhzZmM3?=
+=3D
+ =3D?utf-8?B?a3pRSXQzcXFXeGFzK3NNVDZVRW5yZDgyOC9BUEZSWlRZZktESFBCSVA4TldL?=
+=3D
+ =3D?utf-8?B?R1BwcWJjbWtkVEdHdWFTd29KK3ZmL1lIaGlRaWt5NDRFc0lDOHdUVkp4RGlL?=
+=3D
+ =3D?utf-8?B?YUR4WGQvSjd6ajFlV1QveXNIaklEWmZKcTZvTWRMUlZ6SldrVFpBMnNvbWRh?=
+=3D
+ =3D?utf-8?B?aXZpcXNlUStBTUhrd1lDKzRrT3ptTXh6SCtUSlRqakYxS1k0YUVUek83RjNP?=
+=3D
+ =3D?utf-8?B?MjhKUDI0VVFIU1hobW1jUmFHZnZHaC8zUEdGVTVKRE1qKzhXSEtzaXJpN3M0?=
+=3D
+ =3D?utf-8?B?TmtoNnZmZTU2RkZvNUdkb28zWmlSamc5aFZDOUs2ZnZVSUlXLzZWUkd3dVps?=
+=3D
+ =3D?utf-8?B?RlB3WURUUTkvclZoQWQrUG1WZjMrY1NYMFVoUkVVWWZ4MktZSVZqdzlxUlFq?=
+=3D
+ =3D?utf-8?B?bndlQWFHaE5jQk0zQkdKSDhhWkM0L2xIZGMveUEvclF0Wk5OMEdSWThiZURs?=
+=3D
+ =3D?utf-8?B?c1hpVFo3bG5uS0xXZHZKM0I1WHFGTjhRLzk2MFpPTnE5cCtFcTZmNGczTFdO?=
+=3D
+ =3D?utf-8?B?WGRlRlY0SzA2czRlMjVqWFB3c0NHakJjVncybW5BZGpOby8rUFdTZVZzSXFl?=
+=3D
+ =3D?utf-8?B?b21NQ1hoMnNyajM1NE1MZk1pdE5DaC9wTTRMbHJDZUVreWhndXFMY3p4UTZF?=
+=3D
+ =3D?utf-8?B?MmwwaU9tTlh5cVEyNitSNTBOMjhvRzU1Q3I1eHZ4bDByZG44RWJFK2RCWi9O?=
+=3D
+ =3D?utf-8?B?U0VCOXk2bkxXaFloNzVaaFJHekdOemJmeVlQTXJSV1g4L1I5WnZUOFQxU2Ez?=
+=3D
+ =3D?utf-8?B?T2xFOHVGNmxYQ0dZemMzUGxIYmE0QStoQ1BJa1RkSXFkeDF2a1ZhRFpkVWxy?=
+=3D
+ =3D?utf-8?B?NWh1bUZuenM0ZW1BSEVZcmFIbDhzZ0ZRdmExTGRiWkQ1V0UvOUVZRjVFdGYx?=
+=3D
+ =3D?utf-8?B?UzRSVWE0Z0orV3FTN2k0OU1pMzVieHhsZDgwanpjK0ZmL0pIbTVkOWFXTE9T?=
+=3D
+ =3D?utf-8?B?T0xBVWgyNkR0dzNQbEorS25BeVJyQnNaV2pqaXdUZUFzeCtscEd4ZWxBSExI?=
+=3D
+ =3D?utf-8?B?SHRwSERDQXdUZnNtejVhOFZ1MUVya1U1c3A1WWt0RkVMU3duUWR3T0VJVXBj?=
+=3D
+ =3D?utf-8?B?OGxFSVNYNFk3N3JlMkxET0sxa0w5Rkp6SnNyS0RBNVJhM2lDakdZaE9UbmpW?=
+=3D
+ =3D?utf-8?B?bFozdE5rV0pxblNnV1A1Y3JrbUs0Y29VZGtKMU9LN1JqUzFJa0tuSmdRcGxa?=
+=3D
+ =3D?utf-8?B?bHVQK09PRTVoNFd4NlZKQXVSSDByc01xZkJGekpnTEFFdEhDaDlkVUNTUkR4?=
+=3D
+ =3D?utf-8?B?Z3FnWVdZUWtVSWZXQlc5cXU3aWdRKzI0MWtJTzQ5U0lTK3NDeWpob0lCSlgz?=
+=3D
+ =3D?utf-8?B?T0VVUmFhZWZhQ2w4RU9kdytlUUxQUjdFRGRJcVdaNktydUw3MkZJVWZwWjNt?=
+=3D
+ =3D?utf-8?B?b01MeHhweU1Cem9DQzYwY3BlMzhzeFVHQWZNdEh0REVqTFdTU3BWTE5vYTN2?=
+=3D
+ =3D?utf-8?B?MTlGZlhURFA1eGJlOE5lWHdKTmd0Y1MvMm9EZzlEZ1UzNjZnblZjeG12RUhu?=
+=3D
+ =3D?utf-8?B?N2IxQVRVU0srcHU1aW80ZWVHaHQ5eno4WjBwVTM2dGRCUGFkdkNCbUN6RWJH?=
+=3D
+ =3D?utf-8?B?R29tRzQxZS8wYmc4c3JsTWhHN2RzWnRYd0RhWFQrdzZ5R2ZpbGZpZFBCeFJS?=
+=3D
+ =3D?utf-8?B?MGFac2FWTWw3WlRFV2xBVHRncktRcGd0VUVlQjl5eUZYb0FiN1EybUJXV2Zl?=
+=3D
+ =3D?utf-8?B?T0VTalQzK3YyQk4xS3YxYjhWY2l1aTR0ZEdnMGEwa2oydTA0cFl4eGdNL3Fv?=
+=3D
+ =3D?utf-8?B?dElJY0phT1p4NXgvNHNSL3pIYURjWmhYM25FZFdNSGdyem01TTg5dlBRSUJC?=
+=3D
+ =3D?utf-8?B?ZEdiRDZSSXFGeEM5THNjSHI3YjZuY01lOEtrN1hXV2NYdjZrZ3ljRFlvbWY3?=
+=3D
+ =3D?utf-8?B?TEdETzZaQnBRbzJESGphZVlkUW1hOGdwNC9mOEVkS25MRkFTQTdmZkFhYlMx?=
+=3D
+ =3D?utf-8?B?c0lZNnZJekUzV3dBVjYrb2JJQ04vSHViYTlleXQ3dUtjb2owck9IV09qY0NR?=
+=3D
+ =3D?utf-8?B?ZmE4c1p5QXRuSTVkS1BnSkE1ZWsxQU5WQWcvTEQ2ZytITzhCc0ZoWlFxa3E2?=
+=3D
+ =3D?utf-8?Q?lVaKHg//bTACdFX/gs0EcPv?=3D
+X-Forefront-Antispam-Report: CIP:182.239.55.22;CTRY:HK;LANG:en;SCL:1;SRV:;I=
+PV:NLI;SFV:NSPM;H:clouds5.skyey-tech.com;PTR:clouds5.skyey-tech.com;CAT:NON=
+E;SFS:(13230040);DIR:INB;
+X-MS-Exchange-ATPSafeLinks-Stat: 0
+X-MS-Exchange-ATPSafeLinks-BitVector: 0:0x0|0x0|0x0|0x0|0x0|0x0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Dec 2024 15:23:14.9095
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cec27740-fcbc-4288-0d02-08dd2=
+9af0bbf
+X-MS-Exchange-CrossTenant-Id: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0
+X-MS-Exchange-CrossTenant-AuthSource: HK3PEPF0000021D.apcprd03.prod.outlook=
+.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3P286MB3662
+X-OrganizationHeadersPreserved: TY3P286MB3662.JPNP286.PROD.OUTLOOK.COM
+X-CrossPremisesHeadersPromoted: exch10ed2.hktdc.org
+X-CrossPremisesHeadersFiltered: exch10ed2.hktdc.org
+X-OriginatorOrg: hktdc.onmicrosoft.com
+</pre>
+</font>
+</body>
+</html>=
+
+--e126f09c-bea5-44e7-a90c-787e300a6073--
+
+--193131f9-7887-4bef-aa9f-6ac977361130
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns;hktdc.org
+Received-From-MTA: dns;OS0P286CU010.outbound.protection.outlook.com
+Arrival-Date: Tue, 31 Dec 2024 15:23:17 +0000
+
+Final-Recipient: rfc822;postmaster@hktdc.org
+Action: failed
+Status: 5.2.2
+Diagnostic-Code: smtp;554 5.2.2 mailbox full; STOREDRV.Deliver.Exception:QuotaExceededException.MapiExceptionShutoffQuotaExceeded; Failed to process message due to a permanent exception with message Cannot get ID from name. 16.55847:C80C0000, 17.43559:000000008C000000000000000000000000000000, 20.52176:010FCB892C000011B0000000, 20.50032:010FCB899C17000000000000, 0.35180:00000000, 255.23226:51010000, 255.27962:56000000, 255.17082:B9040000, 0.16993:DD040000, 4.21921:B9040000, 255.31418:DD040000, 0.22753:FA000000, 255.21817:B9040000, 0.37224:00000000, 4.40808:DD040000, 0.24529:352D3462, 4.18385:DD040000, 0.36864:38343566, 4.37120:DD040000 [Stage: CreateMessage]
+Remote-MTA: dns;EXCH16MS2.hktdc.org
+
+
+--193131f9-7887-4bef-aa9f-6ac977361130
+Content-Type: message/rfc822
+
+Received: from exch10ed2.hktdc.org (10.50.32.57) by EXCH16MS2.hktdc.org
+ (10.50.8.185) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2507.44; Tue, 31 Dec
+ 2024 23:23:17 +0800
+Received: from OS0P286CU010.outbound.protection.outlook.com (10.50.33.5) by
+ exch10ed2.hktdc.org (10.50.32.57) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.48 via Frontend Transport; Tue, 31 Dec 2024 23:23:17 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dOWjYQAitqJ3BM4FXb4hcdwscKrJavkSl1xr18wy5+/p9cQGToXrAzsrrk7uy8/kfogvO5WpnXNrHhle7eMsmadd0+dVb4nMEFpoWnytIbDSWiXvbvLq5eF1RD7HkzxTl2JQOM36d+qNzDFSuDXxkQIBG1uMl0NNwqItP2cE5jv9ZPmPJsyY8H2kht6ypa8NnUlUCwaiALFwyUQ/qea9eMokvMpqW5+wXM6dbh/toCX5WLdbANmK09gP9kSmkna4Mwe5kyaADWHlbBogfHfjwTwdlm1ud6Ma6m6gWB09EA4UQqoB6/xECuPYTwcA9jlycpMZPz2YGjZTa4mIPWAFVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Wjk2mC+VzikmoVKxq9XodFXJRMg877cE4j5NYJKCjY8=;
+ b=MHilP4mnZxLi23RDeNhVK+Ia5gXUFxP2c0RiWB4ZHSDv7KiMUluZwqyFgZAg8tCWwz7FwBWOzKI/AECNjnoGAnFtgENL4vkieyLeaesEH6y2xNjlfibBeDBO4PFtUahKuxMD2uKYaEzQab9LXajKiErR3aCDFmdtfdcZIamxk7ygds3iqy/g+f37kQmLgEsMwcBR/J/RTaGJpJ1EWi98GVMCBEu48bOZH9JEvSSUHYp44ApC0qLMNaBP/cTuHMMKHN1OLZAAEwZM+Jp3C89ZD7X8A4A49nDnAgS3O5NJAPv2A1mnFozYjfwVwlDYVqFloQFZ5ClKMb4I7HVOcRhFUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 182.239.55.22) smtp.rcpttodomain=hktdc.org smtp.mailfrom=iwra.hk;
+ dmarc=bestguesspass action=none header.from=iwra.hk; dkim=pass (signature was
+ verified) header.d=iwra.hk; arc=none (0)
+Received: from KL1PR01CA0056.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:5::20) by TY3P286MB3662.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:3d7::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8293.20; Tue, 31 Dec
+ 2024 15:23:16 +0000
+Received: from HK3PEPF0000021D.apcprd03.prod.outlook.com
+ (2603:1096:820:5:cafe::9b) by KL1PR01CA0056.outlook.office365.com
+ (2603:1096:820:5::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8293.16 via Frontend Transport; Tue,
+ 31 Dec 2024 15:23:17 +0000
+Authentication-Results: spf=pass (sender IP is 182.239.55.22)
+ smtp.mailfrom=iwra.hk; dkim=pass (signature was verified)
+ header.d=iwra.hk;dmarc=bestguesspass action=none
+ header.from=iwra.hk;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of iwra.hk designates
+ 182.239.55.22 as permitted sender) receiver=protection.outlook.com;
+ client-ip=182.239.55.22; helo=clouds5.skyey-tech.com; pr=C
+Received: from clouds5.skyey-tech.com (182.239.55.22) by
+ HK3PEPF0000021D.mail.protection.outlook.com (10.167.8.39) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8314.11 via Frontend Transport; Tue, 31 Dec 2024 15:23:14 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iwra.hk;
+	s=default; h=Content-Transfer-Encoding:Content-Type:Mime-Version:To:Subject:
+	Message-Id:From:Date:Sender:Reply-To:Cc:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=Wjk2mC+VzikmoVKxq9XodFXJRMg877cE4j5NYJKCjY8=; b=bYxojxfmTeTqBKiD2dQVkyVnq8
+	BBSH5fDTGQgE5TPCz1n82Hzeue+zMLxvPnggrgJTcXvPSYl94MafDuQ+k0t8+dMNUlHKqk22MvX2I
+	dJYsyPNYvKZqyVr1dFvq5eDcUhhvC7bizwrUAGnGPNRFwe6RkJXtV4tl49pv/nxn9ynAKmxU4Jh1N
+	lUeTnsaTVzj74PFALYeX3/LxxQhmvlWxYm3wuci28cqY/9pVhcszlVc7VBW7O68Y7CUn4zp/lgKvC
+	Ul8lqiHnPjBS/ggYslVGzbMeBA5LCzx5I3h5OuSV0fVCzY41T9ajFIQqlG7nJ3n9fnuMxE+F5296Z
+	mxgjJt4w==;
+Received: from iwra by clouds5.skyey-tech.com with local (Exim 4.96.2)
+	(envelope-from <maurice.wong@iwra.hk>)
+	id 1tSe5R-0001Ox-2Y
+	for postmaster@hktdc.org;
+	Tue, 31 Dec 2024 23:23:14 +0800
+Date: Tue, 31 Dec 2024 15:23:13 +0000
+From: Maurice Wong <maurice.wong@iwra.hk>
+Message-ID: <1735658593.lEY33LDamiXdFYUj@clouds5.skyey-tech.com>
+Precedence: auto_reply
+Subject: Reply to your email will be done within 24 hrs
+To: <postmaster@hktdc.org>
+X-Autorespond: Undeliverable: Reply to your email will be done within 24 hrs
+X-Loop: postmaster@hktdc.org
+X-Precedence: auto_reply
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - clouds5.skyey-tech.com
+X-AntiAbuse: Original Domain - hktdc.org
+X-AntiAbuse: Originator/Caller UID/GID - [1028 993] / [47 12]
+X-AntiAbuse: Sender Address Domain - iwra.hk
+X-Get-Message-Sender-Via: clouds5.skyey-tech.com: authenticated_id: iwra/from_h
+X-Authenticated-Sender: clouds5.skyey-tech.com: maurice.wong@iwra.hk
+X-Source: /usr/local/cpanel/bin/autorespond
+X-Source-Args: /usr/local/cpanel/bin/autorespond maurice.wong@iwra.hk /home/iwra/.autorespond 
+X-Source-Dir: /home/iwra
+Return-Path: maurice.wong@iwra.hk
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0:0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: HK3PEPF0000021D:EE_|TY3P286MB3662:EE_
+X-MS-Office365-Filtering-Correlation-Id: cec27740-fcbc-4288-0d02-08dd29af0bbf
+X-LD-Processed: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0,ExtAddr
+X-MS-Exchange-AtpMessageProperties: SA|SL
+X-Microsoft-Antispam: BCL:0;ARA:13230040;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cUFvblZYTzN3MVBldXhNVk94UTZuZU13U3BIRjVYYnpVZlNwcnVBMmhHMDhC?=
+ =?utf-8?B?MjNwRSt5cFJ3ZkJnUnBhZ253MzJUTFM5OEp6czBJcGdsS2JYNms3SS9MVldF?=
+ =?utf-8?B?UUY3Rm5OSUxmMkV2M0J0WjIrOWtKL3JiSmFHaHBpRmszQmh6Um9TTHhMMHZv?=
+ =?utf-8?B?Y0wxSmRnYVIxZlVyNkNWMDFKZGo0a2FxNFJYME9jTExKNDBvWU1jWG5OYXV1?=
+ =?utf-8?B?THptcnBBVGhjMnVkYUJsU3E2U0VCVkh1MWp2dDB6TVphK1BXdk5ZVnhXbHBW?=
+ =?utf-8?B?QmZqM0FCQ3lIN2EwcE1wVkdrZGZaemdUWnNNckpNVitzVVI3d28xaTNKb0FE?=
+ =?utf-8?B?YkVxS2gxRmpVbWR2MWJnK3Q0WjZiTCtUUWRzTnBSWU9LbmZwSmdCQXZkSkw1?=
+ =?utf-8?B?VHQwZUcyalpTRGtZWGI5STQxdHRuSUw2ZzVuOUx5bWlLQXdiZTFnYWt1TW9O?=
+ =?utf-8?B?N21lQ2dlTkZiaDU5QjBxbGpUNVdNbmJGbjFXSExMOER5eG45MCt3VWl3ekNn?=
+ =?utf-8?B?RG82cEJ5ZFE3bUtodUprS2JycW1UVFRCcTJZQW9BWEdGRFpDdnpnRXdFVi9Y?=
+ =?utf-8?B?MnhNRUhtOTNEeWJ6TUw1ZjRuWXJESG9HTnlWMFQyU25IRHV4c2YxZHhzZmM3?=
+ =?utf-8?B?a3pRSXQzcXFXeGFzK3NNVDZVRW5yZDgyOC9BUEZSWlRZZktESFBCSVA4TldL?=
+ =?utf-8?B?R1BwcWJjbWtkVEdHdWFTd29KK3ZmL1lIaGlRaWt5NDRFc0lDOHdUVkp4RGlL?=
+ =?utf-8?B?YUR4WGQvSjd6ajFlV1QveXNIaklEWmZKcTZvTWRMUlZ6SldrVFpBMnNvbWRh?=
+ =?utf-8?B?aXZpcXNlUStBTUhrd1lDKzRrT3ptTXh6SCtUSlRqakYxS1k0YUVUek83RjNP?=
+ =?utf-8?B?MjhKUDI0VVFIU1hobW1jUmFHZnZHaC8zUEdGVTVKRE1qKzhXSEtzaXJpN3M0?=
+ =?utf-8?B?TmtoNnZmZTU2RkZvNUdkb28zWmlSamc5aFZDOUs2ZnZVSUlXLzZWUkd3dVps?=
+ =?utf-8?B?RlB3WURUUTkvclZoQWQrUG1WZjMrY1NYMFVoUkVVWWZ4MktZSVZqdzlxUlFq?=
+ =?utf-8?B?bndlQWFHaE5jQk0zQkdKSDhhWkM0L2xIZGMveUEvclF0Wk5OMEdSWThiZURs?=
+ =?utf-8?B?c1hpVFo3bG5uS0xXZHZKM0I1WHFGTjhRLzk2MFpPTnE5cCtFcTZmNGczTFdO?=
+ =?utf-8?B?WGRlRlY0SzA2czRlMjVqWFB3c0NHakJjVncybW5BZGpOby8rUFdTZVZzSXFl?=
+ =?utf-8?B?b21NQ1hoMnNyajM1NE1MZk1pdE5DaC9wTTRMbHJDZUVreWhndXFMY3p4UTZF?=
+ =?utf-8?B?MmwwaU9tTlh5cVEyNitSNTBOMjhvRzU1Q3I1eHZ4bDByZG44RWJFK2RCWi9O?=
+ =?utf-8?B?U0VCOXk2bkxXaFloNzVaaFJHekdOemJmeVlQTXJSV1g4L1I5WnZUOFQxU2Ez?=
+ =?utf-8?B?T2xFOHVGNmxYQ0dZemMzUGxIYmE0QStoQ1BJa1RkSXFkeDF2a1ZhRFpkVWxy?=
+ =?utf-8?B?NWh1bUZuenM0ZW1BSEVZcmFIbDhzZ0ZRdmExTGRiWkQ1V0UvOUVZRjVFdGYx?=
+ =?utf-8?B?UzRSVWE0Z0orV3FTN2k0OU1pMzVieHhsZDgwanpjK0ZmL0pIbTVkOWFXTE9T?=
+ =?utf-8?B?T0xBVWgyNkR0dzNQbEorS25BeVJyQnNaV2pqaXdUZUFzeCtscEd4ZWxBSExI?=
+ =?utf-8?B?SHRwSERDQXdUZnNtejVhOFZ1MUVya1U1c3A1WWt0RkVMU3duUWR3T0VJVXBj?=
+ =?utf-8?B?OGxFSVNYNFk3N3JlMkxET0sxa0w5Rkp6SnNyS0RBNVJhM2lDakdZaE9UbmpW?=
+ =?utf-8?B?bFozdE5rV0pxblNnV1A1Y3JrbUs0Y29VZGtKMU9LN1JqUzFJa0tuSmdRcGxa?=
+ =?utf-8?B?bHVQK09PRTVoNFd4NlZKQXVSSDByc01xZkJGekpnTEFFdEhDaDlkVUNTUkR4?=
+ =?utf-8?B?Z3FnWVdZUWtVSWZXQlc5cXU3aWdRKzI0MWtJTzQ5U0lTK3NDeWpob0lCSlgz?=
+ =?utf-8?B?T0VVUmFhZWZhQ2w4RU9kdytlUUxQUjdFRGRJcVdaNktydUw3MkZJVWZwWjNt?=
+ =?utf-8?B?b01MeHhweU1Cem9DQzYwY3BlMzhzeFVHQWZNdEh0REVqTFdTU3BWTE5vYTN2?=
+ =?utf-8?B?MTlGZlhURFA1eGJlOE5lWHdKTmd0Y1MvMm9EZzlEZ1UzNjZnblZjeG12RUhu?=
+ =?utf-8?B?N2IxQVRVU0srcHU1aW80ZWVHaHQ5eno4WjBwVTM2dGRCUGFkdkNCbUN6RWJH?=
+ =?utf-8?B?R29tRzQxZS8wYmc4c3JsTWhHN2RzWnRYd0RhWFQrdzZ5R2ZpbGZpZFBCeFJS?=
+ =?utf-8?B?MGFac2FWTWw3WlRFV2xBVHRncktRcGd0VUVlQjl5eUZYb0FiN1EybUJXV2Zl?=
+ =?utf-8?B?T0VTalQzK3YyQk4xS3YxYjhWY2l1aTR0ZEdnMGEwa2oydTA0cFl4eGdNL3Fv?=
+ =?utf-8?B?dElJY0phT1p4NXgvNHNSL3pIYURjWmhYM25FZFdNSGdyem01TTg5dlBRSUJC?=
+ =?utf-8?B?ZEdiRDZSSXFGeEM5THNjSHI3YjZuY01lOEtrN1hXV2NYdjZrZ3ljRFlvbWY3?=
+ =?utf-8?B?TEdETzZaQnBRbzJESGphZVlkUW1hOGdwNC9mOEVkS25MRkFTQTdmZkFhYlMx?=
+ =?utf-8?B?c0lZNnZJekUzV3dBVjYrb2JJQ04vSHViYTlleXQ3dUtjb2owck9IV09qY0NR?=
+ =?utf-8?B?ZmE4c1p5QXRuSTVkS1BnSkE1ZWsxQU5WQWcvTEQ2ZytITzhCc0ZoWlFxa3E2?=
+ =?utf-8?Q?lVaKHg//bTACdFX/gs0EcPv?=
+X-Forefront-Antispam-Report: CIP:182.239.55.22;CTRY:HK;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:clouds5.skyey-tech.com;PTR:clouds5.skyey-tech.com;CAT:NONE;SFS:(13230040);DIR:INB;
+X-MS-Exchange-ATPSafeLinks-Stat: 0
+X-MS-Exchange-ATPSafeLinks-BitVector: 0:0x0|0x0|0x0|0x0|0x0|0x0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Dec 2024 15:23:14.9095
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cec27740-fcbc-4288-0d02-08dd29af0bbf
+X-MS-Exchange-CrossTenant-Id: de180f95-eee8-42a4-9cab-dc2dd6ce3ed0
+X-MS-Exchange-CrossTenant-AuthSource: HK3PEPF0000021D.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3P286MB3662
+X-OrganizationHeadersPreserved: TY3P286MB3662.JPNP286.PROD.OUTLOOK.COM
+X-CrossPremisesHeadersPromoted: exch10ed2.hktdc.org
+X-CrossPremisesHeadersFiltered: exch10ed2.hktdc.org
+X-OriginatorOrg: hktdc.onmicrosoft.com
+
+Hi, =0D
+=0D
+Thank you for your email, I shall reply to you soonest.=0D
+
+--193131f9-7887-4bef-aa9f-6ac977361130--

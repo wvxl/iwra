@@ -1,0 +1,2061 @@
+Return-Path: <edmund@etengineering.hk>
+Delivered-To: angus.lee@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id qMuCGI8bD2eiGgAA07NIEQ
+	(envelope-from <edmund@etengineering.hk>)
+	for <angus.lee@iwra.hk>; Wed, 16 Oct 2024 09:49:03 +0800
+Return-path: <edmund@etengineering.hk>
+Envelope-to: angus.lee@iwra.hk
+Delivery-date: Wed, 16 Oct 2024 09:49:03 +0800
+Received: from mail-lf1-f48.google.com ([209.85.167.48]:43420)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <edmund@etengineering.hk>)
+	id 1t0t9n-0001mv-09
+	for angus.lee@iwra.hk;
+	Wed, 16 Oct 2024 09:49:03 +0800
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539e8586b53so356676e87.1
+        for <angus.lee@iwra.hk>; Tue, 15 Oct 2024 18:48:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etengineering-hk.20230601.gappssmtp.com; s=20230601; t=1729043334; x=1729648134; darn=iwra.hk;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+Ejytzbdr3AswYbhwGAHBVgUwbcc02tMpgsM251FA6I=;
+        b=zvanxMWeNQ1HmvlgcgXSmcHoHd1J5PuCjwt0DNkSjvXdJotbtz7m22phlpHwX3Keee
+         DRuevO8ogWFzjyLKP5erlTq4OajaGSpYmMV+K+FmC1IQDRutdSdWuEAKTyoWCJ6EDTmJ
+         MygiIZJEOx9ktvigYuk+7G5PbrPJb3nZUTAr5rCMmD8dWwc0yma79TGWjNIMOyfBtYfh
+         Jo6i4pKHu0sIOskE2iuCGsjSKprcMfDqWDglKDuebImw7nTc+jqfgf8LOmSFxFt8IgQG
+         lyzQKXkzGW+/1xxa6Un3Ub6ACotI6GQnJdqSWpJ2XYK7C1q9bxRaaraQuvAI5HHAL0Ei
+         KATQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729043334; x=1729648134;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Ejytzbdr3AswYbhwGAHBVgUwbcc02tMpgsM251FA6I=;
+        b=ODnXbG+MIy79tDm0pJiOtxKGqsLxNj/5mNsZKyP0ryMaqzbjx+Ko5x7u79aFe8w104
+         7xTmyZeiOGWRiCQHVO220kxLe0AK/DTW/ViYnquMsQRa0478/94QSF2cD/GI1UZl8N3r
+         ARv7+envYFnMv7N9tUMdZdZTXrIB/u6uPWK3avHeSPrNwJnVEBkpW9c7ob6w8hHEDtfl
+         bKENyKW5qjbTRUqBB1d/LYFBb6vnKseG+IDWgpZ+1OXGhO83ZsGyS2wu2KEzYIeEGA7D
+         ueGCjG0wwrhDVycpHf28BPurg5RhNzCPjjcchTXrolr4RzenlMhwSVD9pX46nS2W1HUR
+         82WA==
+X-Forwarded-Encrypted: i=1; AJvYcCWOkqVLkm9vn/8djWICuDCoAorX1ZvyfrdkiQ/ezoUlxX+HUaE1CmlsIS70WigG0D6/X/beOc63PR0=@iwra.hk
+X-Gm-Message-State: AOJu0Yxe9gulR1sHH8P1AX1C6NSuxzzUUds7NjHps/uBljx/FKJIVi3+
+	CoQJcdbPtW6FC/5m39/0KwtQCkNEsfZN9rYfS7dErLS92aPoweP5n1uvVUH9RtqPQ768Tkwpsfd
+	1y4MwXx0wYaXyMBe8jCF/xT+92lxs0rgq5l6+AmFsp+YH4hVP
+X-Google-Smtp-Source: AGHT+IETlKpeeXWojs9w8L5IlWHY54l51GO9c16q8b65wrLn1qj6XVs2OoTUg+JeFwbnmRyBUWBIleGkEDz6d4pAt/I=
+X-Received: by 2002:a05:6512:304e:b0:53a:1d:e3bc with SMTP id
+ 2adb3069b0e04-53a03cced4fmr816259e87.26.1729043333318; Tue, 15 Oct 2024
+ 18:48:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <20241010203413.6707c9c5b98a62072a5d1a3b.dpc@bounce.hktdc.com>
+In-Reply-To: <20241010203413.6707c9c5b98a62072a5d1a3b.dpc@bounce.hktdc.com>
+From: Edmund Tong <edmund@etengineering.hk>
+Date: Wed, 16 Oct 2024 09:48:41 +0800
+Message-ID: <CALg4RSw=7u19Yrb4FMdZ_sEAtd1=Kr620STVCRg8HarL6JfPnA@mail.gmail.com>
+Subject: =?UTF-8?Q?Fwd=3A_=E2=99=BB=F0=9F=8C=B3_Customer=2C_REGISTER_Eco_Expo_Asia_now?=
+To: maurice.wong@iwra.hk, angus.lee@iwra.hk
+Content-Type: multipart/alternative; boundary="000000000000af37d206248e4587"
+X-Spam-Status: No, score=-0.2
+X-Spam-Score: -1
+X-Spam-Bar: /
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  fyi, I will be in China until 1 Nov and will not be available
+    on 2 Nov. Will you visit and check? Edmund Forwarded message --------- From:
+    HKTDC Exhibition <hktdc-exhibition@hktdc.com> Date: Thu, Oct 10, 2024 at
+   8:34 PM Subject: ♻🌳 Customer, REGISTER Eco Expo Asia now To: <edmund@etengi
+    [...] 
+ Content analysis details:   (-0.2 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [209.85.167.48 listed in bl.score.senderscore.com]
+ -0.0 RCVD_IN_DNSWL_NONE     RBL: Sender listed at https://www.dnswl.org/,
+                              no trust
+                             [209.85.167.48 listed in list.dnswl.org]
+  0.0 RCVD_IN_VALIDITY_SAFE_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                          [209.85.167.48 listed in sa-trusted.bondedsender.org]
+ -1.2 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [209.85.167.48 listed in wl.mailspike.net]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.0 HTML_IMAGE_RATIO_02    BODY: HTML has a low ratio of text to image
+                             area
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+  0.8 CPANEL_LOTS_OF_EMPTY_LINE RAW: Spam that has large block of
+                             empty lines
+  0.2 KAM_LOTSOFHASH         Emails with lots of hash-like gibberish
+X-Spam-Flag: NO
+
+--000000000000af37d206248e4587
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+fyi, I will be in China until 1 Nov and will not be available on 2 Nov.
+Will you visit and check?
+
+Edmund
+
+---------- Forwarded message ---------
+From: HKTDC Exhibition <hktdc-exhibition@hktdc.com>
+Date: Thu, Oct 10, 2024 at 8:34=E2=80=AFPM
+Subject: =E2=99=BB=F0=9F=8C=B3 Customer, REGISTER Eco Expo Asia now
+To: <edmund@etengineering.hk>
+
+
+Stay ahead with eco-friendly and green product solutions
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D4c18f8c9>
+
+View this online
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Df85accaf>
+[image: HKTDC.com]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Df4469310>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1177a0cb>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5706619e>
+
+Explore limitless opportunities at *Eco Expo Asia*
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Df46905fc>.
+Engage with a diverse range of exhibitors and eco-friendly products.
+*Register*
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Da51e59de>
+today to arrange face-to-face and virtual meetings with suppliers via
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dc31752ec>.
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D937e2e22>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5caaeb86>
+
+Portable solar panel
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D729cb831>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D6a7c46aa>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1d73e2d4>
+
+Food waste smart collection bin
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dc57eec5b>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D0c38c2d0>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Df284e758>
+
+Compostable straw
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1b8d43a0>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D0dbe4ff2>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3De54c8aeb>
+
+Air purifier
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D3ab3eac7>
+
+
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Ded2c26b4>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D902ee0aa>
+
+Compostable shopping bag
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5da6fc57>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D87f5d39a>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Db4d5366b>
+
+Wood plastic composite products
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D3088c15a>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dbdd77477>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dcf6f4a3b>
+
+Multipurpose base paint
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D0172089c>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D16548c02>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Da4157345>
+
+RPET coffee mug
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D8f85e5d1>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D7273d2ac>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3De4d9d2bc>
+
+Solar garden light
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D34328dd1>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1d3387fe>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D37fc47f7>
+
+Outdoor utensil set
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5fb00b7c>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D9461ca66>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D377840f7>
+
+Smart air purifier
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dabd3aa1b>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D626e3e78>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3De645418d>
+
+Solar street light
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D23061710>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D619d8ea9>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D0bbad922>
+
+Biodegradable hairbrush
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D66a5e276>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Df65c4cf9>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5010176f>
+
+Air purifier
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D6e59c49a>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D30ae3406>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D2ea9086b>
+
+RPET shopping bag
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D689980d4>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D203766b2>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D78104c37>
+
+Outdoor solar light
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D340de983>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dac409db1>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D9ba9b4b7>
+
+RPET shopping bag
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D54209047>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D86cc1bfc>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D4d0614b3>
+
+Solar powered wall light
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Da9546539>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D0aa3c519>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Db0b6f15d>
+
+Car air purifier
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D09c58d96>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D2c8e6813>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dc6b415fb>
+
+Solar power system
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D96d4fa2f>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D36ffe7dc>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D8381e90b>
+
+RPET umbrella
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D22d45c7e>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D819da40b>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Da36b7687>
+
+Home air purifier
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3De1851cf1>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Db379b79d>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Da4ce7fcc>
+
+Biodegradable bottle
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D7507a393>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5ac890ca>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D084ba785>
+
+Recycled felt pet house
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dc2462e13>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dc9687454>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D17c594db>
+
+Solar charger
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D7c1f5059>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dc2e17760>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D382ac7c1>
+
+Recycled glass jar
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dfb353ab9>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1832f072>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Ddccc1b69>
+
+Recyclable pen
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3De678e2d4>
+
+
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dcc675cc9>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D4477421c>
+
+Vertical axis wind turbine
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Ddeb152ce>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dd70586cc>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Db5d3b451>
+
+Biodegradable stationery
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D034cca9c>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D2a6ef153>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Df483cb18>
+
+Portable air purifier
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D4e0f15bb>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Def5aa810>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D8ae77438>
+
+RPET running pocket
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D88f17191>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1190f7ab>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D3c50a2a9>
+
+Solar camping light
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Db8339d2b>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D516029ca>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D60078442>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dd9f95097>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Db857a765>
+
+Follow HKTDC:
+[image: Follow Us on Facebook]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D451c3add>
+[image:
+Follow Us on Linkedin]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dba684016>
+[image:
+Follow Us on Instagram]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D7a069425>
+[image:
+Follow Us on Twitter]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1024a44c>
+[image:
+Follow Us on Youtube]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D456bdb7e>
+[image:
+Follow Us on Weibo]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D9695d4a3>
+[image:
+Follow Us on Youku]
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Db4831072>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5a58398f>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Daefbf5ae>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D5d06f71d>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Da5a2eb93>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D082c345a>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Df20416a7>
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D03915886>
+
+Terms of Use
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D1252e5e1>
+|
+Privacy Statement
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Dfe9270a5>
+
+You are receiving this email since your contact details are in HKTDC
+database. Please do not reply to this email, as the address is unattended.
+For enquiries or more information about this email, please contact
+sourcingsupport@hktdc.org
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3D44651423>
+
+To unsubscribe or manage your HKTDC e-subscription, please click here
+<https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b=
+&link=3Ddedea035>
+.
+
+--000000000000af37d206248e4587
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">fyi, I will be in China until 1 Nov and will not be availa=
+ble on 2 Nov. Will you visit and check?<div><br></div><div>Edmund<br><br><d=
+iv class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">---------- F=
+orwarded message ---------<br>From: <strong class=3D"gmail_sendername" dir=
+=3D"auto">HKTDC Exhibition</strong> <span dir=3D"auto">&lt;<a href=3D"mailt=
+o:hktdc-exhibition@hktdc.com">hktdc-exhibition@hktdc.com</a>&gt;</span><br>=
+Date: Thu, Oct 10, 2024 at 8:34=E2=80=AFPM<br>Subject: =E2=99=BB=F0=9F=8C=
+=B3 Customer, REGISTER Eco Expo Asia now<br>To:  &lt;<a href=3D"mailto:edmu=
+nd@etengineering.hk">edmund@etengineering.hk</a>&gt;<br></div><br><br><div =
+class=3D"msg5076744886097542317"><u></u>
+
+=20
+ =20
+ =20
+ =20
+ =20
+ =20
+ =20
+  =20
+  =20
+  =20
+  =20
+  =20
+ =20
+ =20
+ =20
+  =20
+  =20
+  =20
+ =20
+ <div bgcolor=3D"#dcdcdc" style=3D"font-family:verdana,sans-serif;font-size=
+:0px;margin:0;padding:0;background:#dcdcdc">=20
+  <table bgcolor=3D"#dcdcdc" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"m_5076744886097542317mainWrapper" style=3D"width:100%!important=
+;min-width:100%!important" width=3D"100%">=20
+   <tbody>=20
+    <tr>=20
+     <td align=3D"center" style=3D"padding-top:0px">
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr class=3D"m_5076744886097542317col">=20
+         <td align=3D"left" class=3D"m_5076744886097542317col" style=3D"pad=
+ding:5px 0px" valign=3D"top">=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0">=20
+           <tbody>=20
+            <tr>=20
+             <td style=3D"padding-left:5px"> <p style=3D"font-size:12px;lin=
+e-height:18px;font-family:Verdana,sans-serif;margin:0;color:#58595b"><a hre=
+f=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d=
+1a3b&amp;link=3D4c18f8c9" style=3D"color:#58595b" target=3D"_blank"><font c=
+olor=3D"#58595b">Stay ahead with eco-friendly and green product solutions</=
+font> </a></p> </td>=20
+            </tr>=20
+            <tr>=20
+             <td style=3D"padding:5px 0 0 5px"> <p style=3D"font-size:12px;=
+line-height:18px;font-family:Verdana,sans-serif;margin:0;color:#58595b"><a =
+href=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072=
+a5d1a3b&amp;link=3Df85accaf" style=3D"color:#58595b" target=3D"_blank"><fon=
+t color=3D"#58595b">View this online</font> </a></p> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table> </td>=20
+         <td align=3D"right" style=3D"padding:5px 5px;text-align:right;floa=
+t:right" valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/c=
+lick?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Df4469310" target=3D"_blank"><=
+img alt=3D"HKTDC.com" height=3D"49" src=3D"https://info.hktdc.com/edm/2024Q=
+4/CP2600457/images/HKTDC_Toprightlogo.png" width=3D"204"></a></td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+     =20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:0px" valign=3D"top"><a href=3D"https://protrac=
+ker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D1177=
+a0cb" target=3D"_blank"><img alt=3D"" class=3D"m_5076744886097542317default=
+Img" height=3D"68" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/image=
+s/banner_01.jpg" width=3D"600"></a></td>=20
+        </tr>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:0px" valign=3D"top"><a href=3D"https://protrac=
+ker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D5706=
+619e" target=3D"_blank"><img alt=3D"" class=3D"m_5076744886097542317default=
+Img" height=3D"112" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/imag=
+es/banner_02.jpg" width=3D"600"></a></td>=20
+        </tr>=20
+        <tr>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+     =20
+     =20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:10px 25px 0px 25px" valign=3D"top">=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%">=20
+           <tbody>=20
+            <tr>=20
+             <td style=3D"padding-bottom:20px">=20
+              <div style=3D"font-size:14px;line-height:30px;font-family:Ver=
+dana,sans-serif;margin:0;color:#000000">
+               Explore limitless opportunities at=20
+               <a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Df46905fc" style=3D"color:#5c9f38;tex=
+t-decoration:underline" target=3D"_blank"> <font style=3D"color:#5c9f38;tex=
+t-decoration:underline"><strong>Eco Expo Asia</strong></font></a>. Engage w=
+ith a diverse range of exhibitors and eco-friendly products.=20
+               <a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Da51e59de" style=3D"color:#5c9f38;tex=
+t-decoration:underline" target=3D"_blank"> <font style=3D"color:#5c9f38;tex=
+t-decoration:underline"><strong>Register</strong></font></a> today to arran=
+ge face-to-face and virtual meetings with suppliers via=20
+               <a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dc31752ec" target=3D"_blank"><img alt=
+=3D"" class=3D"m_5076744886097542317clicklogo" height=3D"25" src=3D"https:/=
+/info.hktdc.com/edm/2024Q4/CP2600457/images/Click2Matchlogo.png" width=3D"9=
+2"></a>.
+              </div>=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding-top:15px;padding-bot=
+tom:0px"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c=
+9c5b98a62072a5d1a3b&amp;link=3D937e2e22" target=3D"_blank"><img alt=3D"" he=
+ight=3D"60" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/butto=
+n-stat.png" width=3D"280"></a></td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          </td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:0px 30px 0px 30px" valign=3D"top">=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D5caaeb86" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic1.png" width=3D"135">=
+</a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D729cb831" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Portable solar panel</font> </a></p> <p style=3D"margin:0;font=
+-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold=
+;color:#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p>=
+ </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D6a7c46aa" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D1d73e2d4" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic2.png" width=3D"135">=
+</a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dc57eec5b" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Food waste smart collection bin</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D0c38c2d0" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Df284e758" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic3.png" width=3D"135">=
+</a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D1b8d43a0" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Compostable straw</font> </a></p> <p style=3D"margin:0;font-si=
+ze:13px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;co=
+lor:#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> </=
+td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D0dbe4ff2" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3De54c8aeb" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic4.png" width=3D"135">=
+</a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D3ab3eac7" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Air purifier</font> </a></p> <p style=3D"margin:0;font-size:13=
+px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;color:#=
+fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> <p styl=
+e=3D"margin:0;font-size:13px;line-height:16px;font-family:Verdana,sans-seri=
+f;font-weight:bold;color:#fb5004;text-align:center"><font color=3D"#131313"=
+>=C2=A0</font></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Ded2c26b4" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D902ee0aa" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic5.png" width=3D"135">=
+</a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D5da6fc57" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Compostable shopping bag</font> </a></p> <p style=3D"margin:0;=
+font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-weight:=
+bold;color:#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font>=
+</p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D87f5d39a" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Db4d5366b" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg1" height=3D"135" src=3D"=
+https://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic6.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D3088c15a" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Wood plastic composite products</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dbdd77477" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dcf6f4a3b" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg1" height=3D"135" src=3D"=
+https://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic7.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D0172089c" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Multipurpose base paint</font> </a></p> <p style=3D"margin:0;f=
+ont-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-weight:b=
+old;color:#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font><=
+/p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D16548c02" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Da4157345" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg1" height=3D"135" src=3D"=
+https://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic8.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D8f85e5d1" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">RPET coffee mug</font> </a></p> <p style=3D"margin:0;font-size=
+:13px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;colo=
+r:#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> </td=
+>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D7273d2ac" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3De4d9d2bc" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic9.png" width=3D"135">=
+</a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D34328dd1" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Solar garden light</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D1d3387fe" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D37fc47f7" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic10.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D5fb00b7c" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Outdoor utensil set</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D9461ca66" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D377840f7" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic11.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dabd3aa1b" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Smart air purifier</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D626e3e78" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3De645418d" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic12.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D23061710" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Solar street light</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D619d8ea9" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D0bbad922" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic13.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D66a5e276" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Biodegradable hairbrush</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Df65c4cf9" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D5010176f" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic14.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D6e59c49a" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Air purifier</font> </a></p> <p style=3D"margin:0;font-size:13=
+px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;color:#=
+fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> </td>=
+=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D30ae3406" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D2ea9086b" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic15.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D689980d4" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">RPET shopping bag</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D203766b2" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D78104c37" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic16.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D340de983" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Outdoor solar light</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dac409db1" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+m_5076744886097542317disnone" width=3D"100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D9ba9b4b7" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic17.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D54209047" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">RPET shopping bag</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D86cc1bfc" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D4d0614b3" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic18.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Da9546539" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Solar powered wall light</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D0aa3c519" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Db0b6f15d" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic19.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D09c58d96" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Car air purifier</font> </a></p> <p style=3D"margin:0;font-siz=
+e:13px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;col=
+or:#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> </t=
+d>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D2c8e6813" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dc6b415fb" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic20.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D96d4fa2f" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Solar power system</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D36ffe7dc" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+m_5076744886097542317disnone" width=3D"100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D8381e90b" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic21.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D22d45c7e" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">RPET umbrella</font> </a></p> <p style=3D"margin:0;font-size:1=
+3px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;color:=
+#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> </td>=
+=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D819da40b" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Da36b7687" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic22.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3De1851cf1" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Home air purifier</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Db379b79d" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Da4ce7fcc" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic23.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D7507a393" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Biodegradable bottle</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D5ac890ca" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D084ba785" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic24.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dc2462e13" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Recycled felt pet house</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dc9687454" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+m_5076744886097542317disnone" width=3D"100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D17c594db" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic25.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D7c1f5059" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Solar charger</font> </a></p> <p style=3D"margin:0;font-size:1=
+3px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;color:=
+#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> </td>=
+=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dc2e17760" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D382ac7c1" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic26.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dfb353ab9" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Recycled glass jar</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D1832f072" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Ddccc1b69" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic27.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3De678e2d4" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Recyclable pen</font> </a></p> <p style=3D"margin:0;font-size:=
+13px;line-height:16px;font-family:Verdana,sans-serif;font-weight:bold;color=
+:#fb5004;text-align:center"><font color=3D"#131313">=C2=A0</font></p> </td>=
+=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dcc675cc9" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D4477421c" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic28.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Ddeb152ce" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Vertical axis wind turbine</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Dd70586cc" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow01.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+m_5076744886097542317disnone" width=3D"100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Db5d3b451" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic29.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D034cca9c" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Biodegradable stationery</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D2a6ef153" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Df483cb18" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic30.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D4e0f15bb" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Portable air purifier</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3Def5aa810" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D8ae77438" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic31.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D88f17191" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">RPET running pocket</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D1190f7ab" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+             <td align=3D"center" class=3D"m_5076744886097542317fullWid m_5=
+076744886097542317col" valign=3D"top" width=3D"25%">=20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td><a href=3D"https://protracker.edm.hktdc.com/track/clic=
+k?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D3c50a2a9" target=3D"_blank"><img=
+ alt=3D"" class=3D"m_5076744886097542317defaultImg" height=3D"135" src=3D"h=
+ttps://info.hktdc.com/edm/2024Q4/CP2600457/images/bpic32.png" width=3D"135"=
+></a></td>=20
+                </tr>=20
+                <tr>=20
+                 <td style=3D"padding:2px 10px 10px 10px"> <p style=3D"marg=
+in:0;font-size:13px;line-height:16px;font-family:Verdana,sans-serif;font-we=
+ight:bold;color:#fb5004;text-align:center"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Db8339d2b" =
+style=3D"text-decoration:none;color:#131313" target=3D"_blank"><font color=
+=3D"#131313">Solar camping light</font> </a></p> </td>=20
+                </tr>=20
+                <tr>=20
+                 <td align=3D"center" style=3D"padding:0px 10px 20px 10px" =
+valign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=
+=3D6707c9c5b98a62072a5d1a3b&amp;link=3D516029ca" target=3D"_blank"><img cla=
+ss=3D"m_5076744886097542317defaultImg60" height=3D"30" src=3D"https://info.=
+hktdc.com/edm/2024Q4/CP2600457/images/enquirenow02.png" width=3D"105"></a><=
+/td>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" style=3D"padding:10px 20px 20px 20px" val=
+ign=3D"top"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=3D67=
+07c9c5b98a62072a5d1a3b&amp;link=3D60078442" style=3D"text-decoration:underl=
+ine;color:#131313" target=3D"_blank"><img alt=3D"" class=3D"m_5076744886097=
+542317defaultImg40" height=3D"41" src=3D"https://info.hktdc.com/edm/2024Q4/=
+CP2600457/images/showmore.png" width=3D"110"></a></td>=20
+            </tr>=20
+           </tbody>=20
+          </table>=20
+          </td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+     =20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:0px 30px 0px 30px" valign=3D"top">=20
+          <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" width=3D"100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" bgcolor=3D"#ffffff" valign=3D"top">
+              =20
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"m_5076744886097542317fullWid" width=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_50767448=
+86097542317fullWid" style=3D"padding:0" valign=3D"top"><a href=3D"https://p=
+rotracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=
+=3Dd9f95097" target=3D"_blank"><img alt=3D"" class=3D"m_5076744886097542317=
+defaultImg" height=3D"180" src=3D"https://info.hktdc.com/edm/2024Q4/CP26004=
+57/images/sourcingsupport.jpg" width=3D"540"> </a></td>=20
+                </tr>=20
+               </tbody>=20
+              </table>=20
+             =20
+              =20
+              <table align=3D"center" bgcolor=3D"#ffffff" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"m_5076744886097542317fullWid" widt=
+h=3D"540">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_50767448=
+86097542317fullWid" style=3D"padding:0px 10px 0px 10px" valign=3D"top"></td=
+>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table> </td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:15px 30px 15px 30px" valign=3D"top">=20
+          <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" width=3D"100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" bgcolor=3D"#ffffff" valign=3D"top">
+              =20
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"m_5076744886097542317fullWid" width=3D"100%">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_50767448=
+86097542317fullWid" style=3D"padding:0" valign=3D"top"><a href=3D"https://p=
+rotracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=
+=3Db857a765" target=3D"_blank"><img alt=3D"" class=3D"m_5076744886097542317=
+defaultImg" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/eplus=
+banner.png" width=3D"540"> </a></td>=20
+                </tr>=20
+               </tbody>=20
+              </table>=20
+             =20
+              =20
+              <table align=3D"center" bgcolor=3D"#ffffff" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"m_5076744886097542317fullWid" widt=
+h=3D"540">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_50767448=
+86097542317fullWid" style=3D"padding:0px 10px 0px 10px" valign=3D"top"></td=
+>=20
+                </tr>=20
+               </tbody>=20
+              </table> </td>=20
+            </tr>=20
+           </tbody>=20
+          </table> </td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+     =20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:15px 26px 10px 26px" valign=3D"top">=20
+          <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" width=3D"100%">=20
+           <tbody>=20
+            <tr>=20
+             <td align=3D"center" bgcolor=3D"#ffffff" style=3D"padding:0px =
+0px 0px 0px;border:4px #dcdcdc solid" valign=3D"top">
+              =20
+              <table align=3D"center" bgcolor=3D"#ffffff" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"m_5076744886097542317fullWid" widt=
+h=3D"540">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_50767448=
+86097542317col" style=3D"padding:15px 15px 0px 15px" valign=3D"middle">=20
+                  <table align=3D"left" bgcolor=3D"#ffffff" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0">=20
+                   <tbody>=20
+                    <tr>=20
+                     <td style=3D"padding:0 10px 6px 0" valign=3D"middle"> =
+<p style=3D"margin:0;font-size:18px;line-height:24px;font-family:Verdana,sa=
+ns-serif;color:#000000;font-weight:bold">Follow HKTDC:</p> </td>=20
+                    </tr>=20
+                   </tbody>=20
+                  </table>=20
+                  <table align=3D"left" bgcolor=3D"#ffffff" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0">=20
+                   <tbody>=20
+                    <tr>=20
+                     <td align=3D"left" valign=3D"middle" width=3D"40"><a h=
+ref=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a=
+5d1a3b&amp;link=3D451c3add" target=3D"_blank"><img alt=3D"Follow Us on Face=
+book" height=3D"22" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/imag=
+es/facebook.png" width=3D"22"></a></td>=20
+                     <td align=3D"left" valign=3D"middle" width=3D"40"><a h=
+ref=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a=
+5d1a3b&amp;link=3Dba684016" target=3D"_blank"><img alt=3D"Follow Us on Link=
+edin" height=3D"22" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/imag=
+es/in.png" width=3D"22"></a></td>=20
+                     <td align=3D"left" valign=3D"middle" width=3D"40"><a h=
+ref=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a=
+5d1a3b&amp;link=3D7a069425" target=3D"_blank"><img alt=3D"Follow Us on Inst=
+agram" height=3D"22" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/ima=
+ges/instagram.png" width=3D"22"></a></td>=20
+                     <td align=3D"left" valign=3D"middle" width=3D"40"><a h=
+ref=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a=
+5d1a3b&amp;link=3D1024a44c" target=3D"_blank"><img alt=3D"Follow Us on Twit=
+ter" height=3D"23" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/image=
+s/twitter.png" width=3D"23"></a></td>=20
+                     <td align=3D"left" valign=3D"middle" width=3D"40"><a h=
+ref=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a=
+5d1a3b&amp;link=3D456bdb7e" target=3D"_blank"><img alt=3D"Follow Us on Yout=
+ube" height=3D"25" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/image=
+s/youtube.png" width=3D"25"></a></td>=20
+                     <td align=3D"left" valign=3D"middle" width=3D"40"><a h=
+ref=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a=
+5d1a3b&amp;link=3D9695d4a3" target=3D"_blank"><img alt=3D"Follow Us on Weib=
+o" height=3D"25" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/=
+weibo.png" width=3D"25"></a></td>=20
+                     <td align=3D"left" valign=3D"middle" width=3D"40"><a h=
+ref=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a=
+5d1a3b&amp;link=3Db4831072" target=3D"_blank"><img alt=3D"Follow Us on Youk=
+u" height=3D"23" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/=
+youku.png" width=3D"23"></a></td>=20
+                    </tr>=20
+                   </tbody>=20
+                  </table> </td>=20
+                </tr>=20
+               </tbody>=20
+              </table>=20
+              =20
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"m_5076744886097542317fullWid" width=3D"540">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"left" bgcolor=3D"#ffffff" style=3D"padding:0p=
+x 12px 0px 12px" valign=3D"top">=20
+                  <table align=3D"left" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" width=3D"100%">=20
+                   <tbody>=20
+                    <tr>=20
+                     <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_5076=
+744886097542317col" style=3D"padding:10px 0px 0px 0px" valign=3D"top" width=
+=3D"228"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c=
+9c5b98a62072a5d1a3b&amp;link=3D5a58398f" target=3D"_blank"><img alt=3D"" sr=
+c=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/app_2.png" width=3D=
+"225"></a></td>=20
+                     <td class=3D"m_5076744886097542317col" style=3D"paddin=
+g:10px 0px 0px 0px">=20
+                      <table align=3D"left" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" class=3D"m_5076744886097542317fullWid">=20
+                       <tbody>=20
+                        <tr>=20
+                         <td align=3D"left" bgcolor=3D"#ffffff" style=3D"pa=
+dding:0px" valign=3D"middle" width=3D"128"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Daefbf5ae" =
+target=3D"_blank"><img alt=3D"" class=3D"m_5076744886097542317defaultImgApp=
+" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/apple.png" widt=
+h=3D"100"></a></td>=20
+                         <td align=3D"left" bgcolor=3D"#ffffff" style=3D"pa=
+dding:0px 0px 0px 0px" valign=3D"middle"><a href=3D"https://protracker.edm.=
+hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D5d06f71d" ta=
+rget=3D"_blank"><img alt=3D"" class=3D"m_5076744886097542317defaultImgApp" =
+src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/google.png" width=
+=3D"100"></a></td>=20
+                        </tr>=20
+                       </tbody>=20
+                      </table> </td>=20
+                     <td class=3D"m_5076744886097542317col" style=3D"paddin=
+g:0px 0px 0px 0px">=20
+                      <table align=3D"left" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" class=3D"m_5076744886097542317fullWid">=20
+                       <tbody>=20
+                        <tr>=20
+                         <td align=3D"left" bgcolor=3D"#ffffff" style=3D"pa=
+dding:0px" valign=3D"middle" width=3D"128"><img alt=3D"" class=3D"m_5076744=
+886097542317defaultImgspace" src=3D"https://info.hktdc.com/edm/2024Q4/CP260=
+0457/images/whitebtn.png" width=3D"83"></td>=20
+                        </tr>=20
+                       </tbody>=20
+                      </table> </td>=20
+                    </tr>=20
+                   </tbody>=20
+                  </table> </td>=20
+                </tr>=20
+               </tbody>=20
+              </table>=20
+              <table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"m_5076744886097542317fullWid" width=3D"540">=20
+               <tbody>=20
+                <tr>=20
+                 <td align=3D"center" bgcolor=3D"#ffffff" style=3D"padding:=
+0px 12px 10px 10px" valign=3D"top">=20
+                  <table align=3D"center" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" width=3D"100%">=20
+                   <tbody>=20
+                    <tr>=20
+                     <td class=3D"m_5076744886097542317col" style=3D"paddin=
+g:10px 0px 0px 0px">=20
+                      <table align=3D"left" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0">=20
+                       <tbody>=20
+                        <tr>=20
+                         <td align=3D"left" bgcolor=3D"#ffffff" style=3D"pa=
+dding:0px" valign=3D"middle" width=3D"128"><a href=3D"https://protracker.ed=
+m.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3Da5a2eb93" =
+target=3D"_blank"><img alt=3D"" class=3D"m_5076744886097542317defaultImgApp=
+" src=3D"https://info.hktdc.com/edm/2024Q4/CP2600457/images/huawei-final.pn=
+g" width=3D"118"></a></td>=20
+                         <td align=3D"left" bgcolor=3D"#ffffff" style=3D"pa=
+dding:0px" valign=3D"middle"><a href=3D"https://protracker.edm.hktdc.com/tr=
+ack/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D082c345a" target=3D"_bla=
+nk"><img alt=3D"" class=3D"m_5076744886097542317defaultImgApp" src=3D"https=
+://info.hktdc.com/edm/2024Q4/CP2600457/images/app_baidu_20230814.png" width=
+=3D"118"></a></td>=20
+                        </tr>=20
+                       </tbody>=20
+                      </table> </td>=20
+                     <td class=3D"m_5076744886097542317col" style=3D"paddin=
+g:10px 4px 0px 0px">=20
+                      <table align=3D"left" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0">=20
+                       <tbody>=20
+                        <tr>=20
+                         <td align=3D"left" bgcolor=3D"#ffffff" class=3D"m_=
+5076744886097542317col" style=3D"padding:0px" valign=3D"middle" width=3D"12=
+9"><a href=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98=
+a62072a5d1a3b&amp;link=3Df20416a7" target=3D"_blank"><img alt=3D"" class=3D=
+"m_5076744886097542317defaultImgApp" src=3D"https://info.hktdc.com/edm/2024=
+Q4/CP2600457/images/app_360_20230814.png" width=3D"118"></a></td>=20
+                         <td align=3D"left" bgcolor=3D"#ffffff" style=3D"pa=
+dding:0px" valign=3D"middle"><a href=3D"https://protracker.edm.hktdc.com/tr=
+ack/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D03915886" target=3D"_bla=
+nk"><img alt=3D"" class=3D"m_5076744886097542317defaultImgApp" src=3D"https=
+://info.hktdc.com/edm/2024Q4/CP2600457/images/app_apk.png" width=3D"118"></=
+a></td>=20
+                        </tr>=20
+                       </tbody>=20
+                      </table> </td>=20
+                    </tr>=20
+                   </tbody>=20
+                  </table> </td>=20
+                </tr>=20
+               </tbody>=20
+              </table>=20
+              </td>=20
+            </tr>=20
+           </tbody>=20
+          </table> </td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ffffff" style=3D"padding:0px 26px 1=
+0px 26px" valign=3D"top"> <p style=3D"margin:0;font-size:12px;line-height:1=
+8px;font-family:Verdana,sans-serif;color:#000000"><a href=3D"https://protra=
+cker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;link=3D125=
+2e5e1" style=3D"text-decoration:none;color:#000000" target=3D"_blank"><font=
+ color=3D"#000000">Terms of Use</font> </a>=C2=A0|=C2=A0 <a href=3D"https:/=
+/protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1a3b&amp;lin=
+k=3Dfe9270a5" style=3D"text-decoration:none;color:#000000" target=3D"_blank=
+"> <font color=3D"#000000">Privacy Statement</font> </a></p> </td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+      =20
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"m_5076744886097542317fullWid" width=3D"600">=20
+       <tbody>=20
+        <tr>=20
+         <td align=3D"left" bgcolor=3D"#ebebeb" class=3D"m_5076744886097542=
+317fullWid" style=3D"padding:20px 26px" valign=3D"top"> <p style=3D"margin:=
+0;font-size:11px;line-height:16px;font-family:Verdana,sans-serif;color:#000=
+000">You are receiving this email since your contact details are in HKTDC d=
+atabase. Please do not reply to this email, as the address is unattended. F=
+or enquiries or more information about this email, please contact <a href=
+=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b98a62072a5d1=
+a3b&amp;link=3D44651423" style=3D"text-decoration:underline;color:#000000" =
+target=3D"_blank"> <font color=3D"#000000">sourcingsupport@hktdc.org</font>=
+ </a><br> <br> To unsubscribe or manage your HKTDC e-subscription, please c=
+lick <a href=3D"https://protracker.edm.hktdc.com/track/click?id=3D6707c9c5b=
+98a62072a5d1a3b&amp;link=3Ddedea035" style=3D"text-decoration:underline;col=
+or:#000000" target=3D"_blank"> <font color=3D"#000000">here</font> </a>.</p=
+> </td>=20
+        </tr>=20
+       </tbody>=20
+      </table>=20
+      </td>=20
+    </tr>=20
+   </tbody>=20
+  </table> =20
+  <img width=3D"1" height=3D"1" src=3D"https://protracker.edm.hktdc.com/tra=
+ck/open?id=3D6707c9c5b98a62072a5d1a3b">
+ </div>
+</div></div></div></div>
+
+--000000000000af37d206248e4587--

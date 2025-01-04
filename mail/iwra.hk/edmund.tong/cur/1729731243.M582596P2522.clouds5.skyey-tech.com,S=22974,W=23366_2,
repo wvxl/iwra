@@ -1,0 +1,392 @@
+Return-Path: <albertwong@hkpc.org>
+Delivered-To: edmund.tong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id KIBjIauaGWfaCQAA07NIEQ
+	(envelope-from <albertwong@hkpc.org>)
+	for <edmund.tong@iwra.hk>; Thu, 24 Oct 2024 08:54:03 +0800
+Return-path: <albertwong@hkpc.org>
+Envelope-to: edmund.tong@iwra.hk
+Delivery-date: Thu, 24 Oct 2024 08:54:03 +0800
+Received: from mail-japanwestazon11020084.outbound.protection.outlook.com ([52.101.228.84]:37682 helo=OS0P286CU011.outbound.protection.outlook.com)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <albertwong@hkpc.org>)
+	id 1t3m6x-0000fr-16
+	for edmund.tong@iwra.hk;
+	Thu, 24 Oct 2024 08:54:03 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CrrQyR1ZnY2p66C+s+zLk2y0qUSKV194wMcL4DyHtJozy/ygMJKuMRePAbEtgVr53RHajxMeIr+cujp67eqmz3PEc9hPGLrlvHNOsejcoWNArK9EHA16qrRwIB7EovPLy6bqQgwvT30EmyMFLyVuUU74gbGuKX3uYLIP/eHjS4qca/JplxOSB/2kVWoir10dNwnj5WMFqm7rEGyccmGHpaqq224RARSPL42ZYJBbXP3Pza2CTP4P/R2Wlr19v7aYf+AgSDH6mP2OE0ejlqjnNfwl5NjbX6HuJLN9dhzWDW8WGdCfsif8GYw9oVp6xXO5HPv24SEao/1uGxXz9aQnFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A5/yIvqnRvHSw07iXwHAp05sl070miAMKJmU3Oibwc8=;
+ b=frCXGMS9xWwcsy3XGVfT/PAvS9kIRevuIRypOsY2DKGlI8gAbMF3pLRWyT9bqtONRp0IXvJcq81krTGhnIyYVDTVnRwy0/0k6OfsASj0dK0gqY3OhhHdCumDhxkkibgMMV44cbYEAkYrKuu3kNI7f7CXYKxMrYVXprjSEKV5/o3q2FL4WRRSWBRzw8sjlyyncTQAevZ/sQ/bIvUuvvUsqa/FzaeWYcHZdU7Fb1vVtwoiZkvQLwPomgGTydXYR8bRUKf1Of2GU6R277RXtBPh8OJ2q3J/4tlsWeIRCuERKoIjOQ2DhMcekbqHtXinszTzHZuFBfYCNv09DuKr6wCBlQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hkpc.org; dmarc=pass action=none header.from=hkpc.org;
+ dkim=pass header.d=hkpc.org; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hkpc.onmicrosoft.com;
+ s=selector2-hkpc-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A5/yIvqnRvHSw07iXwHAp05sl070miAMKJmU3Oibwc8=;
+ b=Hgss6wsVUlXLS8n0QRryFjDxkjARE+LTcgV+lx8ElqOMxog4F/Y/N13QupXj//A8d5lY9ZbHfEEe7TPff2UX0gu+OWEXR72REg6C9CrUTXClcxD/osXsQze8MjU3NNrGf62LDj7KN61u/zBIJFel2RSqxqKPNXWIF9vNmJKLbzA=
+Received: from TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:17a::6)
+ by OS9P286MB4317.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:2c2::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.17; Thu, 24 Oct
+ 2024 00:53:53 +0000
+Received: from TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::baff:d273:a039:bbb7]) by TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::baff:d273:a039:bbb7%4]) with mapi id 15.20.8069.027; Thu, 24 Oct 2024
+ 00:53:53 +0000
+From: Albert WONG <albertwong@hkpc.org>
+Subject: =?big5?B?ICAorKGwyrDdqPcpTkdPrOyn3rPVxP0g?=
+Thread-Topic: =?big5?B?ICAorKGwyrDdqPcpTkdPrOyn3rPVxP0g?=
+Thread-Index:
+ AQHbJa71kbhJdJ5dfUydddsoAt936bKVEpzwgAAADsCAAAAOwIAAAAywgAAACuCAAAANYIAAABPQgAAAEmA=
+Date: Thu, 24 Oct 2024 00:53:53 +0000
+Message-ID:
+ <TYCP286MB1489047CA02CE0E2486B5181A34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+References:
+ <TYCP286MB1489BC2CCB244DDFAC0623C4A34C2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB148931001C86729FF6386702A34C2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB1489CA2F2A5D2B2D53CD5DF8A34C2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB1489DEFD706AD12C4507EFF9A34C2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB1489C2C4D02C76829F447CD9A34C2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB1489DEB2DFCE717C95CF78BFA34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB148966C1009A3CBDE8524CBAA34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB1489FFC207F8452B9DE154A6A34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB14898DEC36821470668943DBA34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB1489DDE4D274100FBE49CD4EA34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB14893C43AE19133913946EFFA34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB14894A16D088B2083DECC4B1A34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+ <TYCP286MB1489C321D050E4523FDD8670A34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+In-Reply-To:
+ <TYCP286MB1489C321D050E4523FDD8670A34E2@TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM>
+Accept-Language: en-US, zh-HK
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=hkpc.org;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYCP286MB1489:EE_|OS9P286MB4317:EE_
+x-ms-office365-filtering-correlation-id: 2041e1ce-c11c-4a1f-051c-08dcf3c65504
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|366016|1800799024|7416014|8096899003|38070700018;
+x-microsoft-antispam-message-info:
+ =?big5?B?M0VTNDFRa3pSendCcnZpZ01WZWJjUmtRbEFNMnY5SWIrTjBtNGhKRkpJTkpBbGpD?=
+ =?big5?B?aGtiZEt4c3d1VWdJbDVpQkF5QTIzTkNnQ2VOU3NDUHlDckpqZm9tZnZYZ3ZyZWZ3?=
+ =?big5?B?OXVib21oOVJUY1lMVWMyeHExOENjMnVTTDY4Skc2K0JneVhGRHQ0eU5rU3UwTkdW?=
+ =?big5?B?cHJ4bXhwUXJMZzl0OGQ1MWE3N1hPZmhiVkV3TzBrK0JVazFtbXgvNzFMZkIvWTYv?=
+ =?big5?B?ZU14bmYzK0NsZ3k2S1lVSDRqaE0xc00yKzVRTTRYdXlnQ3dpZnQ2WVh2d1A0eFJa?=
+ =?big5?B?VmYyeW5qd0FNQjRrY3BPMnB2L3YwVG1TNUV5K3d2dzFzRTlzVjd5SE01dkxiSWM2?=
+ =?big5?B?V21uQXhyU3M0VXpYWXZrTGJwMmkrUXV3bkVES1pKd2pTUmI3VUVnWUhhQlBTVjBt?=
+ =?big5?B?a0hrMWlQaFhEUExQckd3ZjRBNmc2aDVSREpHU0tHTFAyQTlQSkFMWThXT0Jzem5T?=
+ =?big5?B?YTEvNktCM1NLZHNpYmFDRFBwcjZlTCtRNnlJQnBNVDBWVEhjeGRyRjgyMmVvelZR?=
+ =?big5?B?NVVMSHgzakZoWnZmc2Z2YlMyNWE1a2VFYmcyVzgwYW1KQVM2TWNoUGxuZEpKeFNr?=
+ =?big5?B?VjVFNG1WOFlTVmtKU2sxVEZrYkpEdUdIS2k0czBKSDZXZ0U0QWc0MjVZZHNFSS8x?=
+ =?big5?B?RVA2SUN6NUdJcUVHV1VsWElBeGc4b012YklJU0xFdURZN04rdFRZUUFVbVlEc1Nu?=
+ =?big5?B?Q1NhcW1QeHRxVyszWmlHdHUyVTZZY1I2S1VuaktNNVQwelhIYWkzNmhuS3phSTNU?=
+ =?big5?B?NjllR0pDUWFMNUpsNnpncWhZM2FQdDF5UHorTkxMRnBuWTlRSm1FeWs0RjA1NE42?=
+ =?big5?B?M0xhMVNoTTNwV0h0dC9TeWJxV3hEOEsreU8vdXVxallDcmc4c0tROFJRTTFoc1Zl?=
+ =?big5?B?RWo0WDl4S0hCaVAxZ0FoandwK1BWdUw5blJUeDJ5RThyOFpGdzF6bmFlekVacWY5?=
+ =?big5?B?TjRVSklXNktVdHdpMnpWcERjRVZmeTNQVkJQbkVvZVdrQXpLMDA5R2Q5RktZSmtB?=
+ =?big5?B?Q3VuNnhESmdwa0hoVTNyT0xrNlZVUzlDcCtmNkF1WFhxQk1aZXdrbzI2MWxVMlI1?=
+ =?big5?B?VGkyQnhLZXh0M015VWovZjR0dUNjWlA5eERnNmtUeU5zbldXenAwWmJqNlVmQkNk?=
+ =?big5?B?UzA1LzZGa0pBMU04UzhKMkpVb1B3c0ZGNXNndUNPWjk0MFNDMXUxdkh0OE1HL0pK?=
+ =?big5?B?WlpVU0J6bDNReXhoM2JXbnF5NzJDVFNLcjJhN2h2OVgxT25RV2hGYWxSbFBQV3VS?=
+ =?big5?B?M2xCMmhHWDFjV2VPeURYZVJwRmN6dThhb2huQmQ2TnlGUHVTNHJlZzcvSzVzcjlm?=
+ =?big5?B?S29GR21jOW5kQ0NYSGkrVWFaREY0Z2VEQ2JLOEJaNFdlenhpNXlNZnFnSzk5WU5s?=
+ =?big5?B?U0Z3NGFUc2JLd29zL3RXVWZwR1liOVc4R1EyelN0LytBbXptTzdlRlJmQ2s3Z29l?=
+ =?big5?B?NEdaNzkvejQwc2NXTzZ1ZFhJUTlCTFVuQ0RVN3U4QjdQV0xUVG9XcWxndmw5Q1Qz?=
+ =?big5?B?alZEZkZ2MzFRb0xJemd2dHBUYnFPN3RHM2tlRjB1a2Y0UjdGeW5iYVNhdHRNN1p1?=
+ =?big5?B?U1hRNldpVU1kWHo2dFBQb01Iejg0VlJMYzNKZ00yVTFOUzlTYXlGQm1LVzFDUlJk?=
+ =?big5?Q?AfZS52KwUIIcuFSgS6t0p1hHtwoTVrowx/Y6GnPZv53bft4X?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7416014)(8096899003)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?big5?B?eStuRDlSanRuVmtaWnZ3STJtNk45MlZna1Q1Z083YWY0VGFFZ3FaMXdwZWYyWjMw?=
+ =?big5?B?Wjhuc1IwWGpYZFRPZFA3OXNnd242bko2R3ZxRWk1ai9Welp5WkwxcVArSXdkTTlK?=
+ =?big5?B?SUhRYzRmR09GNmE2blE3UDVpdk9BLzlvMkxvUi9EeE5hemY1Uys4Rm5ES2w2bjBv?=
+ =?big5?B?YjRSUS9NV003MXoxMDYwN0xULzNMdWRVTFJscERJeUFoQ3p5Q1FUTGdBMDJrRVg2?=
+ =?big5?B?bzRSY2lVUnA0aWNWQlhBeE4zbm5qeGllckhQMnFmRkFhYmJBWXJld3ZVWiswZm01?=
+ =?big5?B?cWpLUzZ5SmdTRDlEbEJ3MW1PRThmZ1JVdWZFZ0k4SERxNmFxNXdiSGZQaEh4QnVa?=
+ =?big5?B?RnJicDdjSWJ4UFROMCttYUczK0lxb1B6ajR4N0ZzdTJrWnJvcGdRZkorS0JHRTlU?=
+ =?big5?B?VmJZTTQrTWRyeTYxcThQTWVPVkxOcDhsTkszK2gwc1hNazlqZ2U0L2phMFpZMWFX?=
+ =?big5?B?S054ZVVOb1hMRDZyNEdFUTA3WFlVUUpOeGV5NnBFMnczd3JTWjJudFdsWWlhS0RK?=
+ =?big5?B?b05QQTY2VlUzU3kxTEJqMzhHM3BlekJrdElPNFp4L3lKUGZQNURIS3lMT0pEQ0pR?=
+ =?big5?B?MlBkeUtWSGY5NDNqL21id1o4S2JQaFpGQzg5eFZvT0RMd0t6cFZxRmJTQXV3ejFj?=
+ =?big5?B?L3doai84Tjd0Z1Vod2RJT3NUcG9CSWNpSStWcjMyUStGSkNrQ0NydmtycmpwYkFo?=
+ =?big5?B?TVdrQkJSbzUyMlRlU3ZMVmxDVGNVQzNieHRQbVZpb1R0YW15TEFIdXY3YVpKVUlX?=
+ =?big5?B?OS9ZdTF2cjduVCtyT1ZzN0VHWlJhQWRBS0JDUGl3TnRFblRVM0JBZ0lBcEdSQzhq?=
+ =?big5?B?Zmd4THlHYXpYb05oVTIyWkw0S2l4L2tLYzFzWlJNSHpOUVhJRC9uTUZGZkNEU1cv?=
+ =?big5?B?WVNoSUNHMzhYZFYwSmpncTZXMnhaYWErQ3JBNU9iVjVNNndzRStzb3c1RkRCNnZp?=
+ =?big5?B?ZGl6ZUdwVENTZUpGd3IvUkdVLzB0SDh2cURreG5PWklNTzhvb1Q5dS9LeU5nUEVL?=
+ =?big5?B?VGVIWGJwUEZBd3ppV1FoQXgySkFFWSs5WUNqY0hrMHAyQWV2SVRlb2xDZVBUVGc3?=
+ =?big5?B?aHJGWDNpNFZURUQ1TEN0bGxseUl4T04rbGF1bGRwWkFPTEpFdTlzQUJUTlZMYUtr?=
+ =?big5?B?aFJDTGVVMkIvS01jWWtZWmhEdVZrN3g4M01WSmlZMGI2UFh5M25VQmJjcHF2SlYw?=
+ =?big5?B?dHBjWWluSFVFckVYRjFFUDRkeEJzTTNNbmhTazZCQUtiL3hGM0xGWFBRb1pxSzM3?=
+ =?big5?B?MitRTHFQcUU4QmIzWlkyZytuNVpHL04xQWdHanBJbGtZM2NsL3VsczUraFArOWRM?=
+ =?big5?B?RmpUU0dUMDNvcUdWY0k3Mk1BMFhoQVVXenJwQWlUOTd6NXZKcW9qRytJa2FWNnlj?=
+ =?big5?B?K3NGdEdOZGV0ZVhjcWs4RzZxMEZEY2ZnOHZhSW5vMHRhbXZwUEpRM05sekIyOFJP?=
+ =?big5?B?bEtaK2p3YjY0cjd4NGR0QjNERDdzWGdHRmF6NlBnazVrbDBKZElpdGFTYUZEa25s?=
+ =?big5?B?OUdMYm44VlZ3WTVzZElicTJMUlRucE15RDdNWG8yOXQyWnVlWUtGdG1IWkFXY2dv?=
+ =?big5?B?ZVNjOWphNHgwTThlN0xFR0hhTHlPK1lKQXZST09pM2tHY3dKU3dQMFhET3M3SEdL?=
+ =?big5?B?QktWL2lCMVh5QUZsSmtneE1FYWk2eEh5c0V6dC8vNXlCNFVXa2N5cERHVXVyWUI4?=
+ =?big5?B?bSt4Mm5HcThScUc3bmZlYmRrU3ZoTmNTbDNaSHpsN05tR3hqd3UrZUg3VWtoVS9w?=
+ =?big5?B?QUxqaE9YS2lySm43OGU2MktaMHR0dlJFMllFcGdObi9zYXphTHdYS1RmZ3d2SjIz?=
+ =?big5?B?T2k2blROQzhVZy83a1BiWmpZcHJzSXBjdjlrbVplaFBHVVVwZXMvSmhET1hKKzVo?=
+ =?big5?B?TDg1dUt3SlJiM2tVVDh5ZTVNem1vd2xLaUxsS1dTQzNvbDhwY3RJcllabmdMNHRC?=
+ =?big5?B?ZHY1VlArSHdqTUQxYjhnbnlXWU9XcUlHVHJERnZsV0J2Z3VWSllVNU83eHRUYU8y?=
+ =?big5?Q?hMBrQNEZVONQEXUo?=
+Content-Type: multipart/alternative;
+	boundary="_000_TYCP286MB1489047CA02CE0E2486B5181A34E2TYCP286MB1489JPNP_"
+MIME-Version: 1.0
+X-OriginatorOrg: hkpc.org
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYCP286MB1489.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2041e1ce-c11c-4a1f-051c-08dcf3c65504
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Oct 2024 00:53:53.4752
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 07373b9f-47dd-4621-ad2c-e5bbfc8863f2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: DX3ksTXPPfDQBm/T8id6NBcG5309UUIGVHU3ahba+7RUCegAqVo4yApjtE7IGA6JpkV/wxMjgXtNpkMpQsrMIg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB4317
+X-Spam-Status: No, score=1.2
+X-Spam-Score: 12
+X-Spam-Bar: +
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  敬啟者: 多謝閣下參加上述活動，為了進一步提升我們的未來活動的內容，誠邀您填寫以下的活動問卷：
+    https://forms.office.com/r/dyyE4fQBSF 
+ Content analysis details:   (1.2 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was
+                             blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: hkpc.onmicrosoft.com]
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [52.101.228.84 listed in list.dnswl.org]
+  1.2 MISSING_HEADERS        Missing To: header
+ -0.0 SPF_HELO_PASS          SPF: HELO matches SPF record
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [52.101.228.84 listed in bl.score.senderscore.com]
+  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE:
+                             The query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                          [52.101.228.84 listed in sa-trusted.bondedsender.org]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+X-Spam-Flag: NO
+
+--_000_TYCP286MB1489047CA02CE0E2486B5181A34E2TYCP286MB1489JPNP_
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
+
+t3Gx0qrMOg0KDQqmaMHCu9WkVbDRpVukV616rKGwyqFBrLCkRrZppECoQrSjpMmn2q3MqrqlvKjT
+rKGwyqq6pLquZaFBuNvB3LF6tvG8Z6VIpFWquqyhsMqw3aj3oUcNCg0KaHR0cHM6Ly9mb3Jtcy5v
+ZmZpY2UuY29tL3IvZHl5RTRmUUJTRg0KDQq3UMHCsXqquqTkq/m7UKZYp0ChSQ0KDQrBwsHCDQql
+zbKjpE+rULZpp70NCg0KDQpDb21pbmcgVXAgQCBIS1BDDQoqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqDQpbVHJhaW5pbmddDQo3IE5v
+dmVtYmVyIDIwMjQNClNtYXJ0IEhSIHdpdGggQUk6IEludHJvZHVjdGlvbiB0byBBSSBpbiBIUg0K
+MTEgTm92ZW1iZXIgMjAyNA0KUHJvZmVzc2lvbmFsIENlcnRpZmljYXRlIGluIFN0cmF0ZWdpYyBQ
+dXJjaGFzaW5nIGFuZCBTdXBwbHkgQ2hhaW4gTWFuYWdlbWVudCBbQ0VGXQ0KMTIgTm92ZW1iZXIg
+MjAyNA0KUHJvbXB0IEVuZ2luZWVyaW5nIGZvciBBSSBPcHRpbWlzYXRpb24gaW4gQnVzaW5lc3MN
+CjEzIE5vdmVtYmVyIDIwMjQNCkNlcnRpZmllZCBJbmZvcm1hdGlvbiBTeXN0ZW1zIFNlY3VyaXR5
+IFByb2Zlc3Npb25hbCAoQ0lTU1AocikpIE9mZmljaWFsIFRyYWluaW5nICgyMDI0IE5ldyBWZXJz
+aW9uKQ0KMTYgTm92ZW1iZXIgMjAyNA0KV2hlcmUgQUkgTWVldHMgQVJUIC0gQSBOZXcgRXJhIG9m
+IEFydGlzdGljIEV4cHJlc3Npb24NCkFJIEdyYXBoaWNzIGZvciBFY29tbWVyY2UNCjE4IE5vdmVt
+YmVyIDIwMjQNCkNlcnRpZmllZCBFdGhpY2FsIEhhY2tlciAoQ3xFSCkgJiBQcmFjdGljYWwNCioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKg0KDQpGb3IgbW9yZSBpbmZvcm1hdGlvbiwgcGxlYXNlIHZpc2l0IG91ciB3ZWJzaXRlOiBo
+dHRwczovL3d3dy5oa3BjLm9yZw0KDQpEaXNjbGFpbWVyOg0KVGhpcyBtZXNzYWdlICh0b2dldGhl
+ciB3aXRoIGFueSBvZiBpdHMgYXR0YWNobWVudHMpIGlzIGludGVuZGVkIGZvciB0aGUgZXhjbHVz
+aXZlIHVzZSBvZiB0aGUgYWRkcmVzc2VlKHMpIG9ubHkuIFRoZSBpbmZvcm1hdGlvbiBjb250YWlu
+ZWQgaGVyZWluIG1heSBiZSBwcml2aWxlZ2VkIGFuZCBjb25maWRlbnRpYWwgYW5kIHRoZXJlZm9y
+ZSBzaG91bGQgbm90IGJlIHJlYWQsIGNvcGllZCBvciBvdGhlcndpc2UgdXNlZCBieSBhbnkgb3Ro
+ZXIgcGVyc29uIHdpdGhvdXQgdGhlIHdyaXR0ZW4gY29uc2VudCBvZiBIb25nIEtvbmcgUHJvZHVj
+dGl2aXR5IENvdW5jaWwgYW5kIHRoZSBzZW5kZXIuIElmIHlvdSBhcmUgbm90IHRoZSBpbnRlbmRl
+ZCByZWNpcGllbnQsIGFueSB1c2UsIGRpc2Nsb3N1cmUsIHJlcHJvZHVjdGlvbiwgZGlzdHJpYnV0
+aW9uLCBmb3J3YXJkaW5nIG9yIG90aGVyIGRpc3NlbWluYXRpb24gb2YgdGhpcyBtZXNzYWdlIGlz
+IHN0cmljdGx5IHByb2hpYml0ZWQuIElmIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMgbWVzc2FnZSBp
+biBlcnJvciwgcGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGJ5IHJldHVybiBlLW1haWwgYW5kIHJl
+bW92ZSBvciBkZWxldGUgYWxsIGNvcGllcyBvZiB0aGlzIG1lc3NhZ2UgZnJvbSB5b3VyIHBvc3Nl
+c3Npb24gYW5kIGNvbXB1dGVyIHN5c3RlbS4gSW50ZXJuZXQgY29tbXVuaWNhdGlvbnMgY2Fubm90
+IGJlIGd1YXJhbnRlZWQgdG8gYmUgdGltZWx5LCBzZWN1cmUsIGVycm9yIG9yIHZpcnVzLWZyZWUu
+IEhvbmcgS29uZyBQcm9kdWN0aXZpdHkgQ291bmNpbCBhbmQgdGhlIHNlbmRlciBhY2NlcHQgbm8g
+cmVzcG9uc2liaWxpdHkgZm9yIGFueSBlcnJvcnMgYW5kIGFzc3VtZSBubyBsaWFiaWxpdHkgdG8g
+YW55IHBhcnR5IHdoYXRzb2V2ZXIgd2l0aCByZXNwZWN0IHRvIHRoZSBjb250ZW50cyBvZiB0aGlz
+IG1lc3NhZ2UuDQoNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQpTQVZFIFBBUEVS
+IC0gVEhJTksgQkVGT1JFIFlPVSBQUklOVCENCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fDQo=
+
+--_000_TYCP286MB1489047CA02CE0E2486B5181A34E2TYCP286MB1489JPNP_
+Content-Type: text/html; charset="big5"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Microsoft JhengHei";
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@Microsoft JhengHei";}
+@font-face
+	{font-family:"\@PMingLiU";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:ZH-TW;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.ui-provider
+	{mso-style-name:ui-provider;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;
+	mso-ligatures:none;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-HK" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><b><span lang=3D"ZH-TW" style=3D"font-family:&quot;M=
+icrosoft JhengHei&quot;,sans-serif">=B7q=B1=D2=AA=CC</span></b><b><span sty=
+le=3D"font-family:&quot;Microsoft JhengHei&quot;,sans-serif">:</span></b><b=
+><span style=3D"font-size:12.0pt;font-family:&quot;Microsoft JhengHei&quot;=
+,sans-serif;mso-ligatures:none"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><b><o:p>&nbsp;</o:p></b></p>
+<p class=3D"MsoNormal"><b><span lang=3D"ZH-TW" style=3D"font-family:&quot;M=
+icrosoft JhengHei&quot;,sans-serif">=A6h=C1=C2=BB=D5=A4U=B0=D1=A5[=A4W=ADz=
+=AC=A1=B0=CA=A1A=AC=B0=A4F=B6i=A4@=A8B=B4=A3=A4=C9=A7=DA=AD=CC=AA=BA=A5=BC=
+=A8=D3=AC=A1=B0=CA=AA=BA=A4=BA=AEe=A1A=B8=DB=C1=DC=B1z=B6=F1=BCg=A5H=A4U=AA=
+=BA=AC=A1=B0=CA=B0=DD=A8=F7=A1G</span></b><b><span style=3D"font-family:&qu=
+ot;Microsoft JhengHei&quot;,sans-serif"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><b><o:p>&nbsp;</o:p></b></p>
+<p class=3D"MsoNormal"><b><a href=3D"https://forms.office.com/r/dyyE4fQBSF"=
+>https://forms.office.com/r/dyyE4fQBSF</a><o:p></o:p></b></p>
+<p class=3D"MsoNormal"><span class=3D"ui-provider"><o:p>&nbsp;</o:p></span>=
+</p>
+<p class=3D"MsoNormal"><b><span lang=3D"ZH-TW" style=3D"font-family:&quot;M=
+icrosoft JhengHei&quot;,sans-serif">=B7P=C1=C2=B1z=AA=BA=A4=E4=AB=F9=BBP=A6=
+X=A7@=A1I</span></b><b><span style=3D"font-family:&quot;Microsoft JhengHei&=
+quot;,sans-serif"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span class=3D"ui-provider"><o:p>&nbsp;</o:p></span>=
+</p>
+<p class=3D"MsoNormal"><b><span lang=3D"ZH-CN" style=3D"font-family:&quot;M=
+icrosoft JhengHei&quot;,sans-serif;mso-fareast-language:ZH-CN">=C1=C2=C1=C2=
+</span></b><b><span style=3D"font-family:&quot;Microsoft JhengHei&quot;,san=
+s-serif"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><b><span lang=3D"ZH-CN" style=3D"font-family:&quot;M=
+icrosoft JhengHei&quot;,sans-serif;mso-fareast-language:ZH-CN">=A5=CD=B2=A3=
+=A4O=ABP=B6i=A7=BD</span></b><b><span style=3D"font-family:&quot;Microsoft =
+JhengHei&quot;,sans-serif"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<title></title>
+<font color=3D"#00a79d" face=3D"Calibri" size=3D"3"><b><i>Coming Up @ HKPC<=
+/i></b></font><br>
+*************************************************************<br>
+<b><u><font color=3D"#546670">[Training]</font></u></b><br>
+<b><u><font color=3D"#546670">7 November 2024</font></u></b><br>
+<font color=3D"#0054a6">Smart HR with AI: Introduction to AI in HR</font><b=
+r>
+<b><u><font color=3D"#546670">11 November 2024</font></u></b><br>
+<font color=3D"#0054a6">Professional Certificate in Strategic Purchasing an=
+d Supply Chain Management [CEF]</font><br>
+<b><u><font color=3D"#546670">12 November 2024</font></u></b><br>
+<font color=3D"#0054a6">Prompt Engineering for AI Optimisation in Business<=
+/font><br>
+<b><u><font color=3D"#546670">13 November 2024</font></u></b><br>
+<font color=3D"#0054a6">Certified Information Systems Security Professional=
+ (CISSP&reg;) Official Training (2024 New Version)</font><br>
+<b><u><font color=3D"#546670">16 November 2024</font></u></b><br>
+<font color=3D"#0054a6">Where AI Meets ART - A New Era of Artistic Expressi=
+on</font><br>
+<font color=3D"#0054a6">AI Graphics for Ecommerce</font><br>
+<b><u><font color=3D"#546670">18 November 2024</font></u></b><br>
+<font color=3D"#0054a6">Certified Ethical Hacker (C|EH) &amp; Practical</fo=
+nt><br>
+*************************************************************** <br>
+<p>For more information, please visit our website: <a href=3D"https://www.h=
+kpc.org">
+https://www.hkpc.org</a></p>
+<p>Disclaimer:<br>
+This message (together with any of its attachments) is intended for the exc=
+lusive use of the addressee(s) only. The information contained herein may b=
+e privileged and confidential and therefore should not be read, copied or o=
+therwise used by any other person
+ without the written consent of Hong Kong Productivity Council and the send=
+er. If you are not the intended recipient, any use, disclosure, reproductio=
+n, distribution, forwarding or other dissemination of this message is stric=
+tly prohibited. If you have received
+ this message in error, please notify the sender by return e-mail and remov=
+e or delete all copies of this message from your possession and computer sy=
+stem. Internet communications cannot be guaranteed to be timely, secure, er=
+ror or virus-free. Hong Kong Productivity
+ Council and the sender accept no responsibility for any errors and assume =
+no liability to any party whatsoever with respect to the contents of this m=
+essage.
+</p>
+<p></p>
+<hr>
+SAVE PAPER - THINK BEFORE YOU PRINT! <br>
+<hr>
+<p></p>
+</body>
+</html>
+
+--_000_TYCP286MB1489047CA02CE0E2486B5181A34E2TYCP286MB1489JPNP_--

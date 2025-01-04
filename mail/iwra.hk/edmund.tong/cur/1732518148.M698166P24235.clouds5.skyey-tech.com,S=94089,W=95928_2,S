@@ -1,0 +1,1839 @@
+Return-Path: <1axbiaw9hpjybqms1ai28g26thqtatehcn67pt-edmund+2Etong=iwra.hk@21049160m.email.hkpc.org>
+Delivered-To: edmund.tong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id eKxnKAQhRGerXgAA07NIEQ
+	(envelope-from <1axbiaw9hpjybqms1ai28g26thqtatehcn67pt-edmund+2Etong=iwra.hk@21049160m.email.hkpc.org>)
+	for <edmund.tong@iwra.hk>; Mon, 25 Nov 2024 15:02:28 +0800
+Return-path: <1axbiaw9hpjybqms1ai28g26thqtatehcn67pt-edmund+2Etong=iwra.hk@21049160m.email.hkpc.org>
+Envelope-to: edmund.tong@iwra.hk
+Delivery-date: Mon, 25 Nov 2024 15:02:28 +0800
+Received: from bid470o.21049160m.email.hkpc.org ([158.247.25.70]:6865)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <1axbiaw9hpjybqms1ai28g26thqtatehcn67pt-edmund+2Etong=iwra.hk@21049160m.email.hkpc.org>)
+	id 1tFT72-0006Ju-20
+	for edmund.tong@iwra.hk;
+	Mon, 25 Nov 2024 15:02:28 +0800
+Received: by 172.16.230.85 with SMTP id a0cgfhxxtp4xciypa2dk5lecefdiuypfo3i1532ymdk;
+        Mon, 25 Nov 2024 07:02:22 GMT
+DKIM-Signature: v=1; s=hs1; d=21049160m.email.hkpc.org; 
+        i=@21049160m.email.hkpc.org; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=Y7hgDR4E45CdCJ/cvrWabWDwI2qpsT91yNjLOQiDvbc=; 
+        b=gENxAh2af7i0saac/KvQEDb7AGERgAOQfg7a/A/kk2nyyp8xJwfcobdcD00Ocs
+         wt6dZ0GzdB2qj1pNKnUq8ExqMwRnFofKDUuVsJ6u8PtmMXnfbzl9b69S2z8dW0Y
+         kEduAOmU9eMe9ulz6NB16c1kXIod6RmG0o3wHY60hJ87Ext8qroo8VCUjF3nyb8
+         xgQ+vpOXiD52Qcdnwo1V3y2gPx0kg0TdL4sGRGezpsfkblp5noptWLqyGalcXh3
+         Q9Xt9QbnNa9rtoPymL26+hG+S9CgAdRhg1NAJ+MscMaRSupW9vGw29ZugLC7Lt9
+         BjpAHgJlEzkO5+mNSFbT12w0TVXQ==; q=dns/txt; t=1732518141; 
+        x=1732780941;
+DKIM-Signature: v=1; s=hs2-21049160; d=email.hkpc.org; 
+        i=@email.hkpc.org; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=Y7hgDR4E45CdCJ/cvrWabWDwI2qpsT91yNjLOQiDvbc=; 
+        b=ww1uRKRRM80gKfiOhnZwJgP9dss+L9RGgu8TYIc+R8kjQBe2rwfhlY3j+h66H6
+         Lg/eanzejQgBD7ZixbOGnor1UbCsXVcCClgeMyi6miUA+tOxrEy9qwq0GY9O2U+
+         6teujDV3jtbEzN8l66wkK5z5xBg54Me9Eq3K7QjwCmnwJmO+jsxDMAKGS7pmDL4
+         a2rzcIh1Gi8letYXgiBgg+IwRPbqVQ9jqsTu9XqJOWxqGKchaFZ8NZAXtq3pSkl
+         9Fn+OtPPLz8xyF+8hAWA5xgxjVZlKl0ykaMWp8JuExps0wgu24ZL9Y+V/elm770
+         4om2CRxFZEmIDMZpYDurY6mbNJrQ==; q=dns/txt; t=1732518141; 
+        x=1732780941;
+X-HS-Cid: 1axfaafaeice17z8fumtuspgne451byrq0k199
+List-Unsubscribe: <mailto:1axct847ok9irpbq8lveavti0dwr7ge47139f1-edmund+2Etong=iwra.hk@21049160m.email.hkpc.org?subject=unsubscribe>, <https://campaigninfo.hkpc.org/hs/subscription-preferences/v2/unsubscribe-all?data=W2nXS-N30h-BhW23gpTh47pGwNW3dwKrZ3D-lhZW36vdlb38mJtFW215SvD2KyHMmW2HBy9R3g2x6hW49PFQy3CgrC4W2Mv-XD3LXfxlW2YgmB91VyBQ_W3QPdlh47sYHCW4kl-dB2-cGk4W4htP4W1Vvz8wW4rvzbk1X0b9bW3QNkP924VN4zW2nT_1X3ghMtvW2-d3K63byx-4W2FM82J3dsJSVW3KbsM41StbPHW30cqNk3LBJB2W3jwGZy41qfzSW4rv_hr4mJQcMW2Ymhkq32ywCFW214wSz1QhmcrW3b5qMQ43YlmfW3JSL_G2B140nW3GQNJr2MlL5tW2HYgDZ2TGYx1W3VPc-p2WLsd9W4t8v_d3hZMx4W3QCc6f3649TYW1NhBwD2KYWNpW4r46SR41FG45W32zpZX239KYTW4r73q51NBlzsW38z-Hn2y04W9W2sCngS4mLVBGW30CBDL1Lp-szW4thZfk3gwsjMW3NRWqZ2Pwdw0W3ZM4k_2CPmyMW47Dj9Q24-NLYW38BPL83ZwzkPW3d8ZBW2Rjy8LW2MWcnD2CH_21W1St6Yg1Zmx5pf49z8Fy04>
+Date: Mon, 25 Nov 2024 15:02:22 +0800
+From: Hong Kong Productivity Council <edm@email.hkpc.org>
+Reply-To: dorayeung@hkpc.org
+To: edmund.tong@iwra.hk
+Message-ID: <1732518141247.7221e25d-f902-40ae-b372-68a2e7fb01ae@21049160m.email.hkpc.org>
+Subject: =?utf-8?Q?=E3=80=90Free_Event=E3=80=91Sustainabl?=
+ =?utf-8?Q?e_Futures_=E2=80=93_Insights_an?=
+ =?utf-8?Q?d_Innovations_for_Compliance_in_Manufacturing?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_431640_1332996055.1732518141694"
+X-Report-Abuse-To: abuse@hubspot.com (see
+ https://policy.hubspot.com/abuse-complaints)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Spam-Status: No, score=0.1
+X-Spam-Score: 1
+X-Spam-Bar: /
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Register now! Reserve your spot now to join a morning of insights,
+    networking, and forward-thinking on sustainable progress. 中文 (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSyd7lxC-W95khT26lZ3pLW57T9n06K9hcVW6Dr9Tt1L54QZW6xfXK05RDzT7W5HL8Rv3RVBFXW7HhysV3yNVlcW8W_MPG17w
+    [...] 
+ Content analysis details:   (0.1 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was
+                             blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: hkpc.org]
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [158.247.25.70 listed in list.dnswl.org]
+  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE:
+                             The query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                          [158.247.25.70 listed in sa-trusted.bondedsender.org]
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [158.247.25.70 listed in bl.score.senderscore.com]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+ -0.0 RCVD_IN_MSPIKE_H4      RBL: Very Good reputation (+4)
+                             [158.247.25.70 listed in wl.mailspike.net]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+ -0.0 RCVD_IN_MSPIKE_WL      Mailspike good senders
+  0.2 KAM_HUGEIMGSRC         Message contains many image tags with huge http
+                             urls
+X-Spam-Flag: NO
+
+------=_Part_431640_1332996055.1732518141694
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Register now! Reserve your spot now to join a morning of insights, networki=
+ng, and forward-thinking on sustainable progress.
+
+=E4=B8=AD=E6=96=87 (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/V=
+WdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSyd7lxC-W95khT26lZ3pLW57T9n06K9hcV=
+W6Dr9Tt1L54QZW6xfXK05RDzT7W5HL8Rv3RVBFXW7HhysV3yNVlcW8W_MPG17wvMPN4BhJcPJ3M=
+_KW6TZC7T86-nXVW8wW7B36xS1-2W5mFlRL8lcLymW7-mMlq8zP6pZW42zC4B5BSTbkW7szGgt8=
+Gsp0WN583nzBlbM9SW6BzRYl33BY2MW5sWxqh23fJWhW5g34JR88Pn7PVF7Dw685_Rn4W5TNFdd=
+1851bNW6k1mkQ3cHGZ2W1_wYFL8Q_JvlW2PfKcP19_fXNW4B_vy74DW5hzW4KNFND41M-YkV2ZB=
+Jf86_CY7W5W03PF9m1DTZW43wvLk4JxTh4N2DnkVJNdrRVW4mCwjR2K3ydjW8ZKNpb7B3v8BW5D=
+J3pY6mw1M_W8pcm0b4RK9z8W1xccSG983BrGW3-v5T68z37gDN4SmzRTYPZCsW766jm056GfX9W=
+2Wc1qY3YtbrxW5XYl4v4l8gyrW4rrn1p15ZmGPW1wqRgz2rsVbLW6GQCzx8K8wRQV-144Z6RD1x=
+8W99z0-220glLTV9skly8lLdFlW59FF1H7HMTt_W7TyfFL8YzXW8W8WJPtt600mtdW8XRrdn1zZ=
+Y3rW7k4vNF7zQ_ZlW8G5mv412V9WgW6t680B8vB_1MW3yTnK882tGqMW2XDCcP3hs0W3W4y28PK=
+5-gscXW6YxFtH7xhLJXW26xHHr980Cg4VDn0Fh6XjBDTW1gsLRc8RPtZ9W6rc3xn84VVH2W6zMy=
+zp3QhzzBW5y_3Sn1hPDr6W8M7Jp-1-sC7Sf93bS4n04 )
+
+View in browser (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD=
+8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSx27lxC-W6N2kFb6lZ3q7W6HFxdt8TYYpZVjP=
+VD27lMMrbW3061PZ4DzGPCW2Vw-6R6RgPcMW7QfMf24DXj80W8zSNKm6tZrngV8g97l1m2P68W9=
+7vySS6PBS-zV5DY-W1wj18pVJsJZ96rb2G9W4Hj3s_7QNkGwW2YZ84D6mvlqxW5-2kMV6Scg85W=
+3Lw7t14HrBfGVHPwbW5TJR33W2g4Bpj3Jy8bQW1LNXlX4v0Pz8W8875xn4Rp83FW32t7tC71PMw=
+gW7GkVQy1k68tpW2Q4nbV4sdgPHVn-p4J4RHnvrW2LwSvC4KVGWwW1SxWDq6952c9W6D8F1p9gX=
+mfvW1LX4B77H2mMMW5_-xJS7yGWQdMplG4nd7nJPW5Wy4mP10p6MpW9bFL058qq9G0W6htSnr8B=
+KSRtW1p81Br8cfCm5W10Z7_C2b1cwwW6RpTs625dTWdVWXCFs53lBbdW7QsdHr5djFGHW3fjzqC=
+8TjfVfW5DnkfC4QV6HjW5FFYTL7-nP8rW655MCM42q-xgW8X_D0l4mVH_fW8z4GJ_4XXmRhW5PL=
+1Dz2Jdbm1W37swR67Hr-h0W2S8G4S2lkZFwN3R6FdTkY42XW20d4lD5w9Dq9W6SHt3M7Gc2PbW2=
+5yqhG2CrhkkW6bbpZj1jbgsyW8ZZcRw5ZLlyfW7C-dYh7J70sxV29Ym68ClmtPV7flxF8dFYP9f=
+3tHX8x04 )
+
+Dear Edmund,
+
+Sustainable Futures =E2=80=93
+
+Insights and Innovations for Compliance in Manufacturing
+
+The German Chamber of Commerce, in partnership with the Hong Kong Productiv=
+ity Council (HKPC) and the Chinese Chamber of Commerce (CGCC), aims to stre=
+ngthen collaboration between German and Chinese businesses in the manufactu=
+ring sector. Through expert insights, success stories, and practical guidan=
+ce, this event will help Chinese manufacturers align with upcoming sustaina=
+bility regulations and identify actionable steps for compliance.
+
+Event Highlights:
+
+-
+
+Opening Remarks: Introduction to sustainable practices and upcoming regulat=
+ions in manufacturing
+
+-
+
+Key Insights Presentation: Unveiling a new sustainability brochure for manu=
+facturers to understand European and German standards
+
+-
+
+Success Stories: Case studies on sustainable practices by leading companies
+
+-
+
+Expert Panel Discussion: Interactive session with sustainability experts on=
+ challenges and opportunities in sustainable manufacturing
+
+-
+
+Networking Session: Connect with industry leaders and peers for collaborati=
+ons
+
+We welcome participation from manufacturing sector and business community i=
+nterested in sustainable supply chains. The event is free of charge. Don't =
+miss this unique opportunity=E2=80=94we look forward to your enthusiastic p=
+articipation!
+
+3 December 2024
+
+09:00 - 12:00
+
+SME One Foyer,
+
+G/F, HKPC Building, 78 Tat Chee Avenue,
+
+Kowloon
+
+English
+
+Manufacturing sector and business community interested in sustainable suppl=
+y chains
+
+Rundown
+(https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5=
+Zr3dpW6mk3Cf5nQ8pLN2jjSx27lxC-W6N2kFb6lZ3nQW1fvYm23ftzFKW6CpsJb2QxssMW2GN3K=
+c4mM9DJW3Y-Z7p8mTR7rN5cv7N6_t7x0Vvxv6G1h3nZnW4yKrFJ59LYMNW8ytTcY8Qqk9cW2BS_=
+9m5dfK-FW7MGP7F6GkwrmW45gPpv6KcZgXW4DC8SS4kNG5jN6R_YpZ82Z5_W9c8-pM5-Wjz1W3r=
+hZ8y8t9tXkN25y53SfKvCbVrdlFS82thD2W752_jK2sZ4VVW6RsVCp6Lmn9HN1DfS4nQGbrpW2_=
+35818Sx68LW25jFln97RkYQW6mtwwW65Mv37W1_hcyc8cB_L6V-P1QZ8BBzx3W8CjlSn8pl6_dW=
+8DWyq-5QybD0W26kwhf6d40WfVjtjMc2KJnQqN7mlCQw6N8kTW99k93s7jGdM6W79G1rs9151sR=
+MhgSTLjM-b6W5Xzx2n66HNtFW4yl4-16wLpxzMl9DmmQSR6sW4yR1pb88cgtgW3G3w3M8zcsD5W=
+1y0JvB8Wh7JQW2zBj7c5BpkPhW543-1t2BGHmrN3YgK4y2SSY6N1F8zl85D8fCVSPjvy4J-yGqW=
+1MhqFk7C7qbSW7lqcM46bMhdBW3kkFqF2wd5S3W8K8xr91XjFxhW43bL2M3QgGk_N3zNYhBhyQ4=
+rW6Q--VN8FmDJdW2_39qY3rfN-XW2CF7Q311vLGQW5V3t977jDqr7f9d8CpY04 )
+
+Enrol Now
+(https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5=
+Zr3dpW6mk3Cf5nQ8pLN2jjSwM5m_5PW69t95C6lZ3nXW5bfXDw4mmzNtW7tmHVG80Rn9vW3Tdbh=
+y6hVthtW3LYwRD4lj5w9W7qJhZM1yHZ2VN5xvfsghr8j3W2MbKnD4NlJ2lW60jrxB8MGXrVW72Q=
+Kct1wrhntN5C4-pnyzhRHW4WShl-7Lz5x8V8mk587R56BtW3D6FMw8pv4FzW376c3P6MPrmKN8H=
+9XD8hpDP-W7LqxYS84SQXFW7qdq-M4Z5tChW3kH2Q34fzVMPW2DjjBk4xH39zW7vZ3fb8nYWswW=
+5ZTVcn86HBCfW8NXxlK2vcnXMW6RbSC97CmjyWW3RyVJ35NKQBVW3g5lMd16TDkbW8WZzFD6d-q=
+1KW1qNBTk5K47cDW94TkXr1zwhwXW7q_zwM93DFMtW5DbH4S3q2Dl3W6tfmN-5d17cKW34NBt74=
+X0tTDW7lTCJz4_yXjpW8GYN3m6n_T_pW2vySyV8j9KLDW4Ph0Nm2ch9m0f1jkcwb04 )
+
+Enquiry:
+
+Ms YEUNG=EF=BD=9C+852 2788 5044=EF=BD=9Cdorayeung@hkpc.org (https://campaig=
+ninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8=
+pLN2jjSw85m_5PW50kH_H6lZ3kXW3PXqjz86QhXcN14zbRr71NZkW5Nx0F245k9PhW8YXNzK31k=
+bYrN75c9yxjqPFBW7P5j6G2W0HlXW56SQxZ31l9wtW83br8K7Rg_x4W2DtVqG3gv_LmW18CLD_8=
+s3_9HW5BzQnT6nGPskW2PMx2h8tKK37W4pVhgQ1CmndjW4w3FwQ7FV2sWW6hdBRs59LMN2W7FHr=
+fx2LXSX6W5K3wyv2T3fDQW2DBY0-6MK7m1W7pz3X-5s8b1-W82LPTV8cTYYWW5Jfl0d7c6bYRW2=
+dd2_Q6swF77W5ZlXt82S3XM5N4fTvt_nKPCxW3MnT9s5m-GKKW54_PLv1nSYGSW8yT8Yg98Wkzy=
+W8hfJzN8ZZ-JwW3p_K8K24nwrhW1tzm6Z3bHK3rW6MQ9V_3-R54PW4Gpd9C377HfLf4q4dDv04 =
+)
+
+Ms LAM=EF=BD=9C+852 2788 6371=EF=BD=9Cjeannel@hkpc.org (https://campaigninf=
+o.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2=
+jjSw85m_5PW50kH_H6lZ3mPW1XKf_85rxktdW6K1GH76JmMsvW3BDLr3381LKYW89hYHt1vPV5l=
+W3rRwcN8ZB6XKW52d8Jk4qZhJRW4T_Rm84-00F4W5zq2Pw2nvc29V4hD3g2qkxYBW7T_cqG9lqM=
+9xW6SvcFv8kg7zYW3-5cmZ3vC8z8W6PsMBt6TmBHQN6xMrbqbXFZnMzfJ6pT04wYW7mYjFl3LKY=
+4bW8hzgPn5ynLMkW8k4FFG6kyBPWW6MrbHB4KJzg5W6nnHww596zsdW1syZbC8hsHXmN7w9rxns=
+p_2wW4QVRnB41fbb8N6x5HbkcL1dPW6plchd1tyJ95VWy30p8CLj1dW84zRvn2HhmvFMc2sMltn=
+twkW4t-bZf5mJTKsN3r0-qmlfLzMW11MHN21Gl_6mVJykwP6D7k7KdwzQBP04 )
+
+Disclaimer:=E2=80=8B=E2=80=8B
+
+Any opinions, findings, conclusions or recommendations expressed in this ma=
+terial/event do not necessarily reflect the views of the Organiser, Co-orga=
+niser and Supporting Organisation.
+
+Please be advised that the views and opinions expressed in the panels by th=
+e speakers are not those of HKPC, and accordingly, HKPC takes no responsibi=
+lity for the accuracy or completeness of the contents provided and shared b=
+y the speakers, and expressly disclaims any liability whatsoever for any cl=
+aim, loss or damage howsoever arising from the use of or in reliance upon t=
+he whole or any part of the contents thereof.=E2=80=8B=E2=80=8B The speaker=
+s=E2=80=99 speech or opinions regarding the future development, tend and co=
+nditions of the economy, industry and market may involve the forward-lookin=
+g views, predictions and statements which are subject to the influence of c=
+ertain risks, unexpected or uncertainties factors and assumptions. You shal=
+l pay caution and assess the risks thereof.=E2=80=8B
+
+Follow us
+
+fb_icons (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsb=
+HW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSws5m_5PW5BWr2F6lZ3nyW5KRbNn8TS784W5kVfCL6h8=
+HH2W4Rm4S374n2TfW1dn5CW3k9fgbW7jj3y25YBr0HW6VQ1kT5ZsVyPW6L-5yc5kTDdnN7VLQ_v=
+mffkqW14r9d2951x67W1d1sY-7crkD8N4v6F20VWhTVW35Lxr514215RVC0N8p44ZWWkW1SMz-c=
+3xjc_xN4m-v7dyv4F4W1Pmw3v94FsHlN2d5p-XxDscRW7m4YKH1066dcW6M8x-n2Yw83dN5c5vx=
+-l8SkpW8Fr3k88LxXF4W15SLt76D-n0FW2FJ-Vz5XPP_9W26kstb57BqqfVX-dbm2GHFJZW8Gm0=
+-m6H_tkZW41xY-35xwJLFW1d7zZw78cDvqW7M5v9T4dRRmCN15rP1jjJWVtW2qJ-Dg8QrNpmW4R=
+SmZZ2KfrRTW2rlZCh4bVTMhW7FHp3M71dm4Yf3sQDGl04 )
+
+linkedin_icons (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8=
+T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSwM5m_5PW69t95C6lZ3kqW19NmyN2py-RpW1Bw=
+wNk79LNVLW6Hb8pb4v9FGwF8zSzHqz_0_W1sv6JQ8G9rvgW4s7pgk4R3_rkW78gdHF4NNVTbW6m=
+JB5N94zsTKW9lxnnG5v9RF4VjTPjq5NyTV2W3ym8zP80gHzPW3syjJC1w80mfMBM0Y56f64wW6m=
+_HYT6SYwhcW5wFklh3txvH7W6MRN0x2KnwtmVHnQCH4LN_mZVJgrv572bsXFVLhBVH3Sc3LRN7N=
+gDrGgyWrPW70j3cZ7r8PfYW1-jLpL29CmkNW4tr42S3FTLbFW514jFz6y2ChMW60BL6d3tNChsW=
+5N7hmn783Pn2W8D9vJM152SBDW3pKVYB2CKCzGW83mNgf8bbdRMW201sw91Tp30LW3clY4w260J=
+4RW5dTJ3X9k6mwHN2zqRJ7SNHH_W2hv-816DxsR0W192x8j2XP_KhW4cY9dV4V7LzHf2yKgnW04=
+ )
+
+ig_icons (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsb=
+HW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85m_5PW50kH_H6lZ3pdW25qwGN2682zWW55v3Kz8gw=
+tTHW1LWj1s7l_qQ4W4YjgGv8YlhHSW8vFBxm2b9t6lW97Q-1m5F41qfW8p-PvT3HQn57W5dZt1Z=
+1m7L3pW1kchfD6kjF3pVrZf-K5RtWWpVlKvsB7yzf24W5z2M5x6WSgLkW8qGHzn3hTrnpW4gN4k=
+b7RCpdPVDlzmG5YlPl8N4LR5ymS0wxZW4Ny_Hl8hCNPVW1Wp4gF6qGyTbW10kLks5RLmZNW6V3X=
+Lb869zHBN7-BXhZsn8BmW3mDws32LhqgLW2SB1v_8MFSCWW6YrxVK1JT6S9W3LSJrg6LK6nKN3y=
+Nk9yJPZ7QN2kckrKRV9KBW2hG05F2tZZcXW99T76733_x6dW11fQy51pJ0c0W8PSmKQ95QLH0W4=
+J6MfW6ms3t7f7RLnyb04 )
+
+wechat_icons (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3=
+rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSx25m_5PW6N1X8z6lZ3pjN4JSdKxk6rWGW6mg4JX=
+4-W6kjW59-TQ54wlhyWW2dw7jj2jrbFQW7RS7m-52lFlQN3C5MVP_fj3BW6M5BgH6YTh5DW1DYD=
+Rq4_zcMfW76c_8196C8gDW626ssN3SHgvXW2Dm9fx1T76j2N6Nw3QPkHpz4W6MzSft7x0q3LW8r=
+y7C-5bp8XbVg74Dz6gvtbnVD-vbk952zGjW6GTPNs4Cxbs-W3N_kSZ5wbsNjW2Wyw1y1hnt1gW8=
+RXH-15xYDknW3rPgLx1n8zynW7Wb-3r4-DnQ7V4L_-D7_2scqN3RGD45g0--gW6Pl1Gd5Q12tKW=
+6Rlbwx1rDPFrN7Xrx818bg1jN58s9SpKsL8rW1L8-sP143XlWW55zqB35CRVv5W1pDj3f4PCnV9=
+W7rCXng1fJQ2WW2z8Hp47x94yTN34vCx6zwkzQW6Whd772hShMFW2-bG8765lC3gW90JQ3c7lhh=
+kGW5yGchw60S_tyf2Vcwqs04 )
+
+youtube_icons (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T=
+3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85m_5PW50kH_H6lZ3kZVN8_5r1pxr9DW1-5Gw=
+K3GM72FW8ZpH4T2s4TtbW34LPnP1p4JMSW3VwhJ91jqpjPW4KTX7H8cvchdW7qHZ_J5scy8jW1y=
+W8QX4Cwnz0W2LLFnf2cNRv3W9kfGqw3DhHPxMl4jr87wt_mW1BMR1w92V0SBW6p3_gM1KXt7mW8=
+FssT91DhTF2W3pDNgw6zN4T1W46W2zZ7Wf6vYW5R23jT6Qw87pW35zNZ06-tQBzW6C1kFH2v8Rg=
+-W84VMl42_D0hFW79fpRb3TLLKlW6MVXbN33lkTyW1yfc5h6DXRq2W1vXlN189p67MW2_vGzT3p=
+RyzjW36YNdw9cjt6PW2PHdD-25XdtWW7ZZMLZ3Wrk2lVhXvXp3x5NqWW663bYQ92WGL8W8G1zsn=
+86FQb9W9h-VNN5b523Mf2xG1Cn04 )
+
+Please do not reply to this email. For enquiries, please contact HKPC throu=
+gh the following channels:
+
+phonr_icon (tel:+85227885678)
+
++852 2788 5678
+(tel:+85227885678)
+
+whatsapp_icons (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8=
+T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85m_5PW50kH_H6lZ3mDW2w_fMY6Yw84kW8zj=
+79b6PjpTjN2N7jy0Wf8PrW2B0yVx4J6SsHW95Q_N_5xDV3DW3kjHXZ93lTnxW7-RGxV8d876BW6=
+zr1SY79bhxSW903djg4c-kXkW6gTq9h2-NtSgW32rV7w2DPB_zW5Jy7MV15CxpJW62q9XM8tV2k=
+fW6d6pR653yjSlW87j7GC8jR7z2W39jt-c8p4VLXW74Nb0L5xLt0vW7QNRxc8xmQzQW1sqHH06h=
+sx04W6-RfVh58xtjPW133Bfb8Ck8pMW1vp9lH4BVkq9W477PTb6GxbzGW2dXX2R13lHHcMhMw5K=
+bgWRxW18DrgW4w3VjbW8MJKMX5TxYfsW5vdJrD2Z6thkW5jjqL76mxjXVVdsy906kdpJbW2Cz9m=
+X4LL_jZW2GpM5d1T_9zjf7bPdsj04 )
+
++852 5283 4131
+(https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5=
+Zr3dpW6mk3Cf5nQ8pLN2jjSw85m_5PW50kH_H6lZ3mDW2w_fMY6Yw84kW8zj79b6PjpTjN2N7jy=
+0Wf8PrW2B0yVx4J6SsHW95Q_N_5xDV3DW3kjHXZ93lTnxW7-RGxV8d876BW6zr1SY79bhxSW903=
+djg4c-kXkW6gTq9h2-NtSgW32rV7w2DPB_zW5Jy7MV15CxpJW62q9XM8tV2kfW6d6pR653yjSlW=
+87j7GC8jR7z2W39jt-c8p4VLXW74Nb0L5xLt0vW7QNRxc8xmQzQW1sqHH06hsx04W6-RfVh58xt=
+jPW133Bfb8Ck8pMW1vp9lH4BVkq9W477PTb6GxbzGW2dXX2R13lHHcMhMw5KbgWRxW18DrgW4w3=
+VjbW8MJKMX5TxYfsW5vdJrD2Z6thkW5jjqL76mxjXVVdsy906kdpJbW2Cz9mX4LL_jZW2GpM5d1=
+T_9zjf7bPdsj04 )
+
+mail_icons (mailto:edm@email.hkpc.org)
+
+edm@email.hkpc.org
+(mailto:edm@email.hkpc.org)
+
+web_icons (https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqs=
+bHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85m_5PW50kH_H6lZ3lVVPXp356y_NgvW3xwNWF10Z=
+WBzW54WpBX20-4QZW7Zz5D07jcy43W5gmT158LCPTFW85vx9g857XSjW8cCcp61bS6NSVYsg7V3=
+fXZh5W1P4sPp72rl7cW8KlWVy63BLXTV3X1kY8L0K-qW6GsGGg8FR6SnW2SpcVH5j2TwtW4y8b4=
+Q4XGx1WW4T9plQ2h96X1N4J8l5Npt6txW6S_Lvv265h-lVYg9cJ7YR_5sW7r4WyW341phNW22vW=
+PM1CMs2GW1lGHKT3N8_yCW8VXNqw9dC9l3W8N2WTJ7c4h04VLj78n3BV2Z0W1Dswlq11g02rW2-=
+YNwC79nVqdW38Npz58HD-PfW3hP5Ht1BSV6wW6BP8vH2kLPTrW8KRyYN2KjJZFW3vg_vX2fwqC7=
+W7p85FC29Tjrff4MHpzs04 )
+
+www.hkpc.org
+(https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5=
+Zr3dpW6mk3Cf5nQ8pLN2jjSw85m_5PW50kH_H6lZ3lVVPXp356y_NgvW3xwNWF10ZWBzW54WpBX=
+20-4QZW7Zz5D07jcy43W5gmT158LCPTFW85vx9g857XSjW8cCcp61bS6NSVYsg7V3fXZh5W1P4s=
+Pp72rl7cW8KlWVy63BLXTV3X1kY8L0K-qW6GsGGg8FR6SnW2SpcVH5j2TwtW4y8b4Q4XGx1WW4T=
+9plQ2h96X1N4J8l5Npt6txW6S_Lvv265h-lVYg9cJ7YR_5sW7r4WyW341phNW22vWPM1CMs2GW1=
+lGHKT3N8_yCW8VXNqw9dC9l3W8N2WTJ7c4h04VLj78n3BV2Z0W1Dswlq11g02rW2-YNwC79nVqd=
+W38Npz58HD-PfW3hP5Ht1BSV6wW6BP8vH2kLPTrW8KRyYN2KjJZFW3vg_vX2fwqC7W7p85FC29T=
+jrff4MHpzs04 )
+
+COPYRIGHT =C2=A9 2024  Hong Kong Productivity Council. All rights reserved.
+
+Hong Kong Productivity Council, HKPC Building, 78 Tat Chee Avenue, Kowloon,=
+ Hong Kong
+
+Unsubscribe (https://campaigninfo.hkpc.org/hs/preferences-center/en/direct?=
+data=3DW2nXS-N30h-MtW2sKggc3XzkHyW1S8wC_2MW8zxW1BFtgX1LrgZsW41ydnP1L6dFSW3g=
+6fZm34CHCGW38bcM120WD0pW4tCjgQ3XJmK-W4tfYdr25d5mBW45FJ9r2YvTm6W3dnBcv3Mbh9x=
+W3T4zhZ3P4z2bW3gs9Yw2FG_GSW2r6tYw1VqwjDW2w0JcW2FZn-8W2HrcVc2-pc-lW2RHyDz1WY=
+tHdW32cdFL2sNYfdW4hmzps2y2t3jW3_X1m61NCD2tW4fjQTt45QQNLW218N8F2CW7XKW1Lm_00=
+3Y2Zl3W47sZnK1Q4wcFW2RzknP2My1Q1W4t7LyC3GRgprW2w3DNs21pDBlW1L5qzy2qLbThW32n=
+L9Q45NpXKW2sMMp-2p2yH8W2-kXMf1Lq0RXW1--3G_4ckqlHW3JKBnp2HYN8cW34HrdM1S8XQVW=
+3V-6xn4fz80vW30tD954pGx-ZW3XYdw92t1h4SW2RB6pt20ZtKBW1_kLwl3g8HpsW4fgPG949JD=
+Z1W362x3p1LHzXfW1_4ps44p7dx_W2xKfhB4rBGfGW36lJd83yN7VdW3djWgF3DVRjbW1BGkgP3=
+_HbjJ0&_hsenc=3Dp2ANqtz--pVhyANH9MKtNqcOJIe982EGRPOZt2oHihq-_3_04jtBfEYceTj=
+6OexmLBuJGaFH5LEv39IUwdgZbyxDm-J1d0LewqsQ&_hsmi=3D334992518 )
+Manage preferences (https://campaigninfo.hkpc.org/hs/preferences-center/en/=
+page?data=3DW2nXS-N30h-MtW2sKggc3XzkHyW1S8wC_2MW8zxW1BFtgX1LrgZsW41ydnP1L6d=
+FSW3g6fZm34CHCGW38bcM120WD0pW4tCjgQ3XJmK-W4tfYdr25d5mBW45FJ9r2YvTm6W3dnBcv3=
+Mbh9xW3T4zhZ3P4z2bW3gs9Yw2FG_GSW2r6tYw1VqwjDW2w0JcW2FZn-8W2HrcVc2-pc-lW2RHy=
+Dz1WYtHdW32cdFL2sNYfdW4hmzps2y2t3jW3_X1m61NCD2tW4fjQTt45QQNLW218N8F2CW7XKW1=
+Lm_003Y2Zl3W47sZnK1Q4wcFW2RzknP2My1Q1W4t7LyC3GRgprW2w3DNs21pDBlW1L5qzy2qLbT=
+hW32nL9Q45NpXKW2sMMp-2p2yH8W2-kXMf1Lq0RXW1--3G_4ckqlHW3JKBnp2HYN8cW34HrdM1S=
+8XQVW3V-6xn4fz80vW30tD954pGx-ZW3XYdw92t1h4SW2RB6pt20ZtKBW1_kLwl3g8HpsW4fgPG=
+949JDZ1W362x3p1LHzXfW1_4ps44p7dx_W2xKfhB4rBGfGW36lJd83yN7VdW3djWgF3DVRjbW1B=
+GkgP3_HbjJ0&_hsenc=3Dp2ANqtz--pVhyANH9MKtNqcOJIe982EGRPOZt2oHihq-_3_04jtBfE=
+YceTj6OexmLBuJGaFH5LEv39IUwdgZbyxDm-J1d0LewqsQ&_hsmi=3D334992518 )
+------=_Part_431640_1332996055.1732518141694
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3=
+.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:=
+v=3D"urn:schemas-microsoft-com:vml" lang=3D"en"><head>
+    <title>=E3=80=90Free Event=E3=80=91Sustainable Futures =E2=80=93 Insigh=
+ts and Innovations for Compliance in Manufacturing</title>
+    <meta property=3D"og:title" content=3D"=E3=80=90Free Event=E3=80=91Sust=
+ainable Futures =E2=80=93 Insights and Innovations for Compliance in Manufa=
+cturing">
+    <meta name=3D"twitter:title" content=3D"=E3=80=90Free Event=E3=80=91Sus=
+tainable Futures =E2=80=93 Insights and Innovations for Compliance in Manuf=
+acturing">
+   =20
+   =20
+   =20
+<meta name=3D"x-apple-disable-message-reformatting">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+    <!--[if gte mso 9]>
+  <xml>
+      <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+  </xml>
+ =20
+  <style>
+    ul > li {
+      text-indent: -1em;
+    }
+  </style>
+<![endif]-->
+<!--[if mso]>
+<style type=3D"text/css">
+ body, td {font-family: Arial, Helvetica, sans-serif;}
+ .hse-body-wrapper-table {background-color: #0050ff;}
+</style>
+<![endif]-->
+   =20
+     =20
+ =20
+   =20
+  <meta name=3D"generator" content=3D"HubSpot"><meta property=3D"og:url" co=
+ntent=3D"https://campaigninfo.hkpc.org/-free-event-sustainable-futures-insi=
+ghts-and-innovations-for-compliance-in-manufacturing-25nov"><meta name=3D"r=
+obots" content=3D"noindex,follow"><!--[if !((mso)|(IE))]><!-- --><style typ=
+e=3D"text/css">@media only screen and (max-width:639px){img.stretch-on-mobi=
+le,.hs_rss_email_entries_table img,.hs-stretch-cta .hs-cta-img{height:auto =
+!important;width:100% !important}
+.display_block_on_small_screens{display:block}.hs_padded{padding-left:20px =
+!important;padding-right:20px !important}
+.hs-hm,table.hs-hm{display:none}.hs-hd{display:block !important}table.hs-hd=
+{display:table !important}
+}.moz-text-html .hse-column-container{max-width:600px !important;width:600p=
+x !important}
+.moz-text-html .hse-column{display:table-cell;vertical-align:top}.moz-text-=
+html .hse-section .hse-size-3{max-width:150px !important;width:150px !impor=
+tant}
+.moz-text-html .hse-section .hse-size-12{max-width:600px !important;width:6=
+00px !important}
+@media only screen and (min-width:640px){.hse-column-container{max-width:60=
+0px !important;width:600px !important}
+.hse-column{display:table-cell;vertical-align:top}.hse-section .hse-size-3{=
+max-width:150px !important;width:150px !important}
+.hse-section .hse-size-12{max-width:600px !important;width:600px !important=
+} }@media only screen and (max-width:639px){ul,blockquote{margin:0;padding:=
+1em 40px}
+}</style><!--<![endif]--><style type=3D"text/css">#hs_body #hs_cos_wrapper_=
+main a[x-apple-data-detectors]{color:inherit !important;text-decoration:non=
+e !important;font-size:inherit !important;font-family:inherit !important;fo=
+nt-weight:inherit !important;line-height:inherit !important}
+a{text-decoration:underline}p{margin:0}body{-ms-text-size-adjust:100%;-webk=
+it-text-size-adjust:100%;-webkit-font-smoothing:antialiased;moz-osx-font-sm=
+oothing:grayscale}
+table{border-spacing:0;mso-table-lspace:0;mso-table-rspace:0}table,td{borde=
+r-collapse:collapse}
+img{-ms-interpolation-mode:bicubic}p,a,li,td,blockquote{mso-line-height-rul=
+e:exactly}</style></head>
+  <body id=3D"hs_body" bgcolor=3D"#0050ff" style=3D"margin:0 !important; pa=
+dding:0 !important; font-family:Arial, sans-serif; font-size:15px; color:#0=
+00000; word-break:break-word">
+    <div id=3D"preview_text" style=3D"display:none;font-size:1px;color:#005=
+0ff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;=
+" lang=3D"en">Register now! Reserve your spot now to join a morning of insi=
+ghts, networking, and forward-thinking on sustainable progress.</div>
+   =20
+<!--[if gte mso 9]>
+<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+    <v:fill type=3D"tile" size=3D"100%,100%" color=3D"#ffffff"/>
+</v:background>
+<![endif]-->
+    <div class=3D"hse-body-background" lang=3D"en" style=3D"background-colo=
+r:#0050ff" bgcolor=3D"#0050ff">
+      <table role=3D"presentation" class=3D"hse-body-wrapper-table" cellpad=
+ding=3D"0" cellspacing=3D"0" style=3D"margin:0; padding:0; width:100% !impo=
+rtant; min-width:320px !important; height:100% !important" width=3D"100%" h=
+eight=3D"100%">
+        <tbody><tr>
+          <td class=3D"hse-body-wrapper-td" valign=3D"top" style=3D"font-fa=
+mily:Arial, sans-serif; font-size:15px; color:#000000; word-break:break-wor=
+d; padding-top:20px; padding-bottom:20px">
+            <div id=3D"hs_cos_wrapper_main" class=3D"hs_cos_wrapper hs_cos_=
+wrapper_widget hs_cos_wrapper_type_dnd_area" style=3D"color: inherit; font-=
+size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" d=
+ata-hs-cos-type=3D"dnd_area">  <div id=3D"section-0" class=3D"hse-section h=
+se-section-first" style=3D"padding-left:10px; padding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation">
+      <tr>
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-0-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module-0-0-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module-0-0-0_" class=3D"hs=
+_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style=3D"=
+color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-gene=
+ral-type=3D"widget" data-hs-cos-type=3D"rich_text"><h2 style=3D"margin:0; m=
+so-line-height-rule:exactly; text-align:right; font-size:12px; line-height:=
+100%" align=3D"right"><span style=3D"color: #ffffff;"><a href=3D"https://ca=
+mpaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3C=
+f5nQ8pLN2jjSyd7mmzdW95khT26lZ3lNW5DlVfv78VvzFW2Ywkk02K7qKnW7fytyc570TRlW1qS=
+x8_54RznyW26kgQQ7McRxYW2vs9XY5FTwsFVSZlSP4RMpN_W8QLlHx1STY8rW7GhZB76qWGSVW6=
+fVpLZ3NNYkjW11Qvsd74dQf4W3jnHBX1V3NVzW20n2Q03HNL8nW32mzx43r1SzRW608lBs2LP1B=
+nF85pMNyjk7jW72Nt9v5mPPPZW8svPkr3rYl1PW36KGbS79HtvLW8VlH5-8z-qQVW4dXhgz8Yq_=
+g1W2TScxQ83wGTQW5Y31G41PYGx8N8_2P346Dd6tVpl8w34fdHJmW8LB7zq77zh3jVlFrB024jc=
+_vW1PMcWd96BF2LW7gd6pT4s-Th9W3Y5qSV4ZB08MW6s83Vf26ygpnW2djwVs7W3BS-W8wqMzD7=
+1Y7d4VBF2Nd6v0nPfW4vcqDw2sNWMrW24V8pK2662zhW3_SC186PRHtmW2b0nz93tcmYRW30Hrb=
+d8KlVd3W7q_CgP2FC0xWVGNtYF3qGdvzW2W5_dN6Ng6QHW6g1jZD2w32DhW5QMrnc7DpR6gW8sJ=
+GjV2gl7dLW3-9nSB8plYNgW7TxyFK83Mq8zMWflb0k1mT3W34Bp4y7bs_ckW428p4V98Tr-cW1w=
+34QB3M9N2TW6GRWFg5S_G2HW4fqTjl6N7Mb-W75Ls1H4F6BZwW2Ff7SG9k_VzLN9jDFyFQ2L4fW=
+3zyjmn38P5QkW3ZX_s38cr7QFW2pmvxF252kcgW82N7rS6JQ8kBW8xBgfn4dT-P6W54Vwn65mnF=
+vJf3CQzy204" style=3D"color:#ffffff" rel=3D"noopener" data-hs-link-id=3D"0"=
+ target=3D"_blank">=E4=B8=AD=E6=96=87</a></span></h2></div></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-1" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation">
+      <tr>
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-1-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module-1-0-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><div style=3D"overflow:hidden">
+  <table role=3D"presentation" class=3D"hse-pre-header hse-secondary" width=
+=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"text-align:right; fo=
+nt-family:Arial, sans-serif; font-size:12px; line-height:135%; color:#23496=
+d; margin-bottom:0; padding:0" align=3D"right">
+    <tbody>
+      <tr>
+        <td align=3D"right" valign=3D"top" style=3D"color:#000000; word-bre=
+ak:break-word; text-align:right; font-family:Arial, sans-serif; font-size:1=
+2px; padding:10px 0; margin-bottom:0; line-height:135%">
+          <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2tHwg04/=
+VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSx27mmzdW6N2kFb6lZ3pGW418VSM5ybxr=
+kN3gvsNHrWH1XW32NR0C6yDMt5W8fBSrR7jF450N22gVvmggpsNW3rw8tV590gy3W6zgKtn93Vy=
+fYW9d-XY72hYCQJW6WV8t56-z70dVvFVLT681mJyW8pRk7y22zFCTW4Vznkk4nps2rW5JMmxv4Q=
+h5vZW2Bjd0B3G8N4RW1mvKPM5XS1MWN1MDfG_SNZW-W57QK0S7xZfN3W7Y_dp55PmVqqW3lPS5-=
+1QS1zGN323hXTsb73PW8YZ_0C3mhPYGW695Lz450cFvdMtPnbshsGsKV7w_XM5PPtp7W1vT9zS5=
+5ntWcVdtbf_2SWcCrW4mPJcL3mFxc7W8jK9j_2CTr0bW3ggfY68nLGJ4VljV495J4QZtW60BsZ-=
+1R5v92W5FtSTf3SVkWTW360mfw3VSvJjW2X6LZp5gYk6yW2hCXQm6z4QGnW3wVfQk5X5pGKW7QM=
+j8F3TsPD-W2sr1cP70dKD6W3xXspn4mK1BVW38kyX19gdLsgW6FC4jV4bNRN5W6vFFdD4PHKYzW=
+6HPnW63wYDVnW17BhmH9cP9MxF3fJs62tnhKW7ZDlRc6BdcCrW25_MMM2-HkjMW98bmPR6n9J_W=
+W7NCv6y1mYrBsW6h-MBD5xp-F2W5mb3rl99r91kW7678v44_5t8bW4tZwYt1SY9XcW5_1w1p4F5=
+fK8f2Xl6DY04" style=3D"color:#FFFFFF; font-weight:normal; text-decoration:u=
+nderline; font-style:normal" data-hs-link-id=3D"0" target=3D"_blank">View i=
+n browser</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-2" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-2-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module-2-0-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"presentat=
+ion" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Arial, sans-=
+serif; color:#000000; word-break:break-word; text-align:center; padding:0px=
+; font-size:0px">
+        <img alt=3D"" src=3D"https://campaigninfo.hkpc.org/hs-fs/hubfs/eDM_=
+header.png?width=3D1200&amp;upscale=3Dtrue&amp;name=3DeDM_header.png" style=
+=3D"outline:none; text-decoration:none; max-width:100%; font-size:16px" wid=
+th=3D"600" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-3" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-3-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module-3-0-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"presentat=
+ion" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Arial, sans-=
+serif; color:#000000; word-break:break-word; text-align:center; padding:0px=
+; font-size:0px">
+        <img alt=3D"Sustainable Futures - Insights and Innovations for Comp=
+liance in Manufacturing_Logo_EN" src=3D"https://campaigninfo.hkpc.org/hs-fs=
+/hubfs/Sustainable%20Futures%20-%20Insights%20and%20Innovations%20for%20Com=
+pliance%20in%20Manufacturing_Logo_EN.png?width=3D1200&amp;upscale=3Dtrue&am=
+p;name=3DSustainable%20Futures%20-%20Insights%20and%20Innovations%20for%20C=
+ompliance%20in%20Manufacturing_Logo_EN.png" style=3D"outline:none; text-dec=
+oration:none; max-width:100%; font-size:16px" width=3D"600" align=3D"middle=
+">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-4" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-4-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17147244255081" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Arial, sans-=
+serif; color:#000000; word-break:break-word; text-align:center; padding:0px=
+; font-size:0px">
+        <img alt=3D"Sustainable Futures - Insights and Innovations for Comp=
+liance in Manufacturing_KV" src=3D"https://campaigninfo.hkpc.org/hs-fs/hubf=
+s/Sustainable%20Futures%20-%20Insights%20and%20Innovations%20for%20Complian=
+ce%20in%20Manufacturing_KV.png?width=3D1200&amp;upscale=3Dtrue&amp;name=3DS=
+ustainable%20Futures%20-%20Insights%20and%20Innovations%20for%20Compliance%=
+20in%20Manufacturing_KV.png" style=3D"outline:none; text-decoration:none; m=
+ax-width:100%; font-size:16px" width=3D"600" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+<div id=3D"hs_cos_wrapper_module_17126466249732" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td align=3D"right" valign=3D"top" style=3D"font-family:Arial, sans-s=
+erif; color:#000000; word-break:break-word; text-align:right; padding:0px; =
+font-size:0px">
+        <img alt=3D"Free Seminar" src=3D"https://campaigninfo.hkpc.org/hs-f=
+s/hubfs/CDD/Assets/hero%20banner/Free%20Seminar.png?width=3D262&amp;upscale=
+=3Dtrue&amp;name=3DFree%20Seminar.png" style=3D"outline:none; text-decorati=
+on:none; max-width:100%; font-size:16px" width=3D"131" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; padding:10px 20p=
+x"><div id=3D"hs_cos_wrapper_module-4-0-0" class=3D"hs_cos_wrapper hs_cos_w=
+rapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-siz=
+e: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data=
+-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module-4-0-0_" class=3D"h=
+s_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style=3D=
+"color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-gen=
+eral-type=3D"widget" data-hs-cos-type=3D"rich_text"><p style=3D"mso-line-he=
+ight-rule:exactly; line-height:115%">Dear Edmund,</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:115%">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; font-size:22px; line-height:115%;=
+ text-align:center; font-weight:bold" align=3D"center">Sustainable Futures =
+=E2=80=93</p>
+<p style=3D"mso-line-height-rule:exactly; font-size:22px; line-height:115%;=
+ text-align:center; font-weight:bold" align=3D"center">Insights and Innovat=
+ions for Compliance in Manufacturing</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:115%">&nbsp;</p>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; line-height:115%; font=
+-weight:normal; font-size:15px; text-align:justify" align=3D"justify">The G=
+erman Chamber of Commerce, in partnership with the Hong Kong Productivity C=
+ouncil (HKPC) and the Chinese Chamber of Commerce (CGCC), aims to strengthe=
+n collaboration between German and Chinese businesses in the manufacturing =
+sector. Through expert insights, success stories, and practical guidance, t=
+his event will help Chinese manufacturers align with upcoming sustainabilit=
+y regulations and identify actionable steps for compliance.</h2>
+<p style=3D"mso-line-height-rule:exactly; line-height:115%">&nbsp;</p>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-size:15px; line-h=
+eight:115%; font-weight:bold">Event Highlights:</h2>
+<ul style=3D"mso-line-height-rule:exactly; font-size:15px; line-height:115%=
+">
+<li style=3D"line-height: 125%;">
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-weight:normal; fo=
+nt-size:15px; line-height:175%">Opening Remarks: Introduction to sustainabl=
+e practices and upcoming regulations in manufacturing</h2>
+</li>
+<li style=3D"line-height: 125%;">
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-weight:normal; fo=
+nt-size:15px; line-height:175%">Key Insights Presentation: Unveiling a new =
+sustainability brochure for manufacturers to understand European and German=
+ standards</h2>
+</li>
+<li style=3D"line-height: 125%;">
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-weight:normal; fo=
+nt-size:15px; line-height:175%">Success Stories: Case studies on sustainabl=
+e practices by leading companies</h2>
+</li>
+<li style=3D"line-height: 125%;">
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-weight:normal; fo=
+nt-size:15px; line-height:175%">Expert Panel Discussion: Interactive sessio=
+n with sustainability experts on challenges and opportunities in sustainabl=
+e manufacturing</h2>
+</li>
+<li>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-size:15px; line-h=
+eight:125%; font-weight:normal">Networking Session: Connect with industry l=
+eaders and peers for collaborations</h2>
+</li>
+</ul>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; line-height:115%; font=
+-weight:normal; font-size:15px; text-align:justify" align=3D"justify">&nbsp=
+;</h2>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; line-height:115%; font=
+-weight:normal; font-size:15px; text-align:justify" align=3D"justify">We we=
+lcome participation from manufacturing sector and business community intere=
+sted in sustainable supply chains. The event is free of charge. Don't miss =
+this unique opportunity=E2=80=94we look forward to your enthusiastic partic=
+ipation!</h2></div></div></td></tr></tbody></table>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; padding:10px 20p=
+x"><div id=3D"hs_cos_wrapper_module-4-0-1" class=3D"hs_cos_wrapper hs_cos_w=
+rapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-siz=
+e: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data=
+-hs-cos-type=3D"module"><table role=3D"none" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" style=3D"vertical-align:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #CCCCCC;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #CCCCCC;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-5" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column-5-0" class=3D"hse-column hse-size-3">
+  <div id=3D"hs_cos_wrapper_module-5-0-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"presentat=
+ion" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"icon_date_b2-1" src=3D"https://campaigninfo.hkpc.org/hs=
+-fs/hubfs/Assets/icons/icon_date_b2-1.png?width=3D120&amp;upscale=3Dtrue&am=
+p;name=3Dicon_date_b2-1.png" style=3D"outline:none; text-decoration:none; m=
+ax-width:100%; font-size:16px" width=3D"60" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; padding:10px"><d=
+iv id=3D"hs_cos_wrapper_module-5-0-1" class=3D"hs_cos_wrapper hs_cos_wrappe=
+r_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"module"><div id=3D"hs_cos_wrapper_module-5-0-1_" class=3D"hs_cos=
+_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style=3D"colo=
+r: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-general-=
+type=3D"widget" data-hs-cos-type=3D"rich_text"><h2 style=3D"margin:0; mso-l=
+ine-height-rule:exactly; font-size:14px; line-height:115%; text-align:cente=
+r; font-weight:normal" align=3D"center">3 December 2024<br>09:00 - 12:00&nb=
+sp;</h2></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+<!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column-5-1" class=3D"hse-column hse-size-3">
+  <div id=3D"hs_cos_wrapper_module-5-1-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"presentat=
+ion" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"icon_location_b2-1" src=3D"https://campaigninfo.hkpc.or=
+g/hs-fs/hubfs/Assets/icons/icon_location_b2-1.png?width=3D120&amp;upscale=
+=3Dtrue&amp;name=3Dicon_location_b2-1.png" style=3D"outline:none; text-deco=
+ration:none; max-width:100%; font-size:16px" width=3D"60" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; padding:10px 20p=
+x"><div id=3D"hs_cos_wrapper_module-5-1-1" class=3D"hs_cos_wrapper hs_cos_w=
+rapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-siz=
+e: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data=
+-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module-5-1-1_" class=3D"h=
+s_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style=3D=
+"color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-gen=
+eral-type=3D"widget" data-hs-cos-type=3D"rich_text"><h2 style=3D"margin:0; =
+mso-line-height-rule:exactly; font-size:14px; line-height:115%; text-align:=
+center; font-weight:normal" align=3D"center">&nbsp;SME One Foyer<span style=
+=3D"border: 1pt none windowtext;">,</span></h2>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-size:14px; line-h=
+eight:115%; text-align:center; font-weight:normal" align=3D"center"><span s=
+tyle=3D"border: 1pt none windowtext;">G/F, HKPC Building, 78 Tat Chee Avenu=
+e,</span></h2>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-size:14px; line-h=
+eight:115%; text-align:center; font-weight:normal" align=3D"center"><span s=
+tyle=3D"border: 1pt none windowtext;"> Kowloon</span></h2></div></div></td>=
+</tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+<!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column-5-2" class=3D"hse-column hse-size-3">
+  <div id=3D"hs_cos_wrapper_module-5-2-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"presentat=
+ion" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"icon_medium_b2-2" src=3D"https://campaigninfo.hkpc.org/=
+hs-fs/hubfs/Assets/icons/icon_medium_b2-2.png?width=3D120&amp;upscale=3Dtru=
+e&amp;name=3Dicon_medium_b2-2.png" style=3D"outline:none; text-decoration:n=
+one; max-width:100%; font-size:16px" width=3D"60" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; padding:10px 20p=
+x"><div id=3D"hs_cos_wrapper_module-5-2-1" class=3D"hs_cos_wrapper hs_cos_w=
+rapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-siz=
+e: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data=
+-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module-5-2-1_" class=3D"h=
+s_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style=3D=
+"color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-gen=
+eral-type=3D"widget" data-hs-cos-type=3D"rich_text"><h2 style=3D"margin:0; =
+mso-line-height-rule:exactly; font-size:14px; line-height:125%; text-align:=
+center; font-weight:normal" align=3D"center">English</h2></div></div></td><=
+/tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+<!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column-5-3" class=3D"hse-column hse-size-3">
+  <div id=3D"hs_cos_wrapper_module-5-3-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"presentat=
+ion" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"icon_target_b2-1" src=3D"https://campaigninfo.hkpc.org/=
+hs-fs/hubfs/Assets/icons/icon_target_b2-1.png?width=3D120&amp;upscale=3Dtru=
+e&amp;name=3Dicon_target_b2-1.png" style=3D"outline:none; text-decoration:n=
+one; max-width:100%; font-size:16px" width=3D"60" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; padding:10px 20p=
+x"><div id=3D"hs_cos_wrapper_module-5-3-1" class=3D"hs_cos_wrapper hs_cos_w=
+rapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-siz=
+e: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data=
+-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module-5-3-1_" class=3D"h=
+s_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style=3D=
+"color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-gen=
+eral-type=3D"widget" data-hs-cos-type=3D"rich_text"><h2 style=3D"margin:0; =
+mso-line-height-rule:exactly; font-size:14px; line-height:115%; text-align:=
+center; font-weight:normal" align=3D"center">Manufacturing sector and busin=
+ess community interested in sustainable supply chains</h2></div></div></td>=
+</tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1732003923048" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column_1732003923048_0" class=3D"hse-column hse-size-3">
+ =20
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+<!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column_1732003923048_1" class=3D"hse-column hse-size-3">
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-=
+serif; font-size:15px; color:#000000; word-break:break-word; padding:10px 2=
+0px"><div id=3D"hs_cos_wrapper_module_17272560631461" class=3D"hs_cos_wrapp=
+er hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inheri=
+t; font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"w=
+idget" data-hs-cos-type=3D"module"><table align=3D"center" border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-coll=
+apse:separate!important">
+    <tbody><tr><td align=3D"center" valign=3D"middle" bgcolor=3D"#0050ff" s=
+tyle=3D"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-=
+break:break-word; border-radius:10px; cursor:auto; background-color:#0050ff=
+; mso-padding-alt:12px 18px"><a href=3D"https://campaigninfo.hkpc.org/e3t/C=
+tc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSx27mmzdW6N2kF=
+b6lZ3ldW3NCBF_5B5LTzW7BvgYx5s5D3VW5fMYyF1F4y7DW4qh78P2bZS08W6tmvqx2Qz6vjVlP=
+mzv6r0FrDW7spCCq40598sW6PvlXG519WlsW7kMzTn78VS32W2Cm4Gj8BCSRzW2Z6LPZ68hrvxW=
+1C1Jkv85zM8lW2ZPhkv7Y7c8MW3R2gzN5V1PBHW55cG3b1ZTtx6W7cfrjd7XbzGLW6T5zXj1D_v=
+6NW1CBTlJ89-8klVTMYzV2LMsY6W10Ssdm3V4LcfW7knx-c7bYqstN11wp6pZyS_NW4V7znx1d1=
+xZ6W7Btr2p2Qk39rW7nld9n3pZhxyN89NfQw_tspmW7Wjs7M1N1wNfW8VD7k-5KjjcjW2Q95hN4=
+5PGJSW8nNV5d2vWn0_W8mgz789c5ccWW7JllDH6wq0DmW6Q-_gk72YqNSW8l1d8-95xXnfW2fR5=
+dd244Db7W8S7Kmt3BvpLPW3qmX3h50swWfW7ttMzQ5PhwYKW1-Rvqg3YCX5gW7qmCzV2j77lDW6=
+_ftZ44yx16kW8QDHMC6y0PRkW3Z3LvQ2ZQjB1VT4SnX571s1gW35b00r2RyytpW2C0W6V2KPLLF=
+W8lM6n15d6pp9W1HVcXc803PS_W1sXcXD2JvKXBW6MrwLX2sY11WW1_x4Mp1Kg_fnN9m2v77gLs=
+1kW2YvdzF1NZTpjW3FhK2H3nnF41f3wldfl04" target=3D"_blank" style=3D"color:#00=
+a4bd; font-size:13px; font-family:Arial, sans-serif; Margin:0; text-transfo=
+rm:none; text-decoration:none; padding:12px 18px; display:block" data-hs-li=
+nk-id=3D"0">
+          <strong style=3D"color:#ffffff;font-weight:normal;text-decoration=
+:none;font-style:normal;">Rundown</strong>
+        </a>
+      </td>
+    </tr>
+  </tbody></table></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+<!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column_1732003923048_2" class=3D"hse-column hse-size-3">
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-=
+serif; font-size:15px; color:#000000; word-break:break-word; padding:10px 2=
+0px"><div id=3D"hs_cos_wrapper_module-6-2-0" class=3D"hs_cos_wrapper hs_cos=
+_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-s=
+ize: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" da=
+ta-hs-cos-type=3D"module"><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-collapse:sep=
+arate!important">
+    <tbody><tr><td align=3D"center" valign=3D"middle" bgcolor=3D"#0050ff" s=
+tyle=3D"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-=
+break:break-word; border-radius:10px; cursor:auto; background-color:#0050ff=
+; mso-padding-alt:12px 18px"><a href=3D"https://campaigninfo.hkpc.org/e3t/C=
+tc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSwM5nR32W69t95=
+C6lZ3pBW6Rp-4k8B0tLBW4dc1jv2VmLj5W6sGG411Ts5q3W3WZqWh5Wl_GzW1j02Ft2cfbZwW1_=
+R7dD4cK-SJW2cPyvj6gw_N0N3s0-xS6wQN0W55qcR_8kVKHWW4Z3bLS7c8GQKW8n-Hp72bn8tlW=
+8Y5WJR7k53VVW3DVd_p4xsvP6W8tRR-r51dpySW3l68Sq3PHKgDVSZfFN8RF4bTW4Dn8kF7K_d-=
+VW5VMJs431BrphW8-ZHXj5hJfhsW5rnX8765D0y9W1L0Dnv2YJwnFN5tv9nrl3ZX9W3v8pBw7Pw=
+9z1W53v60V12cPtMW5jlb0G4SWldMW74DFN14bVKxGW8gs2W33NPGxdW3XZDYh8-L5sPW81XScV=
+3WwrDTVRqH966nJJKHW8yr0yC4R70YBN6ktYdDrJKM8W6kLV0b85BXTMVPVZkp5ssfYPW4GMcrC=
+32QkPXN28X1HVn0vjjf3lFTBg04" target=3D"_blank" style=3D"color:#00a4bd; font=
+-size:13px; font-family:Arial, sans-serif; Margin:0; text-transform:none; t=
+ext-decoration:none; padding:12px 18px; display:block" data-hs-link-id=3D"0=
+">
+          <strong style=3D"color:#ffffff;font-weight:normal;text-decoration=
+:none;font-style:normal;">Enrol Now</strong>
+        </a>
+      </td>
+    </tr>
+  </tbody></table></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+<!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column_1732003923048_3" class=3D"hse-column hse-size-3">
+ =20
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-7" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-7-0" class=3D"hse-column hse-size-12">
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-=
+serif; font-size:15px; color:#000000; word-break:break-word; padding:10px 2=
+0px"><div id=3D"hs_cos_wrapper_module-7-0-0" class=3D"hs_cos_wrapper hs_cos=
+_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-s=
+ize: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" da=
+ta-hs-cos-type=3D"module"><table role=3D"none" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" style=3D"vertical-align:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #CCCCCC;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #CCCCCC;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-8" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-8-0" class=3D"hse-column hse-size-12">
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-=
+serif; font-size:15px; color:#000000; word-break:break-word; padding:10px 2=
+0px 10px 15px"><div id=3D"hs_cos_wrapper_module-8-0-0" class=3D"hs_cos_wrap=
+per hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inher=
+it; font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"=
+widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module-8-0-0_=
+" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_te=
+xt" style=3D"color: inherit; font-size: inherit; line-height: inherit;" dat=
+a-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"rich_text"><h1 style=
+=3D"margin:0; mso-line-height-rule:exactly; font-size:15px; line-height:125=
+%; font-weight:bold; text-align:center" align=3D"center"><span style=3D"col=
+or: #000000;">Enquiry:</span></h1>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-size:15px; line-h=
+eight:125%; font-weight:normal; text-align:center" align=3D"center">Ms YEUN=
+G=EF=BD=9C+852 2788 5044=EF=BD=9C<a href=3D"https://campaigninfo.hkpc.org/e=
+3t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85nR32W5=
+0kH_H6lZ3m6VRh7SX8D15-_W733mjH8HFBRKW8Pgh7M61RmFyW6436B18ZvQmzW1k0-dL5k-c_s=
+W11wSfT619nMdN4BPDZMX3q8BW7qpMzj4QLKCSN8ZPH9SQ6bvqN3KDbZWGWjv3W2CDlj837HK7L=
+W8mdvmH6_5tj4W79dmnd3bnkzZW40Tmtv1vhy24W95bCXm50DlHzW9gyk937CpHmFW6Wtjdk2bF=
+YyRW1Wqgdp3csD8GW3KmPWw2t4WmDW7DKM6Q1byhRtW1Q8BjC2gq1ZvW5fxY3V8mPw9FW8PGKcP=
+74dQXgW5mCpBZ94fD0vW6wNw9t9ftRLHW5TpcqL2QdwS0W7KtBXC4tKyTYV58x_28szDbZW4Gpz=
+011wqcbWV-TJK45nHBvVW7313Jp7whD_VVlklWF8Jnr6Hf38N0pv04" style=3D"color:#000=
+000; text-decoration:none" data-hs-link-id=3D"0" target=3D"_blank">dorayeun=
+g@hkpc.org</a></h2>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-size:15px; line-h=
+eight:125%; font-weight:normal; text-align:center" align=3D"center">Ms LAM=
+=EF=BD=9C+852 2788 6371=EF=BD=9C<a href=3D"https://campaigninfo.hkpc.org/e3=
+t/Ctc/2N+113/d2tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85nR32W50=
+kH_H6lZ3nXW4BdH3c72rsnMW5bXH7D5_pV7mVRWt283SCT8vW4XcPH-5b6y1rW5X6fwc3N6bfPN=
+9lj6WYY74VPW77rzzV47mlgtW3ybKJz8xcQ5fW4ksjQP1gCsrRW2GHGP68fgbpdW88Bx6j5X0wM=
+kVJx0ps7kMF_WW1VKh-T5XztKKN4cthgqt_NwxV48VRP55sfkTW7xxqMr8PQCyDW7crpDM2P5Cb=
+HW17cX5y9fTSlWVgRKCS5SG33FW1CWXfD5q2xzgW86dD125dk4bgW7xRKQ33WDt5nW20-J-r6df=
+0X0W6DJ1RF8_Tt7gW2GyH-73S1xM7W4VqpxQ1cllp7W1tbvDT5c228RW17FV3N3wlhsGW7sxVmR=
+5rQ6R9W9hv-s-8FqYD6W76K68Y6dFTRBW2mzY357wC6f7f5Wcl0j04" style=3D"color:#000=
+000; text-decoration:none" data-hs-link-id=3D"0" target=3D"_blank">jeannel@=
+hkpc.org</a></h2>
+<h1 style=3D"margin:0; mso-line-height-rule:exactly; font-size:15px; line-h=
+eight:125%; text-align:center; font-weight:normal" align=3D"center">&nbsp;<=
+/h1></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-9" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-9-0" class=3D"hse-column hse-size-12">
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-=
+serif; font-size:15px; color:#000000; word-break:break-word; padding:10px 2=
+0px"><div id=3D"hs_cos_wrapper_module-9-0-0" class=3D"hs_cos_wrapper hs_cos=
+_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-s=
+ize: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" da=
+ta-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module-9-0-0_" class=3D=
+"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style=
+=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-=
+general-type=3D"widget" data-hs-cos-type=3D"rich_text"><p style=3D"mso-line=
+-height-rule:exactly; font-size:10px; line-height:125%; font-weight:bold"><=
+span style=3D"color: #000000;">Disclaimer:=E2=80=8B=E2=80=8B</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:10px; line-height:125%;=
+ font-weight:normal; text-align:justify" align=3D"justify"><span style=3D"c=
+olor: #000000;">Any opinions, findings, conclusions or recommendations expr=
+essed in this material/event do not necessarily reflect the views of the Or=
+ganiser, Co-organiser and Supporting Organisation.<br><br>Please be advised=
+ that the views and opinions expressed in the panels by the speakers are no=
+t those of HKPC, and accordingly, HKPC takes no responsibility for the accu=
+racy or completeness of the contents provided and shared by the speakers, a=
+nd expressly disclaims any liability whatsoever for any claim, loss or dama=
+ge howsoever arising from the use of or in reliance upon the whole or any p=
+art of the contents thereof.=E2=80=8B=E2=80=8B </span><span style=3D"color:=
+ #000000;">The speakers=E2=80=99 speech or opinions regarding the future de=
+velopment, tend and conditions of the economy, industry and market may invo=
+lve the forward-looking views, predictions and statements which are subject=
+ to the influence of certain risks, unexpected or uncertainties factors and=
+ assumptions. You shall pay caution and assess the risks thereof.=E2=80=8B<=
+/span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-10" class=3D"hse-section hse-section-last" style=3D"pa=
+dding-left:10px; padding-right:10px">
+   =20
+   =20
+    <!--[if !((mso)|(IE))]><!-- -->
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+    <!--<![endif]-->
+   =20
+    <!--[if (mso)|(IE)]>
+      <div class=3D"hse-column-container" style=3D"min-width:280px;max-widt=
+h:600px;width:100%;Margin-left:auto;Margin-right:auto;">
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-10-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module-10-0-0" class=3D"hs_cos_wrapper hs_cos_w=
+rapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-siz=
+e: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data=
+-hs-cos-type=3D"module"><div style=3D"max-width:600px; margin: 0 auto;backg=
+round-color:#fff;color:#000;">
+  <div style=3D"width:100%;text-align:center;">
+    <div style=3D"padding:10px 20px;font-style:Helvetica ;font-size:15px;li=
+ne-height: 175%;">
+      <span>Follow us</span>
+    </div>
+    <div class=3D"social-container" style=3D"padding:0px 20px;">
+      <table style=3D"width:auto;text-align:center;margin:0 auto">
+        <tbody><tr style=3D"line-height:1">
+           =20
+             =20
+             =20
+             =20
+               =20
+               =20
+               =20
+             =20
+               <td style=3D"font-family:Arial, sans-serif; font-size:15px; =
+color:#000000; word-break:break-word; padding:8px 5px">
+                 <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2=
+tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSws5nR32W5BWr2F6lZ3kYW1Mc_=
+wg6r3XYYW81BKzl4PMr-1W3_Hztm2Pvn-8MVZhxBnNBYkW89Dm681qwfqGW4Q7Hhn98HrYrN6vV=
+mKq_x4ktW99lv6k9c5Xb-W6W8Kxp1B2MXlVQ1m_c21L5bJW6TC0ft5w3YMJW1dffk298kxWfW2C=
+0nFc80wt4SW5gq-SC8L7j5gW43V25B5s79NVW26sCqv4FcjyQN8GvXQt9gmmxVMQ_jB9crs2zVK=
+Zm9D12FMZxN10n17mkjw_sVgW_0G88QqVdVM5g3Q5Vk2gbN4whYnxlMZ17VqWmx97d1BN6W5__b=
+6G6dVBhNW92T9jG2pqzbxW8SF1_l80dJj7W180wzj91ySmFW1bCf-x56gcFCVc1ZqP27jq6TW3T=
+M6vQ7q8Tj4W5-3FJN1sGffVW7VVR853g-yV9W6NmqzS8tXWCXdnKtLY04" style=3D"color:#=
+00a4bd" data-hs-link-id=3D"0" target=3D"_blank">
+                       <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubf=
+s/Assets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%209)/fb_i=
+cons.png?width=3D80&amp;height=3D80&amp;upscale=3Dtrue&amp;name=3Dfb_icons.=
+png" alt=3D"fb_icons" loading=3D"lazy" width=3D"40" height=3D"40" style=3D"=
+outline:none; text-decoration:none; border:none">
+                  </a>
+                </td> =20
+           =20
+             =20
+             =20
+             =20
+               =20
+               =20
+               =20
+             =20
+               <td style=3D"font-family:Arial, sans-serif; font-size:15px; =
+color:#000000; word-break:break-word; padding:8px 5px">
+                 <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2=
+tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSwM5nR32W69t95C6lZ3pjV9348=
+r3QRW_9N9fq_59QlGd0W2Vz_Cd7mLgPrW1WGdKD2lVgRQW9kH-4H7v7tNpN1KyTnFzPzn7W8-DB=
+_B58NztyVkMjP27gyHmDW5CxyY53X2t7-W3tHxKJ5_cRzWW4vYF3Y7z3Pn-W27FgKz7w25_mW1B=
+ZPQX3D9jzyN68HMvxBscWyW94GgBn7G5hBGN2x0BkBh8tJxW6jXqkH895_jLW96KBsn4qFBVLW1=
+Jvf8y1py-BpW4rtyvp2_WglkVnZ05b84lgHBW5cVKGj3_BM4sW4HJ-R926l_fYW6mqYQ32JN8zp=
+W6YZXy48CzphTW4wYpn88cKwtDW2K5HD2164SfpW2RNrjP7qJGJdN8ywD2bLl3N8W6q7NLh1f3K=
+1QW8lZM148vH-nvW89wv7x1D16mWW7yHrp25pwpm0W9g7yVg4YfJm7N2zwN70_YfHXW9hhZzx81=
+tsczf4tXB1604" style=3D"color:#00a4bd" data-hs-link-id=3D"0" target=3D"_bla=
+nk">
+                       <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubf=
+s/Assets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%209)/link=
+edin_icons.png?width=3D80&amp;height=3D80&amp;upscale=3Dtrue&amp;name=3Dlin=
+kedin_icons.png" alt=3D"linkedin_icons" loading=3D"lazy" width=3D"40" heigh=
+t=3D"40" style=3D"outline:none; text-decoration:none; border:none">
+                  </a>
+                </td> =20
+           =20
+             =20
+             =20
+             =20
+               =20
+               =20
+               =20
+             =20
+               <td style=3D"font-family:Arial, sans-serif; font-size:15px; =
+color:#000000; word-break:break-word; padding:8px 5px">
+                 <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2=
+tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSws5nR32W5BWr2F6lZ3m4W9gs-=
+7x4kMfRrW5YKJ5h4vnlWwW5KWyNf4Pp3RTW5hW8pl3hGXtqW46Mqvk2dZll2W1SS25x4H_l5WW7=
+6nSKR1yw1_1W56WZN27JxtkmW4Zm8kX2RcQ6cW8CQH207_6MN-N6_GJlDbB0dGW2J1y4x5Zny0h=
+N2S1g85By9BLW91ypsV4SCN3tW5mTmGQ3Fwh_SVRtYK77s1MMrW2cD40y8j4sq3W3r_r5h7rHVt=
+3N5llmX-JTv1kW6Fj1zd4P6QF7W2HlmhH1cS65yV2hMlS13GMfTW5QbqqK7Xgc1yW4bxnsV1SXw=
+YXW52qSG53WtWZ8W4N3SlM7RNtvfW1qvv6K61hQtkW8FTmCr62Rb_QW8Snj8x4LHjvpW6NmtVc3=
+Dnjk-V6TPvq8npBCtW2jDY0l3lWSXBW5y2ZZk2-R_0NW2R37lB1gwJCHf2mFq_v04" style=3D=
+"color:#00a4bd" data-hs-link-id=3D"0" target=3D"_blank">
+                       <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubf=
+s/Assets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%209)/ig_i=
+cons.png?width=3D80&amp;height=3D80&amp;upscale=3Dtrue&amp;name=3Dig_icons.=
+png" alt=3D"ig_icons" loading=3D"lazy" width=3D"40" height=3D"40" style=3D"=
+outline:none; text-decoration:none; border:none">
+                  </a>
+                </td> =20
+           =20
+             =20
+             =20
+             =20
+               =20
+               =20
+               =20
+             =20
+               <td style=3D"font-family:Arial, sans-serif; font-size:15px; =
+color:#000000; word-break:break-word; padding:8px 5px">
+                 <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2=
+tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSx25nR32W6N1X8z6lZ3kyW4TfG=
+tK1VK5hcV-78rQ2dpjDxW2kT--j8dqP_jW8xLLGm5YytL_W7_BPFS168KS-W77cp_48VhY7gW7w=
+9DXB4GmytTW1J4Cc73xyzvlW6KFbtV2rHc44W2k3znk4-7nkjMtm0NPDxs_lVWKqrj7g-yB6W2Z=
+5gVW6fMLnqW40z40j4H3cfhW56MYL-5F6GWkW3yvfGf3psVPqW2_yKXx5cY-Q7W7Wm6kW7rnNF_=
+W5XdPCG6k4WPvW5JkG0y7d4_fbW8m3DlD8zHb6yW2Y1jLF5WRqrlVPgzYL6sDKC5W4T11sZ90J3=
+4TW6TfyMg2yzb4VW4yP9Yc2nbhxnW4Zhyjb7hnNvsW69JNzm34NgNyW2TFqYj2BQ_5RW4tMn7g1=
+rp97nW5qL7_H4jqD5mW3xL9Gf6WzKFrW2XTzxq8GRsBMW491Q8D1vts0TW2hwxnT1tztfNW1Kcy=
+bw3RDXcrW8qcLk78NJW5FW4fCFR68_-hngf599Bdn04" style=3D"color:#00a4bd" data-h=
+s-link-id=3D"0" target=3D"_blank">
+                       <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubf=
+s/Assets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%209)/wech=
+at_icons.png?width=3D80&amp;height=3D80&amp;upscale=3Dtrue&amp;name=3Dwecha=
+t_icons.png" alt=3D"wechat_icons" loading=3D"lazy" width=3D"40" height=3D"4=
+0" style=3D"outline:none; text-decoration:none; border:none">
+                  </a>
+                </td> =20
+           =20
+             =20
+             =20
+             =20
+               =20
+               =20
+               =20
+             =20
+               <td style=3D"font-family:Arial, sans-serif; font-size:15px; =
+color:#000000; word-break:break-word; padding:8px 5px">
+                 <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2=
+tHwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSws5nR32W5BWr2F6lZ3lyW7rt8=
+Cz8dF54LW6BdDJt8rRVQpW1tF4kG2t50v6VcpSzM45TGjVW5_hB6n97fmMrW6qTtLR1V9L9_W4_=
+kCY66SrhN4W2rs4Zr7JDB-cW1RSgPv4vrLslW3h_R4k6VhMy3W155LX61KP8dTN3J9bC7cQHy4W=
+2B9Ltw1lvGtmW4DzJB46nv2t7W4zh9Kc6DKHvQVClCxR6mbKtfW2d20jZ2b5J4qW7kXS7F709td=
+JW6ZShjN6Ffvz2VVXd6F6Ldk1bW4nkjq95tnTJlW57fRxX8VnWCyW7vgq5R5hZzLbW5JGv436lT=
+VrQVn4dbM8SJDPfW7GFD8c94n9LqW7dl1F33p9nY5VgXqT65BgFDrW9m03415wZ8nhW4BW38T76=
+RsVWW4H5yML54bGnTW9kR22B5QgfnPN1rnjjG_qWNbW1ydxVV6kPBVGf8HX3lW04" style=3D"=
+color:#00a4bd" data-hs-link-id=3D"0" target=3D"_blank">
+                       <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubf=
+s/Assets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%209)/yout=
+ube_icons.png?width=3D80&amp;height=3D80&amp;upscale=3Dtrue&amp;name=3Dyout=
+ube_icons.png" alt=3D"youtube_icons" loading=3D"lazy" width=3D"40" height=
+=3D"40" style=3D"outline:none; text-decoration:none; border:none">
+                  </a>
+                </td> =20
+           =20
+        </tr>
+      </tbody></table>
+    </div>
+    <div style=3D"padding:10px 15px 0px;font-style:Helvetica ;font-size:10p=
+x;line-height: 135%;">
+      <p style=3D"margin:0 0 20px;text-align:center">Please do not reply to=
+ this email. For enquiries, please contact HKPC through the following chann=
+els:</p>  =20
+      <div class=3D"social-container" style=3D"margin-bottom:20px;">
+        <table valign=3D"middle" style=3D"border-spacing: 0; margin:0 auto;=
+ text-align:center; table-layout:fixed; ">
+          <tbody><tr style=3D"line-height:1">
+           =20
+           =20
+           =20
+             =20
+             =20
+             =20
+           =20
+            <td width=3D"25%" style=3D"font-family:Arial, sans-serif; font-=
+size:15px; color:#000000; word-break:break-word">=20
+              <div>
+                <a href=3D"tel:+85227885678" style=3D"color:#00a4bd; text-d=
+ecoration:none" data-hs-link-id=3D"0" target=3D"_blank">
+                  <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubfs/Ass=
+ets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%2017)/phonr_ic=
+on.png?width=3D40&amp;height=3D40&amp;upscale=3Dtrue&amp;name=3Dphonr_icon.=
+png" alt=3D"phonr_icon" loading=3D"lazy" width=3D"20" height=3D"20" style=
+=3D"outline:none; text-decoration:none; border:none">  =20
+                </a>
+              </div>
+              <div style=3D"padding:2px 0px;">
+                <a href=3D"tel:+85227885678" style=3D"color:#000; font-size=
+:12px; zoom:0.7; word-break:break-all" data-hs-link-id=3D"1" target=3D"_bla=
+nk">
+                  +852 2788 5678
+                </a>
+              </div>
+            </td>
+           =20
+           =20
+           =20
+             =20
+             =20
+             =20
+           =20
+            <td width=3D"25%" style=3D"font-family:Arial, sans-serif; font-=
+size:15px; color:#000000; word-break:break-word">=20
+              <div>
+                <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2t=
+Hwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85nR32W50kH_H6lZ3nrN24GX4=
+CD_h7wW3VDNCT5pRdmkW8qwmNJ6NxPc_W6_L68W7C__b8N7S__195dJv4W3YNdkn3V9PfHW7R33=
+-b4-nwPKW4w5VWw9c_02YMW6ZsHcYKxQW5l_zVQ7K5061W1XBFmX4mq16SN7g_CBgszLHwW4qHZ=
+6H51TmzgW1qBgVK8QmNjBW8f0dmH1s7__hW6rLTWj30KVLYW2LVB1K8FMy9cW3DQ2Xt5hLSzMVN=
+6rgN5S1VH0W5tjlcZ8-QbcJW2GWPrV8s3YD2W5XD-Dm1P9jNGW8ftPMY2FjBW_W2fdj4r1dMJ3f=
+W3QC6nP1wf5j6W89Yl7Z1kXGBpW4JbZqT5fvyNjW1zQHgH5PQ0cWW4DPHdZ2lC7NmVTxQCP7Q0H=
+kFW3CjTSC9gYDxwW59s9Z669vGq4f6CPN3P04" style=3D"color:#00a4bd; text-decorat=
+ion:none" data-hs-link-id=3D"0" target=3D"_blank">
+                  <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubfs/Ass=
+ets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%2017)/whatsapp=
+_icons.png?width=3D40&amp;height=3D40&amp;upscale=3Dtrue&amp;name=3Dwhatsap=
+p_icons.png" alt=3D"whatsapp_icons" loading=3D"lazy" width=3D"20" height=3D=
+"20" style=3D"outline:none; text-decoration:none; border:none">  =20
+                </a>
+              </div>
+              <div style=3D"padding:2px 0px;">
+                <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2t=
+Hwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85nR32W50kH_H6lZ3kSW2g-r-=
+07JGXtTW6Cstxk2NqB5xW19yYkn37CgQvVBJGJx5ZhZwmN5JdMQql2LlLN4MtsL3Bnqr4W4Pz8c=
+01kJ6sJW4s9dwJ44yBwxW2s-fnK3RLXMxW2_Nf-L9lcg8hW29zyql28r1thW495xSc5tcNYDN5-=
+173tBc6KnW2Z2l-_28GQlqW94rfdt6G8rBkW61lg1t3GHZdtV98lCz3GTxC_W5_1HfK6b7dYTW8=
+Kd1Bd4mSc7lN6c4qRDlNP1cW3mjsg2453hKcVmTdJK2N4L1TW67lWc11F-HSpW4y6k5n7zGxQMN=
+293v6zXD0-VW5F3wG47vV6VmW4zvL9R1jFnMfW2h8X3d4-XKT1W6Ybkpq1MR-zxW95NJHz2dQWJ=
+LW1c3Tkh13QTbQW2_KFcB5YDjS7f3bcB5g04" style=3D"color:#000; font-size:12px; =
+zoom:0.7; word-break:break-all" data-hs-link-id=3D"1" target=3D"_blank">
+                  +852 5283 4131
+                </a>
+              </div>
+            </td>
+           =20
+           =20
+           =20
+             =20
+             =20
+             =20
+           =20
+            <td width=3D"25%" style=3D"font-family:Arial, sans-serif; font-=
+size:15px; color:#000000; word-break:break-word">=20
+              <div>
+                <a href=3D"mailto:edm@email.hkpc.org" style=3D"color:#00a4b=
+d; text-decoration:none" data-hs-link-id=3D"0" target=3D"_blank">
+                  <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubfs/Ass=
+ets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%2017)/mail_ico=
+ns.png?width=3D40&amp;height=3D40&amp;upscale=3Dtrue&amp;name=3Dmail_icons.=
+png" alt=3D"mail_icons" loading=3D"lazy" width=3D"20" height=3D"20" style=
+=3D"outline:none; text-decoration:none; border:none">  =20
+                </a>
+              </div>
+              <div style=3D"padding:2px 0px;">
+                <a href=3D"mailto:edm@email.hkpc.org" style=3D"color:#000; =
+font-size:12px; zoom:0.7; word-break:break-all" data-hs-link-id=3D"1" targe=
+t=3D"_blank">
+                  edm@email.hkpc.org
+                </a>
+              </div>
+            </td>
+           =20
+           =20
+           =20
+             =20
+             =20
+             =20
+           =20
+            <td width=3D"25%" style=3D"font-family:Arial, sans-serif; font-=
+size:15px; color:#000000; word-break:break-word">=20
+              <div>
+                <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2t=
+Hwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85nR32W50kH_H6lZ3p4W1qmMJ=
+W4VR714W1CwR_m2CJ8MLW3kzJy970XhnyW63D8R12V7jprW2LV4PK73Ty9TW5VKJp67CWfNkW9c=
+3p8Z2J-PKnW2wLks67pZYPGW4PDR-h1w0SwMW4bHHbZ81z-t6W8B2jpK4f-KQtW72WDfk1WrTbV=
+W8hR1L92jdKd1W2qGlyC1XLy9cW7jlwwH3wWydyW3TXtR02_1HvxW4xPpGZ83fZ-0W2CrBfq5pP=
+cy5W7pD4rp7cQQnFW6XGyD96F1mmJN2CHcdvBRptjW2qJk4r2njb02W2mqww58Jw8WmW2V3pt-8=
+CFrHwVynhfn1-3vbRW34WDqp6jGV3wW8hXd2Y1Hb6XVW1NQMY11G_tbRW6Bdxl_9lKk1xW8D2V-=
+l85pz7bW94CzJS6FR2VLW21q0014-pS7Ld7XG_z04" style=3D"color:#00a4bd; text-dec=
+oration:none" data-hs-link-id=3D"0" target=3D"_blank">
+                  <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubfs/Ass=
+ets/icons/New%20social%20media%20icons%20from%20HKPC%20(June%2017)/web_icon=
+s.png?width=3D40&amp;height=3D40&amp;upscale=3Dtrue&amp;name=3Dweb_icons.pn=
+g" alt=3D"web_icons" loading=3D"lazy" width=3D"20" height=3D"20" style=3D"o=
+utline:none; text-decoration:none; border:none">  =20
+                </a>
+              </div>
+              <div style=3D"padding:2px 0px;">
+                <a href=3D"https://campaigninfo.hkpc.org/e3t/Ctc/2N+113/d2t=
+Hwg04/VWdD8T3rqsbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLN2jjSw85nR32W50kH_H6lZ3kqW53G70=
+x8Kd41pW6RtCB768_Zy7N3LNlm3R7bGPVDmCQ31p72RPW5XHhn-1-GzkhW580PDx5lSnGfW1jNq=
+jf4fTqSfN42Vqhnj655TW8XvkRZ7sXFnJN5Zsh8wL_4kSW5CBrZY1Dg6dSW94gmVF2N3826W91R=
+YGd1MXdNRW1KGfz64mSVpYW5qZ3M81GYTpNW3kxqWF2bWR5WW54wpYT4XzFGCW3c0W_w4sj4P4W=
+5svKpQ1WX48cW7lWttg7J6QrXW65N-L65T0YzYW8GQbKj86Nmg_W3jQms54zj0ZXN3gghtMDK9J=
+3W6ggW6J4wNcKyW36Z0ll8X-DLMW6LF8623TBB7hW4nVSFV90--pLVYNQDm1T_SZ9W1-JP6B8zj=
+vQGW6D2md-7TsWQSW8Dmhdc7PRB1pd-y2QT04" style=3D"color:#000; font-size:12px;=
+ zoom:0.7; word-break:break-all" data-hs-link-id=3D"1" target=3D"_blank">
+                  www.hkpc.org
+                </a>
+              </div>
+            </td>
+           =20
+          </tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div style=3D"padding:10px 20px 0px;font-style:Helvetica ;font-size:10p=
+x;line-height: 135%;">
+      <p style=3D"margin:0px;text-align:center">
+        COPYRIGHT =C2=A9 2024  Hong Kong Productivity Council. All rights r=
+eserved.
+      </p>
+    </div>
+  </div>
+</div></div>
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%"><tbody><tr><td class=3D"hs_padded" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; padding:10px 20p=
+x"><div id=3D"hs_cos_wrapper_module-10-0-1" class=3D"hs_cos_wrapper hs_cos_=
+wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-si=
+ze: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" dat=
+a-hs-cos-type=3D"module"><table role=3D"presentation" class=3D"hse-footer h=
+se-secondary" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"f=
+ont-family:Arial, sans-serif; font-size:12px; line-height:135%; color:#2349=
+6d; margin-bottom:0; padding:0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Arial, sans-=
+serif; font-size:15px; color:#000000; word-break:break-word; text-align:cen=
+ter; margin-bottom:0; line-height:135%; padding:10px 20px">
+        <p style=3D"font-family:Arial, sans-serif;font-size:12px;font-weigh=
+t:normal;text-decoration:none;font-style:normal;color:#000000">
+          Hong Kong Productivity Council, HKPC Building, 78 Tat Chee Avenue=
+, Kowloon, Hong Kong
+        </p>
+        <p>
+          <a data-unsubscribe=3D"true" href=3D"https://campaigninfo.hkpc.or=
+g/hs/preferences-center/en/direct?data=3DW2nXS-N30h-MtW2sKggc3XzkHyW1S8wC_2=
+MW8zxW1BFtgX1LrgZsW41ydnP1L6dFSW3g6fZm34CHCGW38bcM120WD0pW4tCjgQ3XJmK-W4tfY=
+dr25d5mBW45FJ9r2YvTm6W3dnBcv3Mbh9xW3T4zhZ3P4z2bW3gs9Yw2FG_GSW2r6tYw1VqwjDW2=
+w0JcW2FZn-8W2HrcVc2-pc-lW2RHyDz1WYtHdW32cdFL2sNYfdW4hmzps2y2t3jW3_X1m61NCD2=
+tW4fjQTt45QQNLW218N8F2CW7XKW1Lm_003Y2Zl3W47sZnK1Q4wcFW2RzknP2My1Q1W4t7LyC3G=
+RgprW2w3DNs21pDBlW1L5qzy2qLbThW32nL9Q45NpXKW2sMMp-2p2yH8W2-kXMf1Lq0RXW1--3G=
+_4ckqlHW3JKBnp2HYN8cW34HrdM1S8XQVW3V-6xn4fz80vW30tD954pGx-ZW3XYdw92t1h4SW2R=
+B6pt20ZtKBW1_kLwl3g8HpsW4fgPG949JDZ1W362x3p1LHzXfW1_4ps44p7dx_W2xKfhB4rBGfG=
+W36lJd83yN7VdW3djWgF3DVRjbW1BGkgP3_HbjJ0&amp;utm_campaign=3D%5BGID%5D%20193=
+79112196_Sustainable%20Futures_Insights%20and%20Innovations%20for%20Complia=
+nce%20in%20Manufacturing&amp;utm_source=3Dhs_automation&amp;utm_medium=3Dem=
+ail&amp;utm_content=3D334992518&amp;_hsenc=3Dp2ANqtz-_ZfJsQZPaRMqhf1vjQx7pn=
+BrDnG_RL5ZMsa8i-OTKMwpEeyFhOb3LRqu3KsCOf-NpcnIOyTsIcqCtk6kzSZkMSflUZ-w&amp;=
+_hsmi=3D334992518" style=3D"font-family:Helvetica,Arial,sans-serif; font-si=
+ze:12px; color:#0060ff; font-weight:normal; text-decoration:underline; font=
+-style:normal" data-hs-link-id=3D"0" target=3D"_blank">Unsubscribe</a>
+          <a data-unsubscribe=3D"true" href=3D"https://campaigninfo.hkpc.or=
+g/hs/preferences-center/en/page?data=3DW2nXS-N30h-MtW2sKggc3XzkHyW1S8wC_2MW=
+8zxW1BFtgX1LrgZsW41ydnP1L6dFSW3g6fZm34CHCGW38bcM120WD0pW4tCjgQ3XJmK-W4tfYdr=
+25d5mBW45FJ9r2YvTm6W3dnBcv3Mbh9xW3T4zhZ3P4z2bW3gs9Yw2FG_GSW2r6tYw1VqwjDW2w0=
+JcW2FZn-8W2HrcVc2-pc-lW2RHyDz1WYtHdW32cdFL2sNYfdW4hmzps2y2t3jW3_X1m61NCD2tW=
+4fjQTt45QQNLW218N8F2CW7XKW1Lm_003Y2Zl3W47sZnK1Q4wcFW2RzknP2My1Q1W4t7LyC3GRg=
+prW2w3DNs21pDBlW1L5qzy2qLbThW32nL9Q45NpXKW2sMMp-2p2yH8W2-kXMf1Lq0RXW1--3G_4=
+ckqlHW3JKBnp2HYN8cW34HrdM1S8XQVW3V-6xn4fz80vW30tD954pGx-ZW3XYdw92t1h4SW2RB6=
+pt20ZtKBW1_kLwl3g8HpsW4fgPG949JDZ1W362x3p1LHzXfW1_4ps44p7dx_W2xKfhB4rBGfGW3=
+6lJd83yN7VdW3djWgF3DVRjbW1BGkgP3_HbjJ0&amp;utm_campaign=3D%5BGID%5D%2019379=
+112196_Sustainable%20Futures_Insights%20and%20Innovations%20for%20Complianc=
+e%20in%20Manufacturing&amp;utm_source=3Dhs_automation&amp;utm_medium=3Demai=
+l&amp;utm_content=3D334992518&amp;_hsenc=3Dp2ANqtz-_ZfJsQZPaRMqhf1vjQx7pnBr=
+DnG_RL5ZMsa8i-OTKMwpEeyFhOb3LRqu3KsCOf-NpcnIOyTsIcqCtk6kzSZkMSflUZ-w&amp;_h=
+smi=3D334992518" style=3D"font-family:Helvetica,Arial,sans-serif; font-size=
+:12px; color:#0060ff; font-weight:normal; text-decoration:underline; font-s=
+tyle:normal" data-hs-link-id=3D"0" target=3D"_blank">Manage preferences</a>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module-10-0-2" class=3D"hs_cos_wrapper hs_cos_wra=
+pper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size:=
+ inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-h=
+s-cos-type=3D"module"><div style=3D"width:100%;margin: 0 auto;background-co=
+lor:#fff;">
+  <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"padding:=
+0px;width:100%;line-height:1;">
+    <tbody><tr>
+      <td style=3D"font-family:Arial, sans-serif; font-size:15px; color:#00=
+0000; word-break:break-word">
+       =20
+         =20
+         =20
+          =20
+          <img src=3D"https://campaigninfo.hkpc.org/hs-fs/hubfs/Assets/Emai=
+l%20source/temp_img21.png?width=3D1200&amp;height=3D86&amp;upscale=3Dtrue&a=
+mp;name=3Dtemp_img21.png" style=3D"outline:none; text-decoration:none; widt=
+h:100%; text-align:center; display:block" alt=3D"footer banner" loading=3D"=
+lazy" width=3D"600" height=3D"43" align=3D"center">
+       =20
+      </td>
+    </tr>
+  </tbody></table>
+</div></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div></div>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+ =20
+<img src=3D"https://campaigninfo.hkpc.org/e3t/Cto/2N+113/d2tHwg04/VWdD8T3rq=
+sbHW6nJMCj5Zr3dpW6mk3Cf5nQ8pLW2jjSh73CX7P-1b2" alt=3D"" width=3D"1" height=
+=3D"1" border=3D"0" style=3D"display:none!important;min-height:1px!importan=
+t;width:1px!important;border-width:0!important;margin-top:0!important;margi=
+n-bottom:0!important;margin-right:0!important;margin-left:0!important;paddi=
+ng-top:0!important;padding-bottom:0!important;padding-right:0!important;pad=
+ding-left:0!important"></body></html>
+------=_Part_431640_1332996055.1732518141694--
+

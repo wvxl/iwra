@@ -1,0 +1,913 @@
+Return-Path: <ryanne@forevergift.hk>
+Delivered-To: angus.lee@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id SA6VHpe6/GZODAAA07NIEQ
+	(envelope-from <ryanne@forevergift.hk>)
+	for <angus.lee@iwra.hk>; Wed, 02 Oct 2024 11:14:31 +0800
+Return-path: <ryanne@forevergift.hk>
+Envelope-to: angus.lee@iwra.hk
+Delivery-date: Wed, 02 Oct 2024 11:14:31 +0800
+Received: from mail-io1-f73.google.com ([209.85.166.73]:43019)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <ryanne@forevergift.hk>)
+	id 1svpoo-0000og-0O
+	for angus.lee@iwra.hk;
+	Wed, 02 Oct 2024 11:14:31 +0800
+Received: by mail-io1-f73.google.com with SMTP id ca18e2360f4ac-82aa499f938so41139039f.0
+        for <angus.lee@iwra.hk>; Tue, 01 Oct 2024 20:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1727838863; x=1728443663; darn=iwra.hk;
+        h=to:from:subject:date:message-id:sender:reply-to:mime-version:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Eh9f2+GWaxX0LzpE7bZa7uJxeGXF40aZtgZDDGEVaq0=;
+        b=aDoAPBI17sCxJBEemcLwo2LMw7e2I4W/jvWvLEfFJaxN7+R0JwFiycUB7m/D1sQ+6X
+         l1+jyDtu24TR7PTT/wLCM97wyuGLYzIJw2YT+GuNyxekArSJgjEVg/YFtPKltwMq1Aon
+         G0JUjVoKfiW9WfrDMXjTTlT/yZXMl9zEXpZkUbtHn30MgyP0EFLMYYg/n3W3dRe8s7c2
+         i5JEBV/g66BSSPCr1CYggqbW2hQIStw7O9Ue9Jb9YG4mWacNADFdfT+ktaZ3ClQR7XyU
+         9FnUVEX1qqQSkeVcj95ChbqEYE/rHlJHo0hDv+awpecZULdX4Hhem39NjxrJ0As+6dwC
+         oK1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=forevergift-hk.20230601.gappssmtp.com; s=20230601; t=1727838863; x=1728443663; darn=iwra.hk;
+        h=to:from:subject:date:message-id:sender:reply-to:mime-version:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Eh9f2+GWaxX0LzpE7bZa7uJxeGXF40aZtgZDDGEVaq0=;
+        b=l8e65p0g3GeL7O7A389dBP1aB2GgHG/vVPyJHrjIhgmJ/hsbO9Mh6qcPUHBcizNsFP
+         8Isc85J2QGGN8HrK9HEjMxFhuMaU/m5ALojEx5R8OL+OjRrxtpCSIdVTLsfyXP6pCxr8
+         PZCHrELFfu/MJcSohRC1Q7ftN7eH199URb9+pV55/CsPVXRgiB500QN2xOKqUXXteaZq
+         67C+xuEOkdh1k19jIarCKoBhzIneWr3UgDZgjb7FexNxN7A1yhuYKgP7dXDd4lBq079M
+         4veregGZvlN789+jvd7ixvTwK8y2SABEzwtqmtRkraIfjCRMpS0vPzU0/IpS9bORljGu
+         byBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727838863; x=1728443663;
+        h=to:from:subject:date:message-id:sender:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Eh9f2+GWaxX0LzpE7bZa7uJxeGXF40aZtgZDDGEVaq0=;
+        b=S6wgN0sQpll7uDO2o9jokqO9oD2tqH4tWfzompQaWok6elNZNishyWB2+CfTA0XNTo
+         tNKpT+m0DoHwDpwkyalbZAYFRp02vXEF6liBtqBSVnCA6vaOaAh40P3OkO398/2r2e/w
+         +4xRAatuvEdkhBpRzoRXIFUBkjtRWZx0I185OAgVHFaRO9Y2t+b3Ee+p+T5jNMDcWDFq
+         7nxQzESe5bYhMfoTwb+fXzcagUlQ8rYN0E83r2ddrVCBu2O7pHY8EmsFZiCirI+yGq5c
+         QZmDOYJZuIiLVr9X1BEHG1xUyUtDwhMDOZ0dtovOB/FNHz8C0B8hbI0DrxEi4eyLlWO8
+         N8cg==
+X-Gm-Message-State: AOJu0YyGCq0AQUf9rHgseTYcRn8XVXDeEtgXmVd/Zy120dI34IX17fMn
+	JXntK2HxE1De7Yvz9s/UNH0cERAnAx/EAYk7mV1nPjuwSRBd5zlgZSRXrEX17HCEwLFvlT+S8ck
+	W5Q4Tp2O7hsMZV1vAtdqLR3Bf5tfaOZr2/tk1rDr40ArZ4ZDmGQ==
+X-Google-Smtp-Source: AGHT+IFIpa5WSDtyLcofngtW+9ME94pcSqsDb0x4YmYnN2e4LCtr/rjr8MkzWgRDBZUt4c4tb7Qdq5ZIAlArZ8Czv2Fp
+MIME-Version: 1.0
+X-Received: by 2002:a05:6602:2c81:b0:7f6:8489:2679 with SMTP id
+ ca18e2360f4ac-834d8d4955emr128765839f.8.1727838862694; Tue, 01 Oct 2024
+ 20:14:22 -0700 (PDT)
+Reply-To: Ryanne Lai <ryanne@forevergift.hk>
+Sender: Google Calendar <calendar-notification@google.com>
+Message-ID: <calendar-37562b3f-a5e7-4cd4-84ae-8bc0f223004c@google.com>
+Date: Wed, 02 Oct 2024 03:14:22 +0000
+Subject: Invitation: Phone Call with Ryanne (ForeverGift) - Guest of Maurice
+ W... @ Tue 2024-10-15 3pm - 3:30pm (HKT) (angus.lee@iwra.hk)
+From: Ryanne Lai <ryanne@forevergift.hk>
+To: angus.lee@iwra.hk
+Content-Type: multipart/mixed; boundary="000000000000a40b25062375d5c0"
+X-Spam-Status: No, score=0.1
+X-Spam-Score: 1
+X-Spam-Bar: /
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Phone Call with Ryanne (ForeverGift) - Guest of Maurice Wong
+    and Ryanne Tuesday 2024-10-15 ⋅ 3pm – 3:30pm Hong Kong Standard Time
+   Location +852 9213 7277 https://www.google.com/maps/search/%2B852+9213+7277?hl=en
+    
+ Content analysis details:   (0.1 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [209.85.166.73 listed in list.dnswl.org]
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [209.85.166.73 listed in bl.score.senderscore.com]
+  0.0 RCVD_IN_VALIDITY_SAFE_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [209.85.166.73 listed in sa-accredit.habeas.com]
+ -0.0 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [209.85.166.73 listed in wl.mailspike.net]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.0 HTML_FONT_LOW_CONTRAST BODY: HTML font color similar or
+                             identical to background
+  0.1 HTTPS_HTTP_MISMATCH    BODY: No description available.
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+ -0.0 DKIMWL_WL_MED          DKIMwl.org - Medium trust sender
+X-Spam-Flag: NO
+
+--000000000000a40b25062375d5c0
+Content-Type: multipart/alternative; boundary="000000000000a40b22062375d5be"
+
+--000000000000a40b22062375d5be
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Content-Transfer-Encoding: base64
+
+UGhvbmUgQ2FsbCB3aXRoIFJ5YW5uZSAoRm9yZXZlckdpZnQpIC0gR3Vlc3Qgb2YgTWF1cmljZSBX
+b25nIGFuZCBSeWFubmUNClR1ZXNkYXkgMjAyNC0xMC0xNSDii4UgM3BtIOKAkyAzOjMwcG0NCkhv
+bmcgS29uZyBTdGFuZGFyZCBUaW1lDQoNCkxvY2F0aW9uDQorODUyIDkyMTMgNzI3NwkNCmh0dHBz
+Oi8vd3d3Lmdvb2dsZS5jb20vbWFwcy9zZWFyY2gvJTJCODUyKzkyMTMrNzI3Nz9obD1lbg0KDQoN
+Cg0KQm9va2luZyBUaXRsZTogUGhvbmUgQ2FsbCB3aXRoIFJ5YW5uZSAoRm9yZXZlckdpZnQpDQoN
+ClRvIGJvb2sgYSBwaG9uZSBjYWxsIHdpdGggUnlhbm5lLCBwbGVhc2UgY2xpY2sgb24gYSB0aW1l
+IHNsb3QgYW5kDQpzdWJtaXQgdGhlIGZvcm0uIFlvdSB3aWxsIHRoZW4gcmVjZWl2ZSBhbiBlbWFp
+bCB3aXRoIGRldGFpbHMgb2YgdGhlDQpjYWxlbmRhciBpbnZpdGF0aW9uLg0KDQpMb2NhdGlvbjog
+Kzg1MiA5MjEzIDcyNzcNCg0KUmVzY2hlZHVsZSBvciBjYW5jZWw6IGh0dHBzOi8vdGlkeWNhbC5j
+b20vcnlhbm5lL2NhbGwvcmVzY2hlZHVsZS9tN2QydjA4DQoNCkNyZWF0ZWQgYnkgVGlkeUNhbC5j
+b20NCg0KDQpPcmdhbml6ZXINClJ5YW5uZSBMYWkNCnJ5YW5uZUBmb3JldmVyZ2lmdC5oaw0KDQpH
+dWVzdHMNClJ5YW5uZSBMYWkgLSBvcmdhbml6ZXINCkd1ZXN0IG9mIE1hdXJpY2UgV29uZw0KVmll
+dyBhbGwgZ3Vlc3QgaW5mbyAgDQpodHRwczovL2NhbGVuZGFyLmdvb2dsZS5jb20vY2FsZW5kYXIv
+ZXZlbnQ/YWN0aW9uPVZJRVcmZWlkPVl6bG5OR2QxYzJGcmEycHhiRzFzWm1wc1luRnJiV3RuY21N
+Z1lXNW5kWE11YkdWbFFHbDNjbUV1YUdzJnRvaz1NakVqY25saGJtNWxRR1p2Y21WMlpYSm5hV1ow
+TG1ocll6WmlOemMzTURobE9XVTNPR05tWlRjMFpXWTRabUkxWW1ZeE5tUTNPVGs1WW1GbFl6RmlP
+USZjdHo9QXNpYSUyRkhvbmdfS29uZyZobD1lbiZlcz0wDQoNClJlcGx5IGZvciBhbmd1cy5sZWVA
+aXdyYS5oayBhbmQgdmlldyBtb3JlIGRldGFpbHMgIA0KaHR0cHM6Ly9jYWxlbmRhci5nb29nbGUu
+Y29tL2NhbGVuZGFyL2V2ZW50P2FjdGlvbj1WSUVXJmVpZD1ZemxuTkdkMWMyRnJhMnB4Ykcxc1pt
+cHNZbkZyYld0bmNtTWdZVzVuZFhNdWJHVmxRR2wzY21FdWFHcyZ0b2s9TWpFamNubGhibTVsUUda
+dmNtVjJaWEpuYVdaMExtaHJZelppTnpjM01EaGxPV1UzT0dObVpUYzBaV1k0Wm1JMVltWXhObVEz
+T1RrNVltRmxZekZpT1EmY3R6PUFzaWElMkZIb25nX0tvbmcmaGw9ZW4mZXM9MA0KWW91ciBhdHRl
+bmRhbmNlIGlzIG9wdGlvbmFsLg0KDQp+fi8vfn4NCkludml0YXRpb24gZnJvbSBHb29nbGUgQ2Fs
+ZW5kYXI6IGh0dHBzOi8vY2FsZW5kYXIuZ29vZ2xlLmNvbS9jYWxlbmRhci8NCg0KWW91IGFyZSBy
+ZWNlaXZpbmcgdGhpcyBlbWFpbCBiZWNhdXNlIHlvdSBhcmUgYW4gYXR0ZW5kZWUgb24gdGhlIGV2
+ZW50LiBUbyAgDQpzdG9wIHJlY2VpdmluZyBmdXR1cmUgdXBkYXRlcyBmb3IgdGhpcyBldmVudCwg
+ZGVjbGluZSB0aGlzIGV2ZW50Lg0KDQpGb3J3YXJkaW5nIHRoaXMgaW52aXRhdGlvbiBjb3VsZCBh
+bGxvdyBhbnkgcmVjaXBpZW50IHRvIHNlbmQgYSByZXNwb25zZSB0byAgDQp0aGUgb3JnYW5pemVy
+LCBiZSBhZGRlZCB0byB0aGUgZ3Vlc3QgbGlzdCwgaW52aXRlIG90aGVycyByZWdhcmRsZXNzIG9m
+ICANCnRoZWlyIG93biBpbnZpdGF0aW9uIHN0YXR1cywgb3IgbW9kaWZ5IHlvdXIgUlNWUC4NCg0K
+TGVhcm4gbW9yZSBodHRwczovL3N1cHBvcnQuZ29vZ2xlLmNvbS9jYWxlbmRhci9hbnN3ZXIvMzcx
+MzUjZm9yd2FyZGluZw0K
+--000000000000a40b22062375d5be
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:=
+schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:offi=
+ce"><head><title></title><!--[if !mso]><meta http-equiv=3D"X-UA-Compatible"=
+ content=3D"IE=3Dedge"><![endif]--><meta http-equiv=3D"Content-Type" conten=
+t=3D"text/html; charset=3DUTF-8"><meta name=3D"viewport" content=3D"width=
+=3Ddevice-width,initial-scale=3D1"><meta name=3D"color-scheme" content=3D"l=
+ight dark"><meta name=3D"supported-color-schemes" content=3D"light dark">
+    <style>
+      body, html {
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      #outlook a {
+        padding: 0;
+      }
+
+      .ReadMsgBody {
+        width: 100%;
+      }
+
+      .ExternalClass {
+        width: 100%;
+      }
+
+      .ExternalClass * {
+        line-height: 100%;
+      }
+
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+      }
+
+      p {
+        display: block;
+        margin: 13px 0;
+      }
+    </style>
+    <!--[if !mso]><!-->
+    <style>
+      @media only screen and (max-width:580px) {
+        @-ms-viewport {
+          width: 320px;
+        }
+
+        @viewport {
+          width: 320px;
+        }
+      }
+    </style>
+    <!--<![endif]-->
+    <!--[if mso]>
+          <xml>
+          <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+          </xml>
+          <![endif]-->
+    <!--[if lte mso 11]>
+          <style>
+            .outlook-group-fix { width:100% !important; }
+          </style>
+    <![endif]-->
+
+    <!--[if !mso]><!-- -->
+  <style>body, html {font-family:Roboto,Helvetica,Arial,sans-serif;}@font-f=
+ace {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf) forma=
+t('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc9.ttf) f=
+ormat('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfBBc9.ttf) f=
+ormat('truetype');
+}
+@font-face {
+  font-family: 'Material Icons Extended';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/materialiconsextended/v151/kJEjBvgX7BgnkSr=
+UwT8UnLVc38YydejYY-oE_LvM.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Google Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/googlematerialicons/v142/Gw6kwdfw6UnXLJCcm=
+afZyFRXb3BL9rvi0QZG3g.otf) format('opentype');
+}
+
+.google-material-icons {
+  font-family: 'Google Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+@font-face {
+  font-family: 'Google Material Icons Filled';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/googlematerialiconsfilled/v117/WWXFlimHYg6=
+HKI3TavMkbKdhBmDvgach8TVpeGsuueSZJH4.otf) format('opentype');
+}
+
+.google-material-icons-filled {
+  font-family: 'Google Material Icons Filled';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Owps=
+.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url(//fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94Yt=
+zCwM.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url(//fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154t=
+zCwM.ttf) format('truetype');
+}
+</style><!--<![endif]-->
+      <style>
+        .body-container {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      </style>
+ =20
+      <style>
+        u+.body .body-container,
+        body[data-outlook-cycle] .body-container,
+        #MessageViewBody .body-container {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      </style>
+ =20
+    <style>
+      @media only screen and (min-width:580px) {
+        .column-per-37 {
+          width: 37% !important;
+          max-width: 37%;
+        }
+
+        .column-per-63 {
+          width: 63% !important;
+          max-width: 63%;
+        }
+      }
+    </style>
+ =20
+    <style>
+      .appointment-buttons th {
+        display: block;
+        clear: both;
+        float: left;
+        margin-top: 12px;
+      }
+
+      .appointment-buttons th a {
+        float: left;
+      }
+
+      #MessageViewBody .appointment-buttons th {
+       margin-top: 24px;
+      }
+    </style>
+ =20
+    <style>
+      @media only screen and (max-width:580px) {
+        table.full-width-mobile {
+          width: 100% !important;
+        }
+
+        td.full-width-mobile {
+          width: auto !important;
+        }
+      }
+    </style>
+    <style>
+      .main-container-inner,
+      .info-bar-inner {
+        padding: 12px 16px !important;
+      }
+
+      .main-column-table-ltr {
+        padding-right: 0 !important;
+      }
+
+      .main-column-table-rtl {
+        padding-left: 0 !important;
+      }
+
+      @media only screen and (min-width:580px) {
+        .main-container-inner {
+          padding: 24px 32px !important;
+        }
+
+        .info-bar-inner {
+          padding: 12px 32px !important;
+        }
+
+        .main-column-table-ltr {
+          padding-right: 32px !important;
+        }
+
+        .main-column-table-rtl {
+          padding-left: 32px !important;
+        }
+
+        .appointment-buttons th {
+          display: table-cell;
+          clear: none;
+        }
+      }
+
+      .primary-text {
+        color: #3c4043 !important;
+      }
+
+      .secondary-text,
+      .phone-number a {
+        color: #70757a !important;
+      }
+
+      .accent-text {
+        color: #1a73e8 !important;
+      }
+
+      .accent-text-dark {
+        color: #185abc !important;
+      }
+
+      .grey-button-text,
+      .attachment-chip a {
+        color: #5f6368 !important;
+      }
+
+      .primary-button {
+        background-color: #1a73e8 !important;
+      }
+
+      .primary-button-text {
+        color: #fff !important;
+      }
+
+      .underline-on-hover:hover {
+        text-decoration: underline !important;
+      }
+
+      .grey-infobar-text {
+        color: #202124 !important;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .primary-text:not([class^=3D"x_"]) {
+          color: #e8eaed !important;
+        }
+
+        .secondary-text:not([class^=3D"x_"]),
+        .phone-number:not([class^=3D"x_"]) a {
+          color: #9aa0a6 !important;
+        }
+
+        .grey-button-text:not([class^=3D"x_"]),
+        .attachment-chip:not([class^=3D"x_"]) a {
+          color: #bdc1c6 !important;
+        }
+
+        .accent-text:not([class^=3D"x_"]),
+        .hairline-button-text:not([class^=3D"x_"]) {
+          color: #8ab4f8 !important;
+        }
+
+        .primary-button:not([class^=3D"x_"]) {
+          background-color: #8ab4f8 !important;
+        }
+
+        .primary-button-text:not([class^=3D"x_"]) {
+          color: #202124 !important;
+        }
+      }
+    </style>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        .cse-banner:not([class^=3D"x_"]) {
+          background-color: #3c4043 !important; /* Google Grey 800 */
+        }
+
+        .encryption-icon:not([class^=3D"x_"]) {
+          /* WARNING: This causes the whole style tag to get stripped in Gm=
+ail. */
+          background-image: url('https://fonts.gstatic.com/s/i/googlemateri=
+aliconsfilled/encrypted/v3/gm_grey200-24dp/2x/gm_filled_encrypted_gm_grey20=
+0_24dp.png') !important;
+        }
+      }
+    </style>
+    <!--[if !mso]><!-->
+    <style>
+      .prevent-link a {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+    </style>
+    <!--<![endif]-->
+
+    <!--[if mso | IE]>
+      <style>
+        .main-container-inner {
+          padding: 24px 32px !important;
+        }
+
+        .info-bar-inner {
+          padding: 12px 32px !important;
+        }
+
+        .cse-banner .encryption-icon {
+          /* We use the IE workaround instead. */
+          background-image: none !important;
+        }
+
+        .cse-banner .encryption-icon .ms-fallback {
+          display: block !important;
+        }
+
+        /* NB: Some MS clients ignore dark-scheme styling and apply their o=
+wn, so there's nothing we can do to help there. */
+        @media (prefers-color-scheme: dark) {
+          .cse-banner:not([class^=3D"x_"]) .encryption-icon .ms-fallback {
+            display: none !important;
+          }
+
+          .cse-banner:not([class^=3D"x_"]) .encryption-icon .ms-fallback-da=
+rk {
+            display: block !important;
+          }
+        }
+      </style>
+    <![endif]-->
+  </head><body class=3D"body"><span itemscope itemtype=3D"http://schema.org=
+/InformAction"><span style=3D"display:none" itemprop=3D"about" itemscope it=
+emtype=3D"http://schema.org/Person"><meta itemprop=3D"description" content=
+=3D"Invitation from Ryanne Lai"/></span><span itemprop=3D"object" itemscope=
+ itemtype=3D"http://schema.org/Event"><meta itemprop=3D"eventStatus" conten=
+t=3D"http://schema.org/EventScheduled"/><span itemprop=3D"publisher" itemsc=
+ope itemtype=3D"http://schema.org/Organization"><meta itemprop=3D"name" con=
+tent=3D"Google Calendar"/></span><meta itemprop=3D"eventId/googleCalendar" =
+content=3D"c9g4gusakkjqlmlfjlbqkmkgrc"/><span style=3D"display: none; font-=
+size: 1px; color: #fff; line-height: 1px; height: 0; max-height: 0; width: =
+0; max-width: 0; opacity: 0; overflow: hidden;" itemprop=3D"name">Phone Cal=
+l with Ryanne (ForeverGift) - Guest of Maurice Wong and Ryanne</span><meta =
+itemprop=3D"url" content=3D"https://calendar.google.com/calendar/event?acti=
+on=3DVIEW&amp;eid=3DYzlnNGd1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmE=
+uaGs&amp;tok=3DMjEjcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4=
+ZmI1YmYxNmQ3OTk5YmFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D=
+0"/><span aria-hidden=3D"true"><time itemprop=3D"startDate" datetime=3D"202=
+41015T070000Z"></time><time itemprop=3D"endDate" datetime=3D"20241015T07300=
+0Z"></time></span><div style=3D"display: none; font-size: 1px; color: #fff;=
+ line-height: 1px; height: 0; max-height: 0; width: 0; max-width: 0; opacit=
+y: 0; overflow: hidden;">Booking Title: Phone Call with Ryanne (ForeverGift=
+)
+
+To book a phone call with Ryanne, please click on a time slot and
+submit the form. You will then receive an email with details of the
+calendar invi</div><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+role=3D"presentation" align=3D"center" style=3D"width:100%;" class=3D"body-=
+container"><tbody><tr><td style=3D"" class=3D"" align=3D"left"><!--[if mso =
+| IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation"><tr><td height=3D"16" style=3D"height:16px;"><![endif]--><div styl=
+e=3D"height:16px;" aria-hidden=3D"true"> &nbsp; </div><!--[if mso | IE]></t=
+d></tr></table><![endif]--><table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" align=3D"center" style=3D"width:100%;" class=
+=3D""><tbody><tr><td style=3D"border: solid 1px #dadce0; border-radius: 8px=
+; direction: rtl; font-size: 0; padding: 24px 32px; text-align: left; verti=
+cal-align: top;" class=3D"main-container-inner"><!--[if mso | IE]><table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><!=
+[endif]--><div class=3D"" style=3D"font-size: 13px; text-align: left; direc=
+tion: ltr; display: inline-block; vertical-align: top; width: 100%;overflow=
+: hidden; word-wrap: break-word;"><table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" width=3D"100%" class=3D"main-column-ta=
+ble-ltr" style=3D"padding-right: 32px; padding-left: 0;;table-layout: fixed=
+;"><tbody><tr><td class=3D"main-column-td" style=3D"padding:0; vertical-ali=
+gn:top;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%" style=3D"table-layout: fixed;"><tr><td style=3D"=
+font-size: 0; padding: 0; text-align: left; word-break: break-word;;padding=
+-bottom:24px;"><div style=3D"font-family: Roboto, sans-serif;font-style: no=
+rmal; font-weight: 400; font-size: 14px; line-height: 20px; letter-spacing:=
+ 0.2px;color: #3c4043; text-decoration: none;" class=3D"primary-text" role=
+=3D"presentation"><span>Booking Title: Phone Call with Ryanne (ForeverGift)=
+<p>To book a phone call with Ryanne, please click on a time slot and<br>sub=
+mit the form. You will then receive an email with details of the<br>calenda=
+r invitation.</p><p>Location: +852 9213 7277</p><p>Reschedule or cancel: <a=
+ href=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Ftidycal.com%2Fryanne%=
+2Fcall%2Freschedule%2Fm7d2v08&amp;sa=3DD&amp;ust=3D1728270840000000&amp;usg=
+=3DAOvVaw1Qd3zo8idPIEbTR_KN7J5H" target=3D"_blank">https://tidycal.com/ryan=
+ne/call/reschedule/m7d2v08</a></p><p>Created by TidyCal.com<br></p></span><=
+meta itemprop=3D"description" content=3D"Booking Title: Phone Call with Rya=
+nne (ForeverGift)
+
+To book a phone call with Ryanne, please click on a time slot and
+submit the form. You will then receive an email with details of the
+calendar invitation.
+
+Location: +852 9213 7277
+
+Reschedule or cancel: https://tidycal.com/ryanne/call/reschedule/m7d2v08
+
+Created by TidyCal.com
+"/></div></td></tr><tr><td style=3D"font-size: 0; padding: 0; text-align: l=
+eft; word-break: break-word;;padding-bottom:24px;"><div style=3D"font-famil=
+y: Roboto, sans-serif;font-style: normal; font-weight: 400; font-size: 14px=
+; line-height: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoration:=
+ none;" class=3D"primary-text" role=3D"presentation"><span aria-hidden=3D"t=
+rue"><time itemprop=3D"startDate" datetime=3D"20241015T070000Z"></time><tim=
+e itemprop=3D"endDate" datetime=3D"20241015T073000Z"></time></span><table b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"padding-bottom: 4px;"><tr><td><h2 class=3D"primary-text" style=3D"font-=
+size: 14px;color: #3c4043; text-decoration: none;font-weight: 700;-webkit-f=
+ont-smoothing: antialiased;margin: 0; padding: 0;">When</h2></td></tr></tab=
+le><span>Tuesday 2024-10-15 =E2=8B=85 3pm =E2=80=93 3:30pm (Hong Kong Stand=
+ard Time)</span></div></td></tr><tr><td style=3D"font-size: 0; padding: 0; =
+text-align: left; word-break: break-word;;padding-bottom:24px;"><div style=
+=3D"font-family: Roboto, sans-serif;font-style: normal; font-weight: 400; f=
+ont-size: 14px; line-height: 20px; letter-spacing: 0.2px;color: #3c4043; te=
+xt-decoration: none;" class=3D"primary-text" role=3D"presentation"><table b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"padding-bottom: 4px;"><tr><td><h2 class=3D"primary-text" style=3D"font-=
+size: 14px;color: #3c4043; text-decoration: none;font-weight: 700;-webkit-f=
+ont-smoothing: antialiased;margin: 0; padding: 0;">Location</h2></td></tr><=
+/table><span itemprop=3D"location" itemscope itemtype=3D"http://schema.org/=
+Place"><span itemprop=3D"name" class=3D"primary-text notranslate" style=3D"=
+font-family: Roboto, sans-serif;font-style: normal; font-weight: 400; font-=
+size: 14px; line-height: 20px; letter-spacing: 0.2px;color: #3c4043; text-d=
+ecoration: none;">+852 9213 7277</span><br/><a href=3D"https://www.google.c=
+om/maps/search/%2B852+9213+7277?hl=3Den" class=3D"accent-text underline-on-=
+hover" style=3D"display: inline-block;;color: #1a73e8; text-decoration: non=
+e;font-weight: 700;" target=3D"_blank" itemprop=3D"map">View map</a></span>=
+</div></td></tr><tr><td style=3D"font-size: 0; padding: 0; text-align: left=
+; word-break: break-word;;padding-bottom:24px;"><div style=3D"font-family: =
+Roboto, sans-serif;font-style: normal; font-weight: 400; font-size: 14px; l=
+ine-height: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoration: no=
+ne;" class=3D"primary-text" role=3D"presentation"><table border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"padding-botto=
+m: 4px;"><tr><td><h2 class=3D"primary-text" style=3D"font-size: 14px;color:=
+ #3c4043; text-decoration: none;font-weight: 700;-webkit-font-smoothing: an=
+tialiased;margin: 0; padding: 0;">Guests</h2></td></tr></table><div style=
+=3D"padding-bottom: 4px; text-align: left;;color: #3c4042;"><div><span item=
+prop=3D"attendee" itemscope itemtype=3D"http://schema.org/Person"><span ite=
+mprop=3D"name" class=3D"notranslate"><a class=3D"primary-text underline-on-=
+hover" style=3D"display: inline-block;;color: #3c4043; text-decoration: non=
+e;" href=3D"mailto:ryanne@forevergift.hk">Ryanne Lai</a></span><meta itempr=
+op=3D"email" content=3D"ryanne@forevergift.hk"/></span><span itemprop=3D"or=
+ganizer" itemscope itemtype=3D"http://schema.org/Person"><meta itemprop=3D"=
+name" content=3D"Ryanne Lai"/><meta itemprop=3D"email" content=3D"ryanne@fo=
+revergift.hk"/></span><span class=3D"secondary-text" style=3D"color: #70757=
+a; text-decoration: none;"> - organizer</span></div><div><span itemprop=3D"=
+attendee" itemscope itemtype=3D"http://schema.org/Person"><span itemprop=3D=
+"name" class=3D"notranslate"><a class=3D"primary-text underline-on-hover" s=
+tyle=3D"display: inline-block;;color: #3c4043; text-decoration: none;" href=
+=3D"mailto:angus.lee@iwra.hk">Guest of Maurice Wong</a></span><meta itempro=
+p=3D"email" content=3D"angus.lee@iwra.hk"/></span><span class=3D"secondary-=
+text" style=3D"color: #70757a; text-decoration: none;"></span></div></div><=
+a href=3D"https://calendar.google.com/calendar/event?action=3DVIEW&amp;eid=
+=3DYzlnNGd1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaGs&amp;tok=3DMj=
+Ejcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4ZmI1YmYxNmQ3OTk5Y=
+mFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D0" style=3D"displ=
+ay: inline-block;;color: #1a73e8; text-decoration: none;font-weight: 700;" =
+target=3D"_blank" class=3D"accent-text underline-on-hover">View all guest i=
+nfo</a></div></td></tr><tr><td style=3D"font-size: 0; padding: 0; text-alig=
+n: left; word-break: break-word;;padding-bottom:0px;"><div style=3D"color: =
+#3c4043; text-decoration: none;;font-family: Roboto, sans-serif;font-size: =
+14px; line-height: 20px; mso-line-height-rule: exactly; text-align: left;" =
+class=3D"primary-text"><div><span style=3D"font-weight: 700;-webkit-font-sm=
+oothing: antialiased;">Reply</span><span class=3D"secondary-text" style=3D"=
+color: #70757a; text-decoration: none;"> for <a class=3D"secondary-text und=
+erline-on-hover" style=3D"display: inline-block;;color: #70757a; text-decor=
+ation: none;" href=3D"mailto:angus.lee@iwra.hk">angus.lee@iwra.hk</a></span=
+></div></div></td></tr><tr><td style=3D"font-size: 0; padding: 0; text-alig=
+n: left; word-break: break-word;;padding-bottom:16px;"><div style=3D"font-f=
+amily: Roboto, sans-serif;font-size: 14px; line-height: 20px; mso-line-heig=
+ht-rule: exactly; text-align: left;"><table border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" role=3D"presentation" style=3D"border-collapse: separate;=
+"><tr><td style=3D"padding-top: 8px; padding-left: 0; padding-right: 12px;"=
+><!-- RSVP buttons --><table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"border: solid 1px #dadce0; border-radius:=
+ 16px; border-collapse: separate;font-family: &#39;Google Sans&#39;, Roboto=
+, sans-serif;;display: inline-block;;margin-right: 12px; margin-left: 0;"><=
+tr><td align=3D"center" vertical-align=3D"middle" role=3D"presentation"><sp=
+an itemprop=3D"potentialaction" itemscope itemtype=3D"http://schema.org/Rsv=
+pAction"><meta itemprop=3D"attendance" content=3D"http://schema.org/RsvpAtt=
+endance/Yes"/><span itemprop=3D"handler" itemscope itemtype=3D"http://schem=
+a.org/HttpActionHandler"><link itemprop=3D"method" href=3D"http://schema.or=
+g/HttpRequestMethod/GET"/><span style=3D"color: #5f6367;"><a href=3D"https:=
+//calendar.google.com/calendar/event?action=3DRESPOND&amp;eid=3DYzlnNGd1c2F=
+ra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaGs&amp;rst=3D1&amp;tok=3DMjEj=
+cnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4ZmI1YmYxNmQ3OTk5YmF=
+lYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D0" style=3D"font-we=
+ight: 400;font-family: &#39;Google Sans&#39;, Roboto, sans-serif;color: #5f=
+6368; font-size: 14px; line-height: 120%; mso-line-height-rule: exactly; ma=
+rgin: 0; text-decoration: none; text-transform: none;" class=3D"grey-button=
+-text" itemprop=3D"url" target=3D"_blank"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td align=3D"center" rol=
+e=3D"presentation" valign=3D"middle" style=3D"padding: 6px 0; padding-left:=
+ 16px; padding-right: 12px; white-space: nowrap;"><!--[if mso]><a href=3D"h=
+ttps://calendar.google.com/calendar/event?action=3DRESPOND&amp;eid=3DYzlnNG=
+d1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaGs&amp;rst=3D1&amp;tok=
+=3DMjEjcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4ZmI1YmYxNmQ3=
+OTk5YmFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D0" class=3D"=
+grey-button-text" itemprop=3D"url" target=3D"_blank"><![endif]--><span clas=
+s=3D"grey-button-text" style=3D"font-weight: 400;font-family: &#39;Google S=
+ans&#39;, Roboto, sans-serif;color: #5f6368; font-size: 14px; line-height: =
+120%; mso-line-height-rule: exactly; margin: 0; text-decoration: none; text=
+-transform: none;">Yes</span><!--[if mso]></a><![endif]--></td></tr></table=
+></a></span></span></span></td><td align=3D"center" vertical-align=3D"middl=
+e" role=3D"presentation" style=3D"border-left: solid 1px #dadce0; border-ri=
+ght: solid 1px #dadce0;"><span itemprop=3D"potentialaction" itemscope itemt=
+ype=3D"http://schema.org/RsvpAction"><meta itemprop=3D"attendance" content=
+=3D"http://schema.org/RsvpAttendance/No"/><span itemprop=3D"handler" itemsc=
+ope itemtype=3D"http://schema.org/HttpActionHandler"><link itemprop=3D"meth=
+od" href=3D"http://schema.org/HttpRequestMethod/GET"/><span style=3D"color:=
+ #5f6367;"><a href=3D"https://calendar.google.com/calendar/event?action=3DR=
+ESPOND&amp;eid=3DYzlnNGd1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaG=
+s&amp;rst=3D2&amp;tok=3DMjEjcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGN=
+mZTc0ZWY4ZmI1YmYxNmQ3OTk5YmFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&=
+amp;es=3D0" style=3D"font-weight: 400;font-family: &#39;Google Sans&#39;, R=
+oboto, sans-serif;color: #5f6368; font-size: 14px; line-height: 120%; mso-l=
+ine-height-rule: exactly; margin: 0; text-decoration: none; text-transform:=
+ none;" class=3D"grey-button-text" itemprop=3D"url" target=3D"_blank"><tabl=
+e border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"><t=
+r><td align=3D"center" role=3D"presentation" valign=3D"middle" style=3D"pad=
+ding: 6px 12px; white-space: nowrap;"><!--[if mso]><a href=3D"https://calen=
+dar.google.com/calendar/event?action=3DRESPOND&amp;eid=3DYzlnNGd1c2Fra2pxbG=
+1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaGs&amp;rst=3D2&amp;tok=3DMjEjcnlhbm5=
+lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4ZmI1YmYxNmQ3OTk5YmFlYzFiOQ=
+&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D0" class=3D"grey-button-te=
+xt" itemprop=3D"url" target=3D"_blank"><![endif]--><span class=3D"grey-butt=
+on-text" style=3D"font-weight: 400;font-family: &#39;Google Sans&#39;, Robo=
+to, sans-serif;color: #5f6368; font-size: 14px; line-height: 120%; mso-line=
+-height-rule: exactly; margin: 0; text-decoration: none; text-transform: no=
+ne;">No</span><!--[if mso]></a><![endif]--></td></tr></table></a></span></s=
+pan></span></td><td align=3D"center" vertical-align=3D"middle" role=3D"pres=
+entation"><span itemprop=3D"potentialaction" itemscope itemtype=3D"http://s=
+chema.org/RsvpAction"><meta itemprop=3D"attendance" content=3D"http://schem=
+a.org/RsvpAttendance/Maybe"/><span itemprop=3D"handler" itemscope itemtype=
+=3D"http://schema.org/HttpActionHandler"><link itemprop=3D"method" href=3D"=
+http://schema.org/HttpRequestMethod/GET"/><span style=3D"color: #5f6367;"><=
+a href=3D"https://calendar.google.com/calendar/event?action=3DRESPOND&amp;e=
+id=3DYzlnNGd1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaGs&amp;rst=3D=
+3&amp;tok=3DMjEjcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4ZmI=
+1YmYxNmQ3OTk5YmFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D0" =
+style=3D"font-weight: 400;font-family: &#39;Google Sans&#39;, Roboto, sans-=
+serif;color: #5f6368; font-size: 14px; line-height: 120%; mso-line-height-r=
+ule: exactly; margin: 0; text-decoration: none; text-transform: none;" clas=
+s=3D"grey-button-text" itemprop=3D"url" target=3D"_blank"><table border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td align=
+=3D"center" role=3D"presentation" valign=3D"middle" style=3D"padding: 6px 0=
+; padding-left: 12px; padding-right: 16px; white-space: nowrap;"><!--[if ms=
+o]><a href=3D"https://calendar.google.com/calendar/event?action=3DRESPOND&a=
+mp;eid=3DYzlnNGd1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaGs&amp;rs=
+t=3D3&amp;tok=3DMjEjcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY=
+4ZmI1YmYxNmQ3OTk5YmFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=
+=3D0" class=3D"grey-button-text" itemprop=3D"url" target=3D"_blank"><![endi=
+f]--><span class=3D"grey-button-text" style=3D"font-weight: 400;font-family=
+: &#39;Google Sans&#39;, Roboto, sans-serif;color: #5f6368; font-size: 14px=
+; line-height: 120%; mso-line-height-rule: exactly; margin: 0; text-decorat=
+ion: none; text-transform: none;">Maybe</span><!--[if mso]></a><![endif]-->=
+</td></tr></table></a></span></span></span></td></tr></table><!-- More opti=
+ons --><a href=3D"https://calendar.google.com/calendar/event?action=3DVIEW&=
+amp;eid=3DYzlnNGd1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmEuaGs&amp;t=
+ok=3DMjEjcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4ZmI1YmYxNm=
+Q3OTk5YmFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D0" style=
+=3D"display: inline-block;;font-weight: 400;font-family: &#39;Google Sans&#=
+39;, Roboto, sans-serif;color: #5f6368; font-size: 14px; line-height: 120%;=
+ mso-line-height-rule: exactly; margin: 0; text-decoration: none; text-tran=
+sform: none;" class=3D"grey-button-text" target=3D"_blank"><table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"bord=
+er: solid 1px #dadce0; border-radius: 16px; border-collapse: separate;font-=
+family: &#39;Google Sans&#39;, Roboto, sans-serif;"><tr><td align=3D"center=
+" vertical-align=3D"middle" role=3D"presentation" style=3D"padding: 6px 0; =
+padding-left: 16px; padding-right: 12px; white-space: nowrap;;color: #5f636=
+7;"><!--[if mso]><a href=3D"https://calendar.google.com/calendar/event?acti=
+on=3DVIEW&amp;eid=3DYzlnNGd1c2Fra2pxbG1sZmpsYnFrbWtncmMgYW5ndXMubGVlQGl3cmE=
+uaGs&amp;tok=3DMjEjcnlhbm5lQGZvcmV2ZXJnaWZ0LmhrYzZiNzc3MDhlOWU3OGNmZTc0ZWY4=
+ZmI1YmYxNmQ3OTk5YmFlYzFiOQ&amp;ctz=3DAsia%2FHong_Kong&amp;hl=3Den&amp;es=3D=
+0" class=3D"grey-button-text" target=3D"_blank"><![endif]--><span class=3D"=
+grey-button-text" style=3D"font-weight: 400;font-family: &#39;Google Sans&#=
+39;, Roboto, sans-serif;color: #5f6368; font-size: 14px; line-height: 120%;=
+ mso-line-height-rule: exactly; margin: 0; text-decoration: none; text-tran=
+sform: none;">More options</span><!--[if mso]></a><![endif]--></td></tr></t=
+able></a></td></tr></table></div></td></tr></table></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></tr></table><![endif]--></td></tr></tbody></tabl=
+e><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
+ion" align=3D"center" style=3D"width:100%;" class=3D""><tbody><tr><td style=
+=3D"font-size: 0; padding: 0; text-align: left; word-break: break-word;;pad=
+ding:4px 12px;" class=3D"" align=3D"left"><div class=3D"secondary-text" sty=
+le=3D"color: #70757a; text-decoration: none;font-family: Roboto, sans-serif=
+;font-size: 12px; line-height: 16px; mso-line-height-rule: exactly; text-al=
+ign: left;"><p>Invitation from <a href=3D"https://calendar.google.com/calen=
+dar/" class=3D"accent-text underline-on-hover" style=3D"font-family: Roboto=
+, sans-serif;font-size: 12px; line-height: 16px; mso-line-height-rule: exac=
+tly;;color: #1a73e8; text-decoration: none;" target=3D"_blank">Google Calen=
+dar</a></p><p>You are receiving this email because you are an attendee on t=
+he event. To stop receiving future updates for this event, decline this eve=
+nt.</p><p>Forwarding this invitation could allow any recipient to send a re=
+sponse to the organizer, be added to the guest list, invite others regardle=
+ss of their own invitation status, or modify your RSVP. <a class=3D"accent-=
+text underline-on-hover" style=3D"font-family: Roboto, sans-serif;font-size=
+: 12px; line-height: 16px; mso-line-height-rule: exactly;;color: #1a73e8; t=
+ext-decoration: none;" href=3D"https://support.google.com/calendar/answer/3=
+7135#forwarding">Learn more</a></p></div></td></tr></tbody></table></td></t=
+r></tbody></table></span></span></body></html>
+--000000000000a40b22062375d5be
+Content-Type: text/calendar; charset="UTF-8"; method=REQUEST
+Content-Transfer-Encoding: 7bit
+
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VTIMEZONE
+TZID:Asia/Hong_Kong
+X-LIC-LOCATION:Asia/Hong_Kong
+BEGIN:STANDARD
+TZOFFSETFROM:+0800
+TZOFFSETTO:+0800
+TZNAME:GMT+8
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Hong_Kong:20241015T150000
+DTEND;TZID=Asia/Hong_Kong:20241015T153000
+DTSTAMP:20241002T031422Z
+ORGANIZER;CN=Ryanne Lai:mailto:ryanne@forevergift.hk
+UID:c9g4gusakkjqlmlfjlbqkmkgrc@google.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=Guest of Maurice Wong;X-NUM-GUESTS=0:mailto:angus.lee@iwra.hk
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=Ryanne Lai;X-NUM-GUESTS=0:mailto:ryanne@forevergift.hk
+X-MICROSOFT-CDO-OWNERAPPTID:1067038123
+CREATED:20241002T031419Z
+DESCRIPTION:Booking Title: Phone Call with Ryanne (ForeverGift)\n\nTo book 
+ a phone call with Ryanne\, please click on a time slot and\nsubmit the form
+ . You will then receive an email with details of the\ncalendar invitation.\
+ n\nLocation: +852 9213 7277\n\nReschedule or cancel: https://tidycal.com/ry
+ anne/call/reschedule/m7d2v08\n\nCreated by TidyCal.com\n
+LAST-MODIFIED:20241002T031419Z
+LOCATION:+852 9213 7277
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Phone Call with Ryanne (ForeverGift) - Guest of Maurice Wong and Ry
+ anne
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-P0DT0H10M0S
+END:VALARM
+END:VEVENT
+END:VCALENDAR
+
+--000000000000a40b22062375d5be--
+--000000000000a40b25062375d5c0
+Content-Type: application/ics; name="invite.ics"
+Content-Disposition: attachment; filename="invite.ics"
+Content-Transfer-Encoding: base64
+
+QkVHSU46VkNBTEVOREFSDQpQUk9ESUQ6LS8vR29vZ2xlIEluYy8vR29vZ2xlIENhbGVuZGFyIDcw
+LjkwNTQvL0VODQpWRVJTSU9OOjIuMA0KQ0FMU0NBTEU6R1JFR09SSUFODQpNRVRIT0Q6UkVRVUVT
+VA0KQkVHSU46VlRJTUVaT05FDQpUWklEOkFzaWEvSG9uZ19Lb25nDQpYLUxJQy1MT0NBVElPTjpB
+c2lhL0hvbmdfS29uZw0KQkVHSU46U1RBTkRBUkQNClRaT0ZGU0VURlJPTTorMDgwMA0KVFpPRkZT
+RVRUTzorMDgwMA0KVFpOQU1FOkdNVCs4DQpEVFNUQVJUOjE5NzAwMTAxVDAwMDAwMA0KRU5EOlNU
+QU5EQVJEDQpFTkQ6VlRJTUVaT05FDQpCRUdJTjpWRVZFTlQNCkRUU1RBUlQ7VFpJRD1Bc2lhL0hv
+bmdfS29uZzoyMDI0MTAxNVQxNTAwMDANCkRURU5EO1RaSUQ9QXNpYS9Ib25nX0tvbmc6MjAyNDEw
+MTVUMTUzMDAwDQpEVFNUQU1QOjIwMjQxMDAyVDAzMTQyMloNCk9SR0FOSVpFUjtDTj1SeWFubmUg
+TGFpOm1haWx0bzpyeWFubmVAZm9yZXZlcmdpZnQuaGsNClVJRDpjOWc0Z3VzYWtranFsbWxmamxi
+cWtta2dyY0Bnb29nbGUuY29tDQpBVFRFTkRFRTtDVVRZUEU9SU5ESVZJRFVBTDtST0xFPVJFUS1Q
+QVJUSUNJUEFOVDtQQVJUU1RBVD1BQ0NFUFRFRDtSU1ZQPVRSVUUNCiA7Q049R3Vlc3Qgb2YgTWF1
+cmljZSBXb25nO1gtTlVNLUdVRVNUUz0wOm1haWx0bzphbmd1cy5sZWVAaXdyYS5oaw0KQVRURU5E
+RUU7Q1VUWVBFPUlORElWSURVQUw7Uk9MRT1SRVEtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9QUNDRVBU
+RUQ7UlNWUD1UUlVFDQogO0NOPVJ5YW5uZSBMYWk7WC1OVU0tR1VFU1RTPTA6bWFpbHRvOnJ5YW5u
+ZUBmb3JldmVyZ2lmdC5oaw0KWC1NSUNST1NPRlQtQ0RPLU9XTkVSQVBQVElEOjEwNjcwMzgxMjMN
+CkNSRUFURUQ6MjAyNDEwMDJUMDMxNDE5Wg0KREVTQ1JJUFRJT046Qm9va2luZyBUaXRsZTogUGhv
+bmUgQ2FsbCB3aXRoIFJ5YW5uZSAoRm9yZXZlckdpZnQpXG5cblRvIGJvb2sgDQogYSBwaG9uZSBj
+YWxsIHdpdGggUnlhbm5lXCwgcGxlYXNlIGNsaWNrIG9uIGEgdGltZSBzbG90IGFuZFxuc3VibWl0
+IHRoZSBmb3JtDQogLiBZb3Ugd2lsbCB0aGVuIHJlY2VpdmUgYW4gZW1haWwgd2l0aCBkZXRhaWxz
+IG9mIHRoZVxuY2FsZW5kYXIgaW52aXRhdGlvbi5cDQogblxuTG9jYXRpb246ICs4NTIgOTIxMyA3
+Mjc3XG5cblJlc2NoZWR1bGUgb3IgY2FuY2VsOiBodHRwczovL3RpZHljYWwuY29tL3J5DQogYW5u
+ZS9jYWxsL3Jlc2NoZWR1bGUvbTdkMnYwOFxuXG5DcmVhdGVkIGJ5IFRpZHlDYWwuY29tXG4NCkxB
+U1QtTU9ESUZJRUQ6MjAyNDEwMDJUMDMxNDE5Wg0KTE9DQVRJT046Kzg1MiA5MjEzIDcyNzcNClNF
+UVVFTkNFOjANClNUQVRVUzpDT05GSVJNRUQNClNVTU1BUlk6UGhvbmUgQ2FsbCB3aXRoIFJ5YW5u
+ZSAoRm9yZXZlckdpZnQpIC0gR3Vlc3Qgb2YgTWF1cmljZSBXb25nIGFuZCBSeQ0KIGFubmUNClRS
+QU5TUDpPUEFRVUUNCkJFR0lOOlZBTEFSTQ0KQUNUSU9OOkRJU1BMQVkNCkRFU0NSSVBUSU9OOlRo
+aXMgaXMgYW4gZXZlbnQgcmVtaW5kZXINClRSSUdHRVI6LVAwRFQwSDEwTTBTDQpFTkQ6VkFMQVJN
+DQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo=
+--000000000000a40b25062375d5c0--

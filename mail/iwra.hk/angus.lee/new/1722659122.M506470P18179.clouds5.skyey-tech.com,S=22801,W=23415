@@ -1,0 +1,614 @@
+Return-Path: <mauricewong2002@gmail.com>
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id riIIHDKxrWYDRwAA07NIEQ
+	(envelope-from <mauricewong2002@gmail.com>); Sat, 03 Aug 2024 12:25:22 +0800
+Return-path: <mauricewong2002@gmail.com>
+Envelope-to: angus.lee@iwra.hk,
+ edmund.tong@iwra.hk
+Delivery-date: Sat, 03 Aug 2024 12:25:22 +0800
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:44537)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <mauricewong2002@gmail.com>)
+	id 1sa6Kb-0004j6-0p;
+	Sat, 03 Aug 2024 12:25:22 +0800
+Received: by mail-qk1-f202.google.com with SMTP id af79cd13be357-7a1d7344c81so1053535385a.1;
+        Fri, 02 Aug 2024 21:25:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1722659118; x=1723263918; darn=iwra.hk;
+        h=to:from:subject:date:message-id:sender:reply-to:mime-version:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=d/qpxjqGVxgSs6XaiuTjiUyNOpNupPpfPQEPHcNJUtU=;
+        b=nA7EuJM6+rxP4wwiVOorvBYBFoVqgUq3tIfG7IrZ0zQjRz9aTa8PJYFzMHnYBNtJFI
+         XuAlnnOrcwS1BE6HlHk5OXUG+S1vTW3ssQivG4b4ZZgky9jsnuLyRBifobkuY/CwkLQn
+         gOGnSomHUwa34ppDgQ5EFrRuLk7I9w1m8jFq5sJno/x0ut6J3k/Z+qfrQRw3WHuOeMn0
+         YPl+ij9BXrD7y9cdi6FaAISyOJUcDuuk60i4zvrAAAFtPHz1d0nl99bOlptlox4rY38d
+         oQSdMuIVIv9Zqz3kAil39fRiRDREjKWF01K/BTAFBnZE9YAeaHuPnDWv7iqbiQLEuhFG
+         Eueg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722659118; x=1723263918; darn=iwra.hk;
+        h=to:from:subject:date:message-id:sender:reply-to:mime-version:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=d/qpxjqGVxgSs6XaiuTjiUyNOpNupPpfPQEPHcNJUtU=;
+        b=WF/JSglA8W4CEvXNDm1oaAaFmMQQxfjaH3a6IIp/PEiaW8GBAlXHqf9CkRt2x1PAXG
+         pRum2h4QVyyQKqT/QOBugV+NJK/0dvl+eATA5xBLA9JSbgIEdA8aREHl3dy6bk/lKA/c
+         ygq6cr6zlB2s2sGtGZCkUgkRKSYnByjpn4GKEE6779cq+nfTX36MIuYJ6sd+WJn5uAr+
+         OJvV3gsD4MGg7E8FDrmDLxJD5ys1wEmCks28wcnlnr2y5IHHetMVeNwjCi7KjLLY0M0M
+         tmzPFqNY4gqTcYj8jwgFSqdkmQkPypxIWMINYMciQhYLelJB0t8/bPZeRvswFlyMwxUA
+         B+7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722659118; x=1723263918;
+        h=to:from:subject:date:message-id:sender:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d/qpxjqGVxgSs6XaiuTjiUyNOpNupPpfPQEPHcNJUtU=;
+        b=XVYnSc9YfGKNY8TdEZd4v5CWOjZvpGtvYMdp460wKtbpOi9ix5mOIwW0Dh+zJCVRqE
+         2qw9Qbr3e/zBbkAkse7sCZLjuUZi2ZPhfqLibrGHMcGPAdeZ05xWOyn7mBr/ox1Ktwnt
+         iANDBauRjZQdDlrSUFdB/y9G2cKKqug95yJwFfsDpbeSLGYXv5su95OBnEL864v8KktR
+         UYwjKTBrUFkvrlAetA1yEDXiNUQmgTThBielis5Pvhw8lfbmxGnOGIzNR215xpHnadGu
+         OG9XWReOcoQ50ZMGQUNZULpF9cRUSJkwAUBPyE8E3XsMgfIXO6nABkcZRtjOj6UgNsPw
+         yvlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUaNmjTvIBo+IODnV/HolccxlqZTy/9kyDD2nB0CGClmW0jc8SVyU+nOmQ9yjIsCo04RIa6WyviLSn7gy2e6VSCeu1l
+X-Gm-Message-State: AOJu0YzVQUsyeB7Ch8AJNe12cHw//1/fRvP+gT7Otf0PR2wYMQRaBt6/
+	yiyRMYUGNYs79oCLwjsxhl2aO3Apb/byvEI/47oMfmoUvbMqGZ8fLd702+Qh2p+mhsohBb95Te1
+	XeHqY83NJP1salNnnWr0xnB8ren+yuZmy8Q==
+X-Google-Smtp-Source: AGHT+IEoKkKGLpwfsZ1lS8Ypjo16Of1+JDgR5iXaGHbbSyVTVfUigrkiBrxf2kR42LMapzKWzTgJimdL55k7QY5R5+FA
+MIME-Version: 1.0
+X-Received: by 2002:a05:620a:468e:b0:79f:84f:809f with SMTP id
+ af79cd13be357-7a34ef1cb9fmr672488985a.33.1722659117725; Fri, 02 Aug 2024
+ 21:25:17 -0700 (PDT)
+Reply-To: Maurice Wong <mauricewong2002@gmail.com>
+Sender: Google Calendar <calendar-notification@google.com>
+Message-ID: <calendar-b9db8931-dedc-4e67-bd8b-2a28105a8a9e@google.com>
+Date: Sat, 03 Aug 2024 04:25:17 +0000
+Subject: =?UTF-8?B?5Zue5pS25Z+66YeR6ICD5a+f5ZyY?=
+From: Maurice Wong <mauricewong2002@gmail.com>
+To: angus.lee@iwra.hk, edmund.tong@iwra.hk, 
+	Maurice Wong <mauricewong2002@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000c809ad061ebfd460"
+X-Spam-Status: No, score=-4.6
+X-Spam-Score: -45
+X-Spam-Bar: ----
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  To join if available (No Subject) Wednesday Aug 21, 2024 Organizer
+    Maurice Wong mauricewong2002@gmail.com 
+ Content analysis details:   (-4.6 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -5.0 RCVD_IN_DNSWL_HI       RBL: Sender listed at https://www.dnswl.org/,
+                             high trust
+                             [209.85.222.202 listed in list.dnswl.org]
+  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+                             digit
+                             [mauricewong2002[at]gmail.com]
+  0.0 FREEMAIL_FROM          Sender email is commonly abused enduser mail
+                             provider
+                             [mauricewong2002[at]gmail.com]
+  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+                             in digit
+                             [mauricewong2002[at]gmail.com]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                            [209.85.222.202 listed in bl.score.senderscore.com]
+  0.1 MIME_HTML_MOSTLY       BODY: Multipart message mostly text/html MIME
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.0 HTML_FONT_LOW_CONTRAST BODY: HTML font color similar or
+                             identical to background
+ -0.1 DKIM_VALID_EF          Message has a valid DKIM or DK signature from
+                             envelope-from domain
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.0 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [209.85.222.202 listed in wl.mailspike.net]
+X-Spam-Flag: NO
+
+--000000000000c809ad061ebfd460
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+
+To join if available
+
+(No Subject)
+Wednesday Aug 21, 2024
+
+
+
+Organizer
+Maurice Wong
+mauricewong2002@gmail.com
+
+
+--000000000000c809ad061ebfd460
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:=
+schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:offi=
+ce"><head><title></title><!--[if !mso]><meta http-equiv=3D"X-UA-Compatible"=
+ content=3D"IE=3Dedge"><![endif]--><meta http-equiv=3D"Content-Type" conten=
+t=3D"text/html; charset=3DUTF-8"><meta name=3D"viewport" content=3D"width=
+=3Ddevice-width,initial-scale=3D1"><meta name=3D"color-scheme" content=3D"l=
+ight dark"><meta name=3D"supported-color-schemes" content=3D"light dark">
+    <style>
+      body, html {
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      #outlook a {
+        padding: 0;
+      }
+
+      .ReadMsgBody {
+        width: 100%;
+      }
+
+      .ExternalClass {
+        width: 100%;
+      }
+
+      .ExternalClass * {
+        line-height: 100%;
+      }
+
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+      }
+
+      p {
+        display: block;
+        margin: 13px 0;
+      }
+    </style>
+    <!--[if !mso]><!-->
+    <style>
+      @media only screen and (max-width:580px) {
+        @-ms-viewport {
+          width: 320px;
+        }
+
+        @viewport {
+          width: 320px;
+        }
+      }
+    </style>
+    <!--<![endif]-->
+    <!--[if mso]>
+          <xml>
+          <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+          </xml>
+          <![endif]-->
+    <!--[if lte mso 11]>
+          <style>
+            .outlook-group-fix { width:100% !important; }
+          </style>
+    <![endif]-->
+
+    <!--[if !mso]><!-- -->
+  <style>body, html {font-family:Roboto,Helvetica,Arial,sans-serif;}@font-f=
+ace {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf) forma=
+t('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc9.ttf) f=
+ormat('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url(//fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfBBc9.ttf) f=
+ormat('truetype');
+}
+@font-face {
+  font-family: 'Material Icons Extended';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/materialiconsextended/v151/kJEjBvgX7BgnkSr=
+UwT8UnLVc38YydejYY-oE_LvM.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Google Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/googlematerialicons/v141/Gw6kwdfw6UnXLJCcm=
+afZyFRXb3BL9rvi0QZG3g.otf) format('opentype');
+}
+
+.google-material-icons {
+  font-family: 'Google Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+@font-face {
+  font-family: 'Google Material Icons Filled';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/googlematerialiconsfilled/v116/WWXFlimHYg6=
+HKI3TavMkbKdhBmDvgach8TVpeGsuueSZJH4.otf) format('opentype');
+}
+
+.google-material-icons-filled {
+  font-family: 'Google Material Icons Filled';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(//fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Owps=
+.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url(//fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94Yt=
+zCwM.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url(//fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154t=
+zCwM.ttf) format('truetype');
+}
+</style><!--<![endif]-->
+      <style>
+        .body-container {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      </style>
+ =20
+      <style>
+        u+.body .body-container,
+        body[data-outlook-cycle] .body-container,
+        #MessageViewBody .body-container {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      </style>
+ =20
+    <style>
+      @media only screen and (min-width:580px) {
+        .column-per-37 {
+          width: 37% !important;
+          max-width: 37%;
+        }
+
+        .column-per-63 {
+          width: 63% !important;
+          max-width: 63%;
+        }
+      }
+    </style>
+ =20
+    <style>
+      .appointment-buttons th {
+        display: block;
+        clear: both;
+        float: left;
+        margin-top: 12px;
+      }
+
+      .appointment-buttons th a {
+        float: left;
+      }
+
+      #MessageViewBody .appointment-buttons th {
+       margin-top: 24px;
+      }
+    </style>
+ =20
+    <style>
+      @media only screen and (max-width:580px) {
+        table.full-width-mobile {
+          width: 100% !important;
+        }
+
+        td.full-width-mobile {
+          width: auto !important;
+        }
+      }
+    </style>
+    <style>
+      .main-container-inner,
+      .info-bar-inner {
+        padding: 12px 16px !important;
+      }
+
+      .main-column-table-ltr {
+        padding-right: 0 !important;
+      }
+
+      .main-column-table-rtl {
+        padding-left: 0 !important;
+      }
+
+      @media only screen and (min-width:580px) {
+        .main-container-inner {
+          padding: 24px 32px !important;
+        }
+
+        .info-bar-inner {
+          padding: 12px 32px !important;
+        }
+
+        .main-column-table-ltr {
+          padding-right: 32px !important;
+        }
+
+        .main-column-table-rtl {
+          padding-left: 32px !important;
+        }
+
+        .appointment-buttons th {
+          display: table-cell;
+          clear: none;
+        }
+      }
+
+      .primary-text {
+        color: #3c4043 !important;
+      }
+
+      .secondary-text,
+      .phone-number a {
+        color: #70757a !important;
+      }
+
+      .accent-text {
+        color: #1a73e8 !important;
+      }
+
+      .accent-text-dark {
+        color: #185abc !important;
+      }
+
+      .grey-button-text,
+      .attachment-chip a {
+        color: #5f6368 !important;
+      }
+
+      .primary-button {
+        background-color: #1a73e8 !important;
+      }
+
+      .primary-button-text {
+        color: #fff !important;
+      }
+
+      .underline-on-hover:hover {
+        text-decoration: underline !important;
+      }
+
+      .grey-infobar-text {
+        color: #202124 !important;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .primary-text:not([class^=3D"x_"]) {
+          color: #e8eaed !important;
+        }
+
+        .secondary-text:not([class^=3D"x_"]),
+        .phone-number:not([class^=3D"x_"]) a {
+          color: #9aa0a6 !important;
+        }
+
+        .grey-button-text:not([class^=3D"x_"]),
+        .attachment-chip:not([class^=3D"x_"]) a {
+          color: #bdc1c6 !important;
+        }
+
+        .accent-text:not([class^=3D"x_"]),
+        .hairline-button-text:not([class^=3D"x_"]) {
+          color: #8ab4f8 !important;
+        }
+
+        .primary-button:not([class^=3D"x_"]) {
+          background-color: #8ab4f8 !important;
+        }
+
+        .primary-button-text:not([class^=3D"x_"]) {
+          color: #202124 !important;
+        }
+      }
+    </style>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        .cse-banner:not([class^=3D"x_"]) {
+          background-color: #3c4043 !important; /* Google Grey 800 */
+        }
+
+        .encryption-icon:not([class^=3D"x_"]) {
+          /* WARNING: This causes the whole style tag to get stripped in Gm=
+ail. */
+          background-image: url('https://fonts.gstatic.com/s/i/googlemateri=
+aliconsfilled/encrypted/v3/gm_grey200-24dp/2x/gm_filled_encrypted_gm_grey20=
+0_24dp.png') !important;
+        }
+      }
+    </style>
+    <!--[if !mso]><!-->
+    <style>
+      .prevent-link a {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+    </style>
+    <!--<![endif]-->
+
+    <!--[if mso | IE]>
+      <style>
+        .main-container-inner {
+          padding: 24px 32px !important;
+        }
+
+        .info-bar-inner {
+          padding: 12px 32px !important;
+        }
+
+        .cse-banner .encryption-icon {
+          /* We use the IE workaround instead. */
+          background-image: none !important;
+        }
+
+        .cse-banner .encryption-icon .ms-fallback {
+          display: block !important;
+        }
+
+        /* NB: Some MS clients ignore dark-scheme styling and apply their o=
+wn, so there's nothing we can do to help there. */
+        @media (prefers-color-scheme: dark) {
+          .cse-banner:not([class^=3D"x_"]) .encryption-icon .ms-fallback {
+            display: none !important;
+          }
+
+          .cse-banner:not([class^=3D"x_"]) .encryption-icon .ms-fallback-da=
+rk {
+            display: block !important;
+          }
+        }
+      </style>
+    <![endif]-->
+  </head><body class=3D"body"><span itemscope itemtype=3D"http://schema.org=
+/InformAction"><span style=3D"display:none" itemprop=3D"about" itemscope it=
+emtype=3D"http://schema.org/EmailMessage"><meta itemprop=3D"description" co=
+ntent=3D"Maurice Wong: To join if available"/></span><span itemprop=3D"obje=
+ct" itemscope itemtype=3D"http://schema.org/Event"><meta itemprop=3D"eventS=
+tatus" content=3D"http://schema.org/EventScheduled"/><span itemprop=3D"publ=
+isher" itemscope itemtype=3D"http://schema.org/Organization"><meta itemprop=
+=3D"name" content=3D"Google Calendar"/></span><meta itemprop=3D"eventId/goo=
+gleCalendar" content=3D"0ia4rpk662egfqs60845m2pe24"/><span style=3D"display=
+: none; font-size: 1px; color: #fff; line-height: 1px; height: 0; max-heigh=
+t: 0; width: 0; max-width: 0; opacity: 0; overflow: hidden;" itemprop=3D"na=
+me">(No Subject)</span><span aria-hidden=3D"true"><time itemprop=3D"startDa=
+te" datetime=3D"20240821"></time><time itemprop=3D"endDate" datetime=3D"202=
+40822"></time></span><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" role=3D"presentation" align=3D"center" style=3D"width:100%;" class=3D"bod=
+y-container"><tbody><tr><td style=3D"" class=3D"" align=3D"left"><!--[if ms=
+o | IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pre=
+sentation"><tr><td height=3D"16" style=3D"height:16px;"><![endif]--><div st=
+yle=3D"height:16px;" aria-hidden=3D"true"> &nbsp; </div><!--[if mso | IE]><=
+/td></tr></table><![endif]--><table border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" align=3D"center" style=3D"width:100%;" clas=
+s=3D""><tbody><tr><td style=3D"" class=3D"" align=3D"left"><span itemscope =
+itemtype=3D"http://schema.org/EmailMessage"><p itemprop=3D"description">To =
+join if available</p></span></td></tr></tbody></table><table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D"center" s=
+tyle=3D"width:100%;" class=3D""><tbody><tr><td style=3D"border: solid 1px #=
+dadce0; border-radius: 8px; direction: rtl; font-size: 0; padding: 24px 32p=
+x; text-align: left; vertical-align: top;" class=3D"main-container-inner"><=
+!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation"><tr><![endif]--><div class=3D"" style=3D"font-size: 13p=
+x; text-align: left; direction: ltr; display: inline-block; vertical-align:=
+ top; width: 100%;overflow: hidden; word-wrap: break-word;"><table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"1=
+00%" class=3D"main-column-table-ltr" style=3D"padding-right: 32px; padding-=
+left: 0;;table-layout: fixed;"><tbody><tr><td class=3D"main-column-td" styl=
+e=3D"padding:0; vertical-align:top;"><table border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-layou=
+t: fixed;"><tr><td style=3D"font-size: 0; padding: 0; text-align: left; wor=
+d-break: break-word;;padding-bottom:2px;"><div style=3D"font-family: &#39;G=
+oogle Sans&#39;, Roboto, sans-serif;font-weight: 400; font-size: 22px; line=
+-height: 28px;color: #3c4043; text-decoration: none;" class=3D"primary-text=
+" role=3D"presentation"><span itemprop=3D"name">(No Subject)</span></div></=
+td></tr><tr><td style=3D"font-size: 0; padding: 0; text-align: left; word-b=
+reak: break-word;;padding-bottom:24px;"><div style=3D"font-family: Roboto, =
+sans-serif;font-style: normal; font-weight: 400; font-size: 14px; line-heig=
+ht: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoration: none;" cla=
+ss=3D"primary-text" role=3D"presentation"><span aria-hidden=3D"true"><time =
+itemprop=3D"startDate" datetime=3D"20240821"></time><time itemprop=3D"endDa=
+te" datetime=3D"20240822"></time></span><span>Wednesday Aug 21, 2024</span>=
+</div></td></tr><tr><td style=3D"font-size: 0; padding: 0; text-align: left=
+; word-break: break-word;;padding-bottom:24px;"><div style=3D"font-family: =
+Roboto, sans-serif;font-style: normal; font-weight: 400; font-size: 14px; l=
+ine-height: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoration: no=
+ne;" class=3D"primary-text" role=3D"presentation"><table border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"padding-botto=
+m: 4px;"><tr><td><h2 class=3D"primary-text" style=3D"font-size: 14px;color:=
+ #3c4043; text-decoration: none;font-weight: 700;-webkit-font-smoothing: an=
+tialiased;margin: 0; padding: 0;">Organizer</h2></td></tr></table><div styl=
+e=3D"color: #3c4042;"><span class=3D"notranslate"><a class=3D"primary-text =
+underline-on-hover" style=3D"display: inline-block;;color: #3c4043; text-de=
+coration: none;" href=3D"mailto:mauricewong2002@gmail.com">Maurice Wong</a>=
+</span><span itemprop=3D"organizer" itemscope itemtype=3D"http://schema.org=
+/Person"><meta itemprop=3D"name" content=3D"Maurice Wong"/><meta itemprop=
+=3D"email" content=3D"mauricewong2002@gmail.com"/></span></div><div style=
+=3D"color: #707579;"><a class=3D"secondary-text underline-on-hover" style=
+=3D"display: inline-block;;color: #70757a; text-decoration: none;" href=3D"=
+mailto:mauricewong2002@gmail.com">mauricewong2002@gmail.com</a></div></div>=
+</td></tr><tr><td style=3D"font-size: 0; padding: 0; text-align: left; word=
+-break: break-word;;padding-bottom:24px;"><div style=3D"font-family: Roboto=
+, sans-serif;font-style: normal; font-weight: 400; font-size: 14px; line-he=
+ight: 20px; letter-spacing: 0.2px;color: #3c4043; text-decoration: none;" c=
+lass=3D"primary-text" role=3D"presentation"><table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"padding-bottom: 4px=
+;"><tr><td><h2 class=3D"primary-text" style=3D"font-size: 14px;color: #3c40=
+43; text-decoration: none;font-weight: 700;-webkit-font-smoothing: antialia=
+sed;margin: 0; padding: 0;">Guests</h2></td></tr></table><div style=3D"padd=
+ing-bottom: 4px; text-align: left;;color: #3c4042;"></div></div></td></tr><=
+/table></td></tr></tbody></table></div><!--[if mso | IE]></tr></table><![en=
+dif]--></td></tr></tbody></table></td></tr></tbody></table></span></span></=
+body></html>
+--000000000000c809ad061ebfd460--

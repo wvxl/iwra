@@ -1,0 +1,561 @@
+Return-Path: <tong.edmund@gmail.com>
+Delivered-To: maurice.wong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id 04tXD/psRWZpIQAA07NIEQ
+	(envelope-from <tong.edmund@gmail.com>)
+	for <maurice.wong@iwra.hk>; Thu, 16 May 2024 10:18:34 +0800
+Return-path: <tong.edmund@gmail.com>
+Envelope-to: maurice.wong@iwra.hk
+Delivery-date: Thu, 16 May 2024 10:18:34 +0800
+Received: from mail-lf1-f52.google.com ([209.85.167.52]:61932)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <tong.edmund@gmail.com>)
+	id 1s7QhT-0002Dr-2p
+	for maurice.wong@iwra.hk;
+	Thu, 16 May 2024 10:18:34 +0800
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-51f4d2676d1so276944e87.3
+        for <maurice.wong@iwra.hk>; Wed, 15 May 2024 19:18:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715825907; x=1716430707; darn=iwra.hk;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fJyf0jMT/eI5+GpOomi0zwEjwI6N9zaCL1dNm6e5LFk=;
+        b=jgMSQe9kcwo3j0Mt9cheDYjQR7+mFXXWyjGlLJvedJIzd+ySNsnABjzCE2UTPntpcK
+         maIscfhvfK1jWucL47N68fzMWw6Y4pks8JiadypjTL8P2ePorIvYWcxZrm9A4m8RCc+t
+         SDozgG6Le1yBGo9gfNlFaA436BnXYgjEeDDOGjQrcfHxwtBiXz3RCibmm3nP0JQ6WqOT
+         XlyHMI4U/tYcVrgvxkcOyXUHL4GRTKdw/SzTBrY80T6D83xsazJIA50q332D4U7nhwyY
+         qAsL7frhPkLpQcxxKA9Vh+4o/FFNJy3/fzb16jTZVb/3cZHNAkfKSt6JFgj0EC6IXW4b
+         WzYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715825907; x=1716430707;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fJyf0jMT/eI5+GpOomi0zwEjwI6N9zaCL1dNm6e5LFk=;
+        b=ayoj+JbOmeucWkwXW5m5FYEhMLY7pzAzvTdLOQRsU9XG6JCYpj143du/SOw1gYoOuA
+         mDqgYM+9uPbOBk9IwzOf4CKPiumjbNOpNo0qaQBgxzBpfO2TVIz7MsR+cxgvdtarBICd
+         XfFJcCd2L0tMRE0JkWs+2xJ9NKrQus5fqawoH2w/caeyFmJVF/pp/s6vStGZf/mTT5Ed
+         Oi8jFPK2l+VinrXQP5SkFrk+cMQ/HEK1SkQxccBdc4SRY3H6MTOnhX/n2GY9w8dHZrEo
+         8FIjH6Smm8xrW3gD0/sCHVqcMJBzpIFs09d13OGO/EpjVVCvmYIo34PXAtsXGQFVcWTV
+         LGFQ==
+X-Gm-Message-State: AOJu0Yypl8zoBrTovffxOIpyuv1K8/Ja5mmI+yrtwmCuHGYXeZovnzvw
+	pJr10INClCRmftxY4T68b1RhSvnPvmm6TPImhUpvd/BgQlZBmIO4iATiU5y/3fzeRx9hkBZNjK4
+	3uRCTgsk1o3TXD3GFvetuI+iUK7tQPQ==
+X-Google-Smtp-Source: AGHT+IEBqgYkXcyzgwtrNW4GWFtL4/q5i6xywEjv+ZaUnISS7dA6Ct9UcIZBIADx4jHWcjdUPw3cOii5SaaaGXqzWTM=
+X-Received: by 2002:ac2:4c31:0:b0:523:8ada:9440 with SMTP id
+ 2adb3069b0e04-5238ada9732mr2647653e87.57.1715825906732; Wed, 15 May 2024
+ 19:18:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <OF45CFB093.33B60E8E-ON48258AD7.0022C420-48258AD7.0022C447@intranet.bochk.com>
+ <CAPO=tgUT4VZ=gRRzwfChFy9xxkp911V4vT7Y3Mpd4a3ri_zhWQ@mail.gmail.com> <CAPO=tgUYnBscJszTGQLnzYsMg4OBJ9MB=6DazUhcqi8edQJQ-w@mail.gmail.com>
+In-Reply-To: <CAPO=tgUYnBscJszTGQLnzYsMg4OBJ9MB=6DazUhcqi8edQJQ-w@mail.gmail.com>
+From: Edmund Tong <tong.edmund@gmail.com>
+Date: Thu, 16 May 2024 10:18:15 +0800
+Message-ID: <CAPO=tgVGXOJ1W4q0L0sSWBSXPe2QkfREtTBOnXa6v+rDoMuEOA@mail.gmail.com>
+Subject: =?UTF-8?B?UmU6IEJPQ0hLXyBCdXNpbmVzcyBhY2NvdW50IG9wZW5pbmflhazlj7jplovmiLbnlLM=?=
+	=?UTF-8?B?6KuLX0lOTk9WQVRJVkUgV09PRCBSRUNZQ0xFIEFTU09DSUFUSU9OIExJTUlURUQ=?=
+To: yimtszho@bochk.com
+Cc: maurice.wong@iwra.hk
+Content-Type: multipart/alternative; boundary="000000000000aad457061888d91f"
+X-Spam-Status: No, score=-0.2
+X-Spam-Score: -1
+X-Spam-Bar: /
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Dear Andy, The last email can't reach you because it was too
+    large. I am resending this email without the attachment of 22Mb, please see
+    below. I will be pleased if I can meet up with you tmr morning and handover
+    a copy to you for your reference. 
+ Content analysis details:   (-0.2 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -0.0 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [209.85.167.52 listed in wl.mailspike.net]
+  0.0 FREEMAIL_FROM          Sender email is commonly abused enduser mail
+                             provider
+                             [tong.edmund[at]gmail.com]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+ -0.1 DKIM_VALID_EF          Message has a valid DKIM or DK signature from
+                             envelope-from domain
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+X-Spam-Flag: NO
+
+--000000000000aad457061888d91f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Andy,
+
+The last email can't reach you because it was too large. I am resending
+this email without the attachment of 22Mb, please see below.
+
+I will be pleased if I can meet up with you tmr morning and handover a copy
+to you for your reference.
+
+Please advise.
+
+Thanks.
+Regards
+Edmund Tong
+
+On Thu, May 16, 2024 at 9:44=E2=80=AFAM Edmund Tong <tong.edmund@gmail.com>=
+ wrote:
+
+> Dear Andy,
+>
+> It was nice meeting you in your office on 3rd April to explain the
+> operation of our association IWRA.
+>
+> Subsequent to that meeting, we have a lot of developments as regards to
+> potential members as below:-
+>
+> 1) Recommended members of the HKGSA (Hong Kong Green Shop Alliance) from
+> the director, Harry Lai of HKGBC (Hong Kong Green Building Council) and
+> details from him as below:-
+> The Hong Kong Green Shop Alliance was established in 2017 with the aim to
+> foster the world=E2=80=99s greenest shopping environment in Hong Kong. Si=
+nce the
+> establishment, we have successfully built a collaborative platform that h=
+as
+> engaged the voluntary participation of 31 Developers / Key Partners, over
+> 180 Malls and 850 Shops. You could find more information in HKGSA website=
+:
+> https://hkgsa.hkgbc.org.hk/
+>
+> These members are potential sources for supply of recycled wood and also
+> end users of decoration/product produced from recycled wood.
+>
+> 2) Meeting with HKPC (Hong Kong Productivity Centre) regarding applicatio=
+n
+> of funding:-
+> a) TVP (Technology Voucher Programme) for a maximum of HKD800,000 with 75=
+%
+> funding available, and
+> b) Recycling Fund- as an NPO, we are eligible to apply for ISP fund with =
+a
+> maximum of HKD 15,000,000 (to be applied by phase depending on the projec=
+t
+> scope), with 100% funding from the Environmental Protection Department
+>
+> We will submit applications to both funds by the end of May, 2024.
+>
+> 3) We have also contacted several architects/designers supporting our
+> association and will refer us to members of the HKID (Hong Kong Institute
+> of Architects) and they have been involved in projects using recycle wood
+>
+> 4) We have also started working with one of the biggest woodworking
+> workshops in Hong Kong located in Fotan for the development of using
+> recycled wood -this workshop has already been producing wooden products
+> with recycled wood for some years.
+>
+> 5) We are also discussing with PolyU for the projects with their year 4
+> students of the PolyU School of Design
+>
+> Based on the above progress, we are now ready to invite
+> corporate/companies and individuals to be members of our association and =
+a
+> bank account is essential for receiving membership fees and also the
+> operation of our association.
+>
+> An updated presentation (still to be refined before formal launching) is
+> attached for your further reference.
+>
+> I remembered that I had signed the 2nd page of the application form when =
+I
+> met you on 3rd April but the 1st page was blank.
+>
+> Since there is good progress in terms of the scope of our development, th=
+e
+> estimated turnover should be more than what we had indicated before in th=
+e
+> first application and we expect faster development. Perhaps we should
+> revise our projection in our application to reflect the updated situation=
+.
+>
+> We would appreciate it if we can have your prompt reply to our applicatio=
+n
+> for opening an account with Bank of China.
+>
+> Thanks
+>
+> Regards
+> Edmund Tong
+> Innovative Wood Recycle Association Limited
+>
+>
+>
+>
+> ---------- Forwarded message ---------
+> From: Edmund Tong <tong.edmund@gmail.com>
+> Date: Thu, Mar 14, 2024 at 10:12=E2=80=AFAM
+> Subject: Re: BOCHK_ Business account opening=E5=85=AC=E5=8F=B8=E9=96=8B=
+=E6=88=B6=E7=94=B3=E8=AB=8B_INNOVATIVE WOOD RECYCLE
+> ASSOCIATION LIMITED
+> To: <chanyeongwo@bochk.com>
+>
+>
+> Dear Mr. Chan,
+>
+> We are preparing info for the application.
+>
+> Just wanted to clarify with you the followings:-
+>
+> 1) Can we arrange to issue cheque with 1 primary signatory + any one of
+> the other secondary signatory ( total 3 nos. of secondary signatory), if
+> this is the case, where can we specify this?
+>
+> 2) For Online Banking Arrangement
+> a) Is it only one primary user is required for online access - like the
+> company account which I have been using for my E T Engineering Ltd accoun=
+t?
+> b) Can we impose a limit of the transaction for the transfer to others
+> (not internally)?
+>
+>
+> Rgds
+> Edmund Tong
+>
+> On Tue, Mar 5, 2024 at 2:19=E2=80=AFPM <chanyeongwo@bochk.com> wrote:
+>
+>> Dear Mr Tong,
+>>
+>> =E5=A4=9A=E8=AC=9D=E9=81=B8=E7=94=A8=E6=9C=AC=E8=A1=8C=E6=9C=8D=E5=8B=99=
+=EF=BC=8C=E7=85=A9=E8=AB=8B=E6=8F=90=E4=BE=9B=E4=BB=A5=E4=B8=8B=E6=96=87=E4=
+=BB=B6=EF=BC=8C=E4=BB=A5=E4=BD=9C=E9=96=8B=E6=88=B6=E5=AF=A9=E6=89=B9=E3=80=
+=82
+>> =E7=9B=B8=E9=97=9C=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B=E7=84=A1=E8=AB=96=
+=E6=98=AF=E5=90=A6=E6=88=90=E5=8A=9F=E9=96=8B=E6=88=B6=EF=BC=8C=E6=94=B6=E8=
+=B2=BB=E4=B8=8D=E8=A8=AD=E9=80=80=E9=82=84=E3=80=82
+>> =E8=AB=8B=E5=AE=A2=E6=88=B6=E6=96=BC1=E5=80=8B=E6=9C=88=E5=85=A7=E6=8F=
+=90=E4=BA=A4=E7=9B=B8=E9=97=9C=E7=94=B3=E8=AB=8B=E9=96=8B=E6=88=B6=E6=96=87=
+=E4=BB=B6=EF=BC=8C=E9=80=BE=E6=99=82=E6=8F=90=E4=BA=A4=E6=96=87=E4=BB=B6=E8=
+=A6=96=E4=BD=9C=E5=8F=96=E6=B6=88=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B=E3=80=
+=82
+>>
+>>
+>> *(=E8=AB=8B=E8=A9=B3=E7=B4=B0=E5=A1=AB=E5=AF=AB=E4=B8=8B=E8=A1=A8=EF=BC=
+=9A=E5=8C=85=E6=8B=AC=E5=85=AC=E5=8F=B8=E8=B2=A0=E8=B2=AC=E4=BA=BA=E7=9A=84=
+=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E5=85=A7=E5=AE=B9=E5=8F=8A=E5=85=AC=E5=
+=8F=B8=E9=81=8B=E4=BD=9C=E6=A8=A1=E5=BC=8F=EF=BC=8C=E5=A6=82=E5=B0=8D=E5=A1=
+=AB=E5=AF=AB=E5=85=A7=E5=AE=B9=E6=9C=89=E7=96=91=E5=95=8F=EF=BC=8C=E5=8F=AF=
+=E5=92=8C=E6=88=91=E5=80=91=E8=81=AF=E7=B5=A1=E5=8F=8A=E6=BA=9D=E9=80=9A)*
+>>
+>>
+>>
+>> =E5=9B=9E=E8=A6=86=E6=99=82=E9=80=A3=E5=90=8C   1.=E5=85=AC=E5=8F=B8KYC=
+=E8=A1=A8=E6=A0=BC(=E9=9B=BB=E9=83=B5=E9=99=84=E4=BB=B6)=E3=80=81
+>>                        2.=E8=B2=A0=E8=B2=AC=E4=BA=BA(=E8=91=A3=E4=BA=8B/=
+=E8=82=A1=E6=9D=B1=E5=8F=8A=E7=B0=BD=E5=AD=97=E4=BA=BA)=E8=BA=AB=E4=BB=BD=
+=E8=AD=89=E6=98=8E=E3=80=81
+>>                        3.=E4=BD=8F=E5=9D=80=E8=AD=89=E6=98=8E=E6=96=87=
+=E4=BB=B6=E3=80=81
+>>                        4.BR+CI=E3=80=81 INCUMBENCY (CERTIFIED BY CPA/LAW=
+YER)
+>>                        5.=E8=82=A1=E4=BB=BD=E8=BD=89=E8=AE=93=E6=96=87=
+=E4=BB=B6(=E5=A6=82=E6=9C=89)=E3=80=81
+>>                        8.=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=
+=E4=BB=B6=E5=8F=8A=E6=A5=AD=E5=8B=99=E6=96=87=E4=BB=B6=E9=9B=BB=E9=83=B5=E7=
+=B5=A6=E6=88=91=E5=80=91=E3=80=82
+>>
+>> ***=E6=A5=AD=E5=8B=99=E6=96=87=E4=BB=B6=E5=8C=85=E6=8B=AC=EF=B8=B0=E7=A7=
+=9F=E7=B4=84=EF=BC=8C=E8=B2=B7=E8=B3=A3=E5=90=88=E5=90=8C=EF=BC=8C=E5=BB=BA=
+=E8=AD=B0=E6=9B=B8=E7=AD=89=E7=AD=89(=E8=AB=8B=E6=8F=90=E4=BE=9B=E6=9C=89=
+=E9=9B=99=E6=96=B9=E8=93=8B=E7=AB=A0=E5=8F=8A=E7=B0=BD=E7=BD=B2=E7=9A=84=E6=
+=96=87=E4=BB=B6)=E5=8F=8A=E7=8F=BE=E6=99=82=E5=85=AC=E5=8F=B8=E7=87=9F=E9=
+=81=8B=E5=9C=B0=E5=9D=80=E7=9A=84=E7=9B=B8=E7=89=87(=E5=A6=82=E6=9C=89) =E7=
+=AD=89=E7=AD=89=E7=9A=84=E6=9C=89=E9=97=9C=E8=B3=87=E6=96=99 **
+>> **=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=E4=BB=B6=EF=B8=B0=E7=B3=
+=A7=E5=96=AE=EF=BC=8C=E5=85=AC=E5=8F=B8=E4=BF=A1=EF=BC=8CMPF=EF=BC=8C=E5=90=
+=8D=E7=89=87=E6=96=87=E4=BB=B6=E7=AD=89=E7=AD=89 =E6=88=96 =E6=8C=81=E6=9C=
+=89=E5=85=B6=E4=BB=96=E5=85=AC=E5=8F=B8=E7=9A=84=E8=AD=89=E6=98=8E=E5=A6=82=
+BR=E3=80=81CI=E3=80=81NNC1(=E4=B8=8D=E5=8C=85=E6=8B=AC=E7=94=B3=E8=AB=8B=E5=
+=85=AC=E5=8F=B8=E7=99=BC=E5=87=BA=E7=9A=84=E6=96=87=E4=BB=B6)**
+>> **=E5=85=AC=E5=8F=B8=E5=B8=B3=E6=88=B6=E7=B0=BD=E7=BD=B2=E5=AE=89=E6=8E=
+=92**
+>>
+>> =E5=A6=82=E6=9C=89=E7=9B=B8=E9=97=9C=E6=9F=A5=E8=A9=A2=EF=BC=8C=E6=AD=A1=
+=E8=BF=8E=E9=9A=A8=E6=99=82=E8=87=B4=E9=9B=BB=E6=88=96=E9=9B=BB=E9=83=B5=E7=
+=B5=A6=E6=9C=AC=E4=BA=BA=EF=BC=8C=E8=AC=9D=E8=AC=9D=EF=BC=81
+>>
+>> Should you have any enquires, feel free to contact me.
+>>
+>> Thank you so much.
+>>
+>> Best regards,
+>> Chan Yeong Wo, China
+>>
+>> Kowloon West Business Banking Centre
+>> Personal Banking and Wealth Management
+>> Direct: (852) 3982 8057
+>> Email: chanyeongwo@bochk.com
+>> Address: 37 Kimberlery Rd, Tsim Sha Tsui, Kowloon
+>>
+>> BOCHK is named "Bank of the Year in Hong Kong" by The Banker as well as
+>> "The Strongest Bank in Hong Kong and Asia Pacific" and "The Second
+>> Strongest Bank in the World" by The Asian Banker in 2023.
+>>
+>>
+>> ***********************************************************
+>> This message contains confidential information which is intended only fo=
+r
+>> the person or entity to which it is addressed. If you are not the intend=
+ed
+>> recipient, you should not read, disseminate, distribute or copy this
+>> e-mail. Any opinion contained in this message are those of the author an=
+d
+>> are not given or endorsed by Bank of China (Hong Kong) Limited, its
+>> subsidiaries or affiliates unless otherwise stated in this message and t=
+he
+>> authority of the author to so bind Bank of China (Hong Kong) Limited, it=
+s
+>> subsidiaries or affiliates  is duly verified. We do not guarantee that t=
+his
+>> e-mail is virus-free or secure and are not liable in respect of any dela=
+y
+>> or omission in the transmission of this message.
+>> ***********************************************************
+>> Save paper, Save the Earth
+>>
+>>
+
+--000000000000aad457061888d91f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Dear Andy,<div><br></div><div>The last em=
+ail can&#39;t reach you because it was too large. I am resending this email=
+ without the attachment of 22Mb, please see below.</div><div><br></div><div=
+>I will be pleased if I can meet up with you tmr morning and handover a cop=
+y to you for your reference.</div><div><br></div><div>Please advise.</div><=
+div><br></div><div>Thanks.</div><div>Regards</div><div>Edmund Tong</div></d=
+iv><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On =
+Thu, May 16, 2024 at 9:44=E2=80=AFAM Edmund Tong &lt;<a href=3D"mailto:tong=
+.edmund@gmail.com">tong.edmund@gmail.com</a>&gt; wrote:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Dear Andy,<div><br=
+></div><div>It was nice meeting you in your office=C2=A0on 3rd April to exp=
+lain the operation of our association IWRA.</div><div><br></div><div>Subseq=
+uent to that meeting, we have a lot of developments as regards to potential=
+ members as below:-</div><div><br></div><div>1) Recommended members of the =
+HKGSA (Hong Kong Green Shop Alliance) from the director, Harry Lai of HKGBC=
+ (Hong Kong Green Building Council) and details from him as below:-</div><d=
+iv>The Hong Kong Green Shop Alliance was established in 2017 with the aim t=
+o foster the world=E2=80=99s greenest shopping environment in Hong Kong. Si=
+nce the establishment, we have successfully built a collaborative platform =
+that has engaged the voluntary participation of 31 Developers / Key Partner=
+s, over 180 Malls and 850 Shops. You could find more information in HKGSA w=
+ebsite: <a href=3D"https://hkgsa.hkgbc.org.hk/" target=3D"_blank">https://h=
+kgsa.hkgbc.org.hk/</a><br></div><div>=C2=A0</div><div>These members are pot=
+ential sources for supply of recycled wood and also end users of decoration=
+/product produced from recycled wood.</div><div><br></div><div>2) Meeting w=
+ith HKPC (Hong Kong Productivity Centre) regarding application of funding:-=
+</div><div>a) TVP (Technology Voucher Programme) for a maximum of HKD800,00=
+0 with 75% funding available, and=C2=A0</div><div>b) Recycling Fund- as an =
+NPO, we are eligible to apply for ISP fund with a maximum of HKD 15,000,000=
+ (to be applied by phase depending on the project scope), with 100% funding=
+ from the Environmental Protection Department</div><div><br></div><div>We w=
+ill submit applications to both funds by the end of May, 2024.</div><div><b=
+r></div><div>3) We have also contacted several architects/designers support=
+ing our association and will refer us to members of the HKID (Hong Kong Ins=
+titute of Architects) and they have been involved in projects using recycle=
+ wood</div><div><br></div><div>4) We have also started working with one of =
+the biggest woodworking workshops in Hong Kong located in Fotan for the dev=
+elopment of using recycled wood -this workshop has already been producing w=
+ooden products with recycled wood for some years.</div><div><br></div><div>=
+5) We are also discussing with PolyU for the projects with their year 4 stu=
+dents of the PolyU School of Design</div><div><br></div><div>Based on the a=
+bove progress, we are now ready to invite corporate/companies and individua=
+ls to be members of our association and a bank account is essential for rec=
+eiving membership fees and also the operation of our association.</div><div=
+><br></div><div>An updated presentation (still to be refined before formal =
+launching) is attached for your further reference.</div><div><br></div><div=
+>I remembered that I had signed the 2nd page of the application form when I=
+ met you on 3rd April but the 1st page was blank.=C2=A0</div><div><br></div=
+><div>Since there is good progress in terms of the scope of our development=
+, the estimated turnover should be more than what we had indicated before i=
+n the first application and we expect faster development. Perhaps we should=
+ revise our projection in our application to reflect the updated situation.=
+</div><div><br></div><div>We would appreciate it if we can have your prompt=
+ reply to our application for opening an account with Bank of China.</div><=
+div><br></div><div>Thanks</div><div><br></div><div>Regards</div><div>Edmund=
+ Tong</div><div>Innovative Wood Recycle Association Limited</div><div><br><=
+/div><div><br></div><div><br></div><div><br></div><div><div class=3D"gmail_=
+quote"><div dir=3D"ltr" class=3D"gmail_attr">---------- Forwarded message -=
+--------<br>From: <strong class=3D"gmail_sendername" dir=3D"auto">Edmund To=
+ng</strong> <span dir=3D"auto">&lt;<a href=3D"mailto:tong.edmund@gmail.com"=
+ target=3D"_blank">tong.edmund@gmail.com</a>&gt;</span><br>Date: Thu, Mar 1=
+4, 2024 at 10:12=E2=80=AFAM<br>Subject: Re: BOCHK_ Business account opening=
+=E5=85=AC=E5=8F=B8=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B_INNOVATIVE WOOD RECY=
+CLE ASSOCIATION LIMITED<br>To:  &lt;<a href=3D"mailto:chanyeongwo@bochk.com=
+" target=3D"_blank">chanyeongwo@bochk.com</a>&gt;<br></div><br><br><div dir=
+=3D"ltr">Dear Mr. Chan,<div><br></div><div>We are preparing info for the ap=
+plication.</div><div><br></div><div>Just wanted to clarify with you the fol=
+lowings:-</div><div><br></div><div>1) Can we arrange to issue cheque with 1=
+ primary signatory + any one of the other secondary signatory ( total 3 nos=
+. of secondary signatory), if this is the case, where can we specify this?<=
+/div><div><br></div><div>2) For Online Banking Arrangement=C2=A0</div><div>=
+a) Is it only one primary user is required=C2=A0for online access -=C2=A0li=
+ke the company account which I have been using for my E T Engineering Ltd a=
+ccount?<br></div><div>b) Can we impose a limit of the transaction for the t=
+ransfer to others (not internally)?</div><div><br></div><div><br></div><div=
+>Rgds</div><div>Edmund Tong</div></div><br><div class=3D"gmail_quote"><div =
+dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 5, 2024 at 2:19=E2=80=AFPM &lt=
+;<a href=3D"mailto:chanyeongwo@bochk.com" target=3D"_blank">chanyeongwo@boc=
+hk.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
+:1ex"><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">Dear Mr Tong,</span>
+<br>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=E5=A4=9A=E8=AC=9D=E9=81=B8=E7=94=A8=E6=9C=AC=E8=A1=8C=
+=E6=9C=8D=E5=8B=99=EF=BC=8C=E7=85=A9=E8=AB=8B=E6=8F=90=E4=BE=9B=E4=BB=A5=E4=
+=B8=8B=E6=96=87=E4=BB=B6=EF=BC=8C=E4=BB=A5=E4=BD=9C=E9=96=8B=E6=88=B6=E5=AF=
+=A9=E6=89=B9=E3=80=82</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=E7=9B=B8=E9=97=9C=E9=96=8B=E6=88=B6=E7=94=B3=E8=AB=8B=
+=E7=84=A1=E8=AB=96=E6=98=AF=E5=90=A6=E6=88=90=E5=8A=9F=E9=96=8B=E6=88=B6=EF=
+=BC=8C</span><span style=3D"font-size:12pt;color:red;font-family:=E5=BE=AE=
+=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">=E6=94=B6=E8=B2=BB=E4=B8=8D=E8=A8=AD=
+=E9=80=80=E9=82=84</span><span style=3D"font-size:12pt;font-family:=E5=BE=
+=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">=E3=80=82</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=E8=AB=8B=E5=AE=A2=E6=88=B6=E6=96=BC</span><span style=
+=3D"font-size:12pt;color:red;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=
+=91=E9=AB=94">1=E5=80=8B=E6=9C=88=E5=85=A7</span><span style=3D"font-size:1=
+2pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">=E6=8F=90=E4=
+=BA=A4=E7=9B=B8=E9=97=9C=E7=94=B3=E8=AB=8B=E9=96=8B=E6=88=B6=E6=96=87=E4=BB=
+=B6=EF=BC=8C=E9=80=BE=E6=99=82=E6=8F=90=E4=BA=A4=E6=96=87=E4=BB=B6=E8=A6=96=
+=E4=BD=9C</span><span style=3D"font-size:12pt;color:red;font-family:=E5=BE=
+=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">=E5=8F=96=E6=B6=88=E9=96=8B=E6=88=
+=B6=E7=94=B3=E8=AB=8B</span><span style=3D"font-size:12pt;font-family:=E5=
+=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94">=E3=80=82</span>
+<table width=3D"1034" style=3D"border-collapse:collapse">
+<tbody><tr height=3D"8">
+<td width=3D"1034" style=3D"border-style:none;border-color:rgb(0,0,0);borde=
+r-width:0px;padding:0px"></td></tr></tbody></table>
+<br>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94"><b>(=E8=AB=8B=E8=A9=B3=E7=B4=B0=E5=A1=AB=E5=AF=AB=E4=B8=
+=8B=E8=A1=A8=EF=BC=9A=E5=8C=85=E6=8B=AC=E5=85=AC=E5=8F=B8=E8=B2=A0=E8=B2=AC=
+=E4=BA=BA=E7=9A=84=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E5=85=A7=E5=AE=B9=E5=
+=8F=8A=E5=85=AC=E5=8F=B8=E9=81=8B=E4=BD=9C=E6=A8=A1=E5=BC=8F=EF=BC=8C=E5=A6=
+=82=E5=B0=8D=E5=A1=AB=E5=AF=AB=E5=85=A7=E5=AE=B9=E6=9C=89=E7=96=91=E5=95=8F=
+=EF=BC=8C=E5=8F=AF=E5=92=8C=E6=88=91=E5=80=91=E8=81=AF=E7=B5=A1=E5=8F=8A=E6=
+=BA=9D=E9=80=9A)</b></span>
+<br>
+<br>
+<br>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=E5=9B=9E=E8=A6=86=E6=99=82=E9=80=A3=E5=90=8C
+=C2=A0 1.=E5=85=AC=E5=8F=B8KYC=E8=A1=A8=E6=A0=BC(=E9=9B=BB=E9=83=B5=E9=99=
+=84=E4=BB=B6)=E3=80=81</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=C2=A0 =C2=A0
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A02.=E8=
+=B2=A0=E8=B2=AC=E4=BA=BA(=E8=91=A3=E4=BA=8B/=E8=82=A1=E6=9D=B1=E5=8F=8A=E7=
+=B0=BD=E5=AD=97=E4=BA=BA)=E8=BA=AB=E4=BB=BD=E8=AD=89=E6=98=8E=E3=80=81</spa=
+n>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=C2=A0 =C2=A0
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A03.=E4=
+=BD=8F=E5=9D=80=E8=AD=89=E6=98=8E=E6=96=87=E4=BB=B6=E3=80=81
+</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=C2=A0 =C2=A0
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<a hre=
+f=3D"http://4.BR" target=3D"_blank">4.BR</a>+CI=E3=80=81
+INCUMBENCY (CERTIFIED BY CPA/LAWYER)</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=C2=A0 =C2=A0
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A05.=E8=
+=82=A1=E4=BB=BD=E8=BD=89=E8=AE=93=E6=96=87=E4=BB=B6(=E5=A6=82=E6=9C=89)=E3=
+=80=81</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=C2=A0 =C2=A0
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A08.=E5=
+=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=E4=BB=B6=E5=8F=8A=E6=A5=AD=E5=8B=
+=99=E6=96=87=E4=BB=B6=E9=9B=BB=E9=83=B5=E7=B5=A6=E6=88=91=E5=80=91=E3=80=82
+</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=C2=A0 =C2=A0
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
+***=E6=A5=AD=E5=8B=99=E6=96=87=E4=BB=B6=E5=8C=85=E6=8B=AC=EF=B8=B0=E7=A7=9F=
+=E7=B4=84=EF=BC=8C=E8=B2=B7=E8=B3=A3=E5=90=88=E5=90=8C=EF=BC=8C=E5=BB=BA=E8=
+=AD=B0=E6=9B=B8=E7=AD=89=E7=AD=89(=E8=AB=8B=E6=8F=90=E4=BE=9B=E6=9C=89=E9=
+=9B=99=E6=96=B9=E8=93=8B=E7=AB=A0=E5=8F=8A=E7=B0=BD=E7=BD=B2=E7=9A=84=E6=96=
+=87=E4=BB=B6)=E5=8F=8A=E7=8F=BE=E6=99=82=E5=85=AC=E5=8F=B8=E7=87=9F=E9=81=
+=8B=E5=9C=B0=E5=9D=80=E7=9A=84=E7=9B=B8=E7=89=87(=E5=A6=82=E6=9C=89)
+=E7=AD=89=E7=AD=89=E7=9A=84=E6=9C=89=E9=97=9C=E8=B3=87=E6=96=99 **<br>
+**=E5=B7=A5=E4=BD=9C=E7=B6=93=E9=A9=97=E6=96=87=E4=BB=B6=EF=B8=B0=E7=B3=A7=
+=E5=96=AE=EF=BC=8C=E5=85=AC=E5=8F=B8=E4=BF=A1=EF=BC=8CMPF=EF=BC=8C=E5=90=8D=
+=E7=89=87=E6=96=87=E4=BB=B6=E7=AD=89=E7=AD=89 =E6=88=96
+=E6=8C=81=E6=9C=89=E5=85=B6=E4=BB=96=E5=85=AC=E5=8F=B8=E7=9A=84=E8=AD=89=E6=
+=98=8E=E5=A6=82BR=E3=80=81CI=E3=80=81NNC1(=E4=B8=8D=E5=8C=85=E6=8B=AC=E7=94=
+=B3=E8=AB=8B=E5=85=AC=E5=8F=B8=E7=99=BC=E5=87=BA=E7=9A=84=E6=96=87=E4=BB=B6=
+)**</span>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">**=E5=85=AC=E5=8F=B8=E5=B8=B3=E6=88=B6=E7=B0=BD=E7=BD=
+=B2=E5=AE=89=E6=8E=92**</span>
+<br>
+<br><span style=3D"font-size:12pt;font-family:=E5=BE=AE=E8=BB=9F=E6=AD=A3=
+=E9=BB=91=E9=AB=94">=E5=A6=82=E6=9C=89=E7=9B=B8=E9=97=9C=E6=9F=A5=E8=A9=A2=
+=EF=BC=8C=E6=AD=A1=E8=BF=8E=E9=9A=A8=E6=99=82=E8=87=B4=E9=9B=BB=E6=88=96=E9=
+=9B=BB=E9=83=B5=E7=B5=A6=E6=9C=AC=E4=BA=BA=EF=BC=8C=E8=AC=9D=E8=AC=9D=EF=BC=
+=81</span>
+<br>
+<br><span style=3D"font-size:10pt;font-family:Arial">Should you have any
+enquires, feel free to contact me. </span>
+<br>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Thank you so much=
+.</span>
+<br>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Best regards,</sp=
+an>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Chan Yeong Wo,
+China </span>
+<br>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Kowloon West Busi=
+ness
+Banking Centre</span>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Personal Banking
+and Wealth Management</span>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Direct: (852)
+3982 8057</span>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Email: <a href=3D=
+"mailto:chanyeongwo@bochk.com" target=3D"_blank">chanyeongwo@bochk.com</a><=
+/span>
+<br><span style=3D"font-size:10pt;font-family:sans-serif">Address: 37 Kimbe=
+rlery
+Rd, Tsim Sha Tsui, Kowloon</span>
+<p><span style=3D"font-family:Arial">BOCHK is named &quot;Bank of the Year =
+in Hong Kong&quot; by The Banker as well as &quot;The Strongest Bank in Hon=
+g Kong and Asia Pacific&quot; and &quot;The Second Strongest Bank in the Wo=
+rld&quot; by The Asian Banker in 2023.</span></p><p><span style=3D"font-fam=
+ily:Arial"><br></span></p><p><span style=3D"font-family:Arial"><span style=
+=3D"font-family:Arial">****************************************************=
+*******<br>This message contains confidential information which is intended=
+ only for the person or entity to which it is addressed. If you are not the=
+ intended recipient, you should not read, disseminate, distribute or copy t=
+his e-mail. Any opinion contained in this message are those of the author a=
+nd are not given or endorsed by Bank of China (Hong Kong) Limited, its subs=
+idiaries or affiliates unless otherwise stated in this message and the auth=
+ority of the author to so bind Bank of China (Hong Kong) Limited, its subsi=
+diaries or affiliates=C2=A0 is duly verified. We do not guarantee that this=
+ e-mail is virus-free or secure and are not liable in respect of any delay =
+or omission in the transmission of this message.<br>***********************=
+************************************<br>Save paper, Save the Earth</span></=
+span></p><p></p></blockquote></div>
+</div></div></div>
+</blockquote></div></div>
+
+--000000000000aad457061888d91f--

@@ -1,0 +1,864 @@
+Return-Path: <mauricewong2002@gmail.com>
+Delivered-To: edmund.tong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id QM5vIdRiKWeeKwAA07NIEQ
+	(envelope-from <mauricewong2002@gmail.com>)
+	for <edmund.tong@iwra.hk>; Tue, 05 Nov 2024 08:12:04 +0800
+Return-path: <mauricewong2002@gmail.com>
+Envelope-to: edmund.tong@iwra.hk
+Delivery-date: Tue, 05 Nov 2024 08:12:04 +0800
+Received: from mail-oo1-f51.google.com ([209.85.161.51]:56635)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <mauricewong2002@gmail.com>)
+	id 1t87Av-0002tz-1E
+	for edmund.tong@iwra.hk;
+	Tue, 05 Nov 2024 08:12:04 +0800
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5ebc1af8e91so2257253eaf.1
+        for <edmund.tong@iwra.hk>; Mon, 04 Nov 2024 16:12:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730765518; x=1731370318; darn=iwra.hk;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=d5Rxk3rGg3+YwczlG5qQUTlZHmFQqtOsaM1EnSd25kQ=;
+        b=Fvgq/vVMfQXnDYK/6aJLA/3OmAfmp0SXTb+85hbqnKjV7aWCZJLHzfKR8F/8Jci2t8
+         ohS3Pl5Jbitdft5PVt2zUJV0avxQdjKwOOh4wHFtpQxpXyMtW9bYMc/37o0I4836JV/e
+         kGDvxber231fkHCD+fibEIgtSMF7aJlIwbsuJ0UQ7U98vkE95LJIc6/f/Nhl3boDm+hB
+         XhSFn8rg70S1rRj8zURVI59U0EKUIv9TwWVPBSuAk/+je2tDj1X9PJK6Pw4Jp4F9qrnh
+         7ukdF4SEUgN37fP9Vt/gGsp8a+76BqOeAb7D8H/SWXYB7e5gK0ymsQ3I5k4ecbGWjkiQ
+         U5Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730765518; x=1731370318;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d5Rxk3rGg3+YwczlG5qQUTlZHmFQqtOsaM1EnSd25kQ=;
+        b=rJZ76OMUHQEL1Sz2SiKCsVxhfZv/MIOYxOLTAfXYdkBNVxKa5gZWmAo1KzjaZKZhEY
+         c2TBAyWHGi1bZ9mY0ZPfTSV8my7Q7VtodF6Roo3pSeai/Fh7FRzeXhMPwsydz0Vx7MSc
+         AWvb3VH7s2h44fHXzBj4uEtbfDaH9HQOT10KmGzrRZcSEtuUeYku35boNzc04ZPzrDiv
+         V0sRYacB9abI1lCgjpJ5UgZBPcgKQseRMDm+Lx8tWMoR3eGhvsyCHjJ6zo6kaujLZDA+
+         qNJAYe5TF9MEg6/35LwjNu/HuAToa5YCVZN29J4GuaCscbXdvj7ai0aJFqcNAWLqajlx
+         vmDQ==
+X-Gm-Message-State: AOJu0Yy9Wj/Ri+GeyFgdrCbHt6rpwBlI3IoMNqFecH0xsi9GukWD9WjT
+	PDO8onmlsHfE3+RwcJROzpXh6M01FHRUqYR3ADpRy8UEpn1bqWuaqVKeyrqEQBmrQ/IcUNCLPGN
+	WoFFqAAugxKvWNOT3JuK+yHXry5P04iLY
+X-Google-Smtp-Source: AGHT+IF5LG6ky12LUbLMaRQ+7GZRyVGop2UP5Fb2UgwU2XL0zQYW//GJ7zqyELXrdgbE9Y9NtE/VqOwoDFT1RVnUCGc=
+X-Received: by 2002:a05:6820:160e:b0:5e7:c8d9:9606 with SMTP id
+ 006d021491bc7-5ec235f2568mr21788685eaf.0.1730765517332; Mon, 04 Nov 2024
+ 16:11:57 -0800 (PST)
+MIME-Version: 1.0
+References: <WIN-8UB97DVO5J0b494288ed2414837a2ed3cce1c1b1b7a@WIN-8UB97DVO5J0>
+In-Reply-To: <WIN-8UB97DVO5J0b494288ed2414837a2ed3cce1c1b1b7a@WIN-8UB97DVO5J0>
+From: Maurice Wong <mauricewong2002@gmail.com>
+Date: Tue, 5 Nov 2024 08:11:46 +0800
+Message-ID: <CAAK5R4iytFKrAnNxwQw7FK5ud25M6fvfbGu5aVF9VdCp63Rcjg@mail.gmail.com>
+Subject: =?UTF-8?B?RndkOiDjgJBGaW5hbCBDYWxsIOacgOW+jOapn+acg+OAkUNoaW5hY2hlbSBHcm91cCBTdQ==?=
+	=?UTF-8?B?c3RhaW5hYmlsaXR5IENvbmZlcmVuY2Ug5Y+v5oyB57qM55m85bGV6KuW5aOHIDIwMjQ=?=
+To: Edmund Tong <edmund.tong@iwra.hk>
+Content-Type: multipart/alternative; boundary="000000000000d9ab8206261f3f83"
+X-Spam-Status: No, score=4.2
+X-Spam-Score: 42
+X-Spam-Bar: ++++
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  Hi Edmund, I also puzzled cannot find your email or whatsapp.
+    Since I have registered prior to your notice, you can try to register again
+    (they send this reminder plus a notification to visit a few days ago to m
+    [...] 
+ Content analysis details:   (4.2 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [209.85.161.51 listed in list.dnswl.org]
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was
+                             blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: chinachemgroup.com]
+  0.0 FREEMAIL_FROM          Sender email is commonly abused enduser mail
+                             provider
+                             [mauricewong2002[at]gmail.com]
+  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE:
+                             The query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [209.85.161.51 listed in sa-accredit.habeas.com]
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [209.85.161.51 listed in bl.score.senderscore.com]
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+                             in digit
+                             [mauricewong2002[at]gmail.com]
+  0.0 RCVD_IN_MSPIKE_H3      RBL: Good reputation (+3)
+                             [209.85.161.51 listed in wl.mailspike.net]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from
+                             author's domain
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -0.1 DKIM_VALID_EF          Message has a valid DKIM or DK signature from
+                             envelope-from domain
+  2.4 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
+                             [cf: 100]
+  1.7 RAZOR2_CHECK           Listed in Razor2 (http://razor.sf.net/)
+  0.0 RCVD_IN_MSPIKE_WL      Mailspike good senders
+X-Spam-Flag: NO
+
+--000000000000d9ab8206261f3f83
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+SGkgRWRtdW5kLA0KDQpJIGFsc28gcHV6emxlZCBjYW5ub3QgZmluZCB5b3VyIGVtYWlsIG9yIHdo
+YXRzYXBwLiAgU2luY2UgSSBoYXZlIHJlZ2lzdGVyZWQNCnByaW9yIHRvIHlvdXIgbm90aWNlLCB5
+b3UgY2FuIHRyeSB0byByZWdpc3RlciBhZ2FpbiAodGhleSBzZW5kIHRoaXMNCnJlbWluZGVyIHBs
+dXMgYSBub3RpZmljYXRpb24gdG8gdmlzaXQgYSBmZXcgZGF5cyBhZ28gdG8gbWUpLg0KDQpNYXVy
+aWNlDQoNCi0tLS0tLS0tLS0gRm9yd2FyZGVkIG1lc3NhZ2UgLS0tLS0tLS0tDQrlr4Tku7bogIXv
+vJogQ2hpbmFjaGVtIEdyb3VwIDxub3JlcGx5QGVuZXdzLmNoaW5hY2hlbWdyb3VwLmNvbT4NCkRh
+dGU6IDIwMjTlubQxMeaciDXml6Ug6YCx5LqMIOS4iuWNiDM6NDQNClN1YmplY3Q6IOOAkEZpbmFs
+IENhbGwg5pyA5b6M5qmf5pyD44CRQ2hpbmFjaGVtIEdyb3VwIFN1c3RhaW5hYmlsaXR5IENvbmZl
+cmVuY2Ug5Y+v5oyB57qM55m85bGV6KuW5aOHDQoyMDI0DQpUbzogbWF1cmljZXdvbmcyMDAyQGdt
+YWlsLmNvbSA8bWF1cmljZXdvbmcyMDAyQGdtYWlsLmNvbT4NCg0KDQpUaGUgaGlnaGx5IGFudGlj
+aXBhdGVkICpDaGluYWNoZW0gR3JvdXAgU3VzdGFpbmFiaWxpdHkgQ29uZmVyZW5jZSogd2lsbCBi
+ZQ0KaGVsZCB0aGlzIFRodXJzZGF5ISBDby1vcmdhbmlzZWQgYnkgQnVzaW5lc3MgRW52aXJvbm1l
+bnQgQ291bmNpbCAoQkVDKSBhbmQNCkhvbmcgS29uZyBHcmVlbiBCdWlsZGluZyBDb3VuY2lsIChI
+S0dCQyksIHRoZSBDb25mZXJlbmNlIHdpbGwgZXhwbG9yZQ0KaG9saXN0aWMgc29sdXRpb25zIHRv
+IHRhY2tsZSB0aGUgaW50ZXJjb25uZWN0ZWQgY2hhbGxlbmdlcyBvZiAoMSkgY2xpbWF0ZQ0KY2hh
+bmdlLCAoMikgc3VzdGFpbmFibGUgZmluYW5jaW5nLCBhbmQgKDMpIGltcGFjdCBpbnZlc3RtZW50
+LCB1bmRlciB0aGUNCm92ZXJhcmNoaW5nIHRoZW1lIG9mIOKAnCpJbnRlZ3JhdGluZyBTdXN0YWlu
+YWJpbGl0eSBTb2x1dGlvbnMgdG93YXJkcyBhDQpSZXNpbGllbnQgRnV0dXJlKuKAnS4gV2l0aCBv
+dmVyIDQsMDAwIGluZHVzdHJ5IHByYWN0aXRpb25lcnMgYWxyZWFkeQ0KcmVnaXN0ZXJlZCwgd2Ug
+ZWFnZXJseSBhbnRpY2lwYXRlIHlvdXIgcGFydGljaXBhdGlvbi4NCg0KKkRhdGU6KiA3IE5vdmVt
+YmVyIDIwMjQgKFRodXJzZGF5KQ0KKlRpbWU6KiA5OjMwYW0gLSA1OjAwcG0gKFJlZ2lzdHJhdGlv
+biBzdGFydHMgYXQgOTowMGFtKQ0KKlZlbnVlOiogTmluYSBCYWxscm9vbSwgNy9GLCBOaW5hIEhv
+dGVsIFRzdWVuIFdhbiBXZXN0LCA4IFlldW5nIFVrIFJkLA0KVHN1ZW4gV2FuIHwgT25saW5lDQoq
+TGFuZ3VhZ2U6KiBFbmdsaXNoICh3aXRoIHNpbXVsdGFuZW91cyBpbnRlcnByZXRhdGlvbiB0byBD
+YW50b25lc2UgJg0KTWFuZGFyaW47IENhbnRvbmVzZSBzaWduLWxhbmd1YWdlIGludGVycHJldGF0
+aW9uKQ0KKkZlZToqIEZyZWUgb2YgY2hhcmdlIChwcmUtcmVnaXN0cmF0aW9uIHJlcXVpcmVkKQ0K
+DQoq6I+v5oeL6ZuG5ZyY5Y+v5oyB57qM55m85bGV6KuW5aOHKuWNs+Wwh+aWvOacrOmAseWbm+iI
+ieihjO+8geacrOWxhuirluWjh+eUseWVhueVjOeSsOS/neWNlOacg++8iEJFQ++8ieWPiummmea4
+r+e2oOiJsuW7uuevieitsOacg++8iEhLR0JD77yJ5YWx5ZCM5Y2U6L6m77yM5Lul44CMKuWkmuWF
+g+WPr+aMgee6jOeZvOWxleaWueahiA0K5oeJ5bCN5pyq5L6G5oyR5oiwKuOAjeeCuuS4u+mhjO+8
+jOiBmueEpiAoMSkg5rCj5YCZ6K6K5YyW44CBICgyKSDlj6/mjIHnuozono3os4fjgIEgKDMpDQrl
+ibXmlYjmipXos4fnrYnnkrDnkrDnm7jmiaPnmoTorbDpoYzvvIzmjqLoqI7lhbflvbHpn7/lipvn
+moTop6PmsbrmlrnmoYjvvIzmh4nlsI3lkITnqK7mjJHmiLDjgILoq5blo4flt7LlkLjlvJXpgL40
+LDAwMOS9jealreeVjOS6uuWjq+WgseWQje+8jOaIkeWAkeeGseWIh+acn+W+heS9oOeahOWPg+iI
+h+OAgg0KDQoq5pel5pyf77yaKjIwMjTlubQxMeaciDfml6XvvIjmmJ/mnJ/lm5vvvIkNCirmmYLp
+lpPvvJoq5LiK5Y2IOeaZgjMw5YiG6Iez5LiL5Y2INeaZgiDvvIjkuIrljYg55pmC6LW36ZaL5aeL
+55m76KiY77yJDQoq5Zyw6bue77yaKuiNg+eBo+aliuWxi+mBkzjomZ/ojYPngaPopb/lpoLlv4Pp
+hZLlupc35qiT5a605pyD5buzIHwg6Kit5pyJ57ea5LiK55u05pKtDQoq6Kqe6KiA77yaKuiLseaW
+h++8iOioreacieW7o+adseipseWSjOaZrumAmuipseWNs+aZguWCs+itr++8m+W7o+adseipseaJ
+i+iqnuWCs+itr++8iQ0KKuiyu+eUqO+8mirlhY3osrvvvIjpoIjpoJDlhYjloLHlkI3vvIkNCjxo
+dHRwczovL3QuZW5ld3MuY2hpbmFjaGVtZ3JvdXAuY29tL3QuYXNweC9zdWJpZC8xNzA5ODc4OTQv
+Y2FtaWQvMjg5OTUwMC9saW5raWQvNDQ2MTIyL0RlZmF1bHQuYXNweD4NCg0KKlNwZWNpYWwgRiZC
+IGFuZCBBY2NvbW1vZGF0aW9uIE9mZmVyIOeJueWIpemkkOmjsuWPiuS9j+Wuv+WEquaDoCAqDQpQ
+cmVzZW50IHlvdXIgcmVnaXN0cmF0aW9uIGNvbmZpcm1hdGlvbiBvciBjb25mZXJlbmNlIG5hbWUg
+YmFkZ2UgdG8gZW5qb3kNCmV4Y2x1c2l2ZSBGJkIgYW5kIGFjY29tbW9kYXRpb24gZGlzY291bnRz
+IGF0IE5pbmEgSG90ZWwgVHN1ZW4gV2FuIFdlc3Qgb24NCnRoZSBDb25mZXJlbmNlIGRheToNCg0K
+KkNhZsOpIENpcmNsZXMgKDkvRikqDQogKuKAoiogMjAlIG9mZiBsdW5jaCBhbmQgZGlubmVyIGJ1
+ZmZldHMNCiAq4oCiKiAxNSUgb2ZmIMOgIGxhIGNhcnRlIG1lbnVzIGZvciBsdW5jaCBhbmQgZGlu
+bmVyDQogKuKAoiogU3BlY2lhbCBleHByZXNzIHNldCBsdW5jaCBhdCBISyQxOTggKyAxMCUgc2Vy
+dmljZSBjaGFyZ2UqDQoNCipOaW5hIFBhdGlzc2VyaWUgKEcvRikqDQogKuKAoiogMTAlIG9mZiB0
+aGUgRiZCIG1lbnUNCg0KKkhvdGVsIEFjY29tbW9kYXRpb24gKg0KICrigKIqIFNwZWNpYWwgZGlz
+Y291bnQgZm9yIGJvb2tpbmdzIG1hZGUgYmVmb3JlIDUgTm92ZW1iZXIgMjAyNCB2aWEgdGhpcyBs
+aW5rDQo8aHR0cHM6Ly90LmVuZXdzLmNoaW5hY2hlbWdyb3VwLmNvbS90LmFzcHgvc3ViaWQvMTcw
+OTg3ODk0L2NhbWlkLzI4OTk1MDAvbGlua2lkLzQ0NjEyMy9EZWZhdWx0LmFzcHg+DQoNCipOb3Qg
+ZWxpZ2libGUgZm9yIGFkZGl0aW9uYWwgZGlzY291bnRzDQoNCuaWvOirluWjh+eVtuaXpeWHuuek
+uueiuuiqjembu+mDteaIluirluWjh+WQjeeJjOWPr+S6q+iNg+eBo+ilv+WmguW/g+mFkuW6l+mk
+kOmjsuWPiuS9j+Wuv+WEquaDoO+8mg0KDQoqQ2Fmw6kgQ2lyY2xlc++8iDnmqJPvvIkqDQogKuKA
+oiog5Y2I5biC5Y+K5pma5biC6Ieq5Yqp6aSQ5YWr5oqY5YSq5oOgDQogKuKAoiog5Y2I5biC5Y+K
+5pma5biC5Zau6bue6I+c5Zau5YWr5LqU5oqY5YSq5oOgDQogKuKAoiog54m55Yil5Y2I5biC5aWX
+6aSQIEhLJDE5OOWPpuaUtuWKoOS4gOacjeWLmeiyuyoNCiogTmluYSBQYXRpc3Nlcmll77yI5Zyw
+5LiL5aSn5aCC77yJKg0KICrigKIqIOmkkOmjsuiPnOWWruS5neaKmOWEquaDoA0KDQoqIOmFkuW6
+l+S9j+WuvyoNCiAq4oCiKiAyMDI05bm0MTHmnIg15pel5oiW5LmL5YmN5pa85q2k6YCj57WQDQo8
+aHR0cHM6Ly90LmVuZXdzLmNoaW5hY2hlbWdyb3VwLmNvbS90LmFzcHgvc3ViaWQvMTcwOTg3ODk0
+L2NhbWlkLzI4OTk1MDAvbGlua2lkLzQ0NjEyNC9EZWZhdWx0LmFzcHg+DQrpoJDoqILmiL/plpPl
+j6/kuqvnibnliKXlhKrmg6ANCg0KKuS4jeWPr+iIh+WFtuS7luWEquaDoOWQjOaZguS9v+eUqA0K
+DQoNCipHdWlkZWQgVG91cnMgdG8gTmluYSBQYXJrIOWmguW/g+WckuWwjuiznuWcmCAqDQpEb2Nl
+bnQgdmlzaXRzIGFyZSBzcGVjaWFsbHkgYXJyYW5nZWQgb24gdGhlIENvbmZlcmVuY2UgZGF5IHRv
+IEhvbmcgS29uZ+KAmXMNCmZpcnN0IGFuZCBvbmx5IHdvb2QgZm9zc2lsIHBhcmsgdGhhdCBhcmUg
+Z3VpZGVkIGJ5IHRoZSBkZXNpZ24gY29uY2VwdCBvZg0Kc3VzdGFpbmFiaWxpdHkgYW5kIGluY2x1
+c2l2aXR5LiBUaGUgTmluYSBQYXJrIGVtcGxveXMgaW5ub3ZhdGl2ZSBjdXJhdG9yaWFsDQptZXRo
+b2RzIHRoYXQgc2VhbWxlc3NseSBpbnRlZ3JhdGUgZW52aXJvbm1lbnRhbCBjb25zZXJ2YXRpb24s
+IGFydCwgYW5kDQphZHZhbmNlZCB0ZWNobm9sb2d5LCBwcm92aWRpbmcgZW5nYWdpbmcg4oCcZWR1
+dGFpbm1lbnTigJ0gZXhwZXJpZW5jZXMgZm9yDQp2aXNpdG9ycyBvZiBhbGwgYWdlcyBhbmQgdmFy
+eWluZyBwaHlzaWNhbCBhYmlsaXRpZXMuDQoNClJlc2VydmUgeW91ciBzcG90IG5vdyBpbiB0aGUg
+cmVnaXN0cmF0aW9uIGZvcm0uDQoNCuirluWjh+eVtuaXpeeJueioreWwjuiznuWcmOWPg+ingOmm
+mea4r+mmluWAi+WPiuWUr+S4gOeahOacqOWMluefs+WFrOWckiDigJQNCuWmguW/g+WckueahOio
+reioiOeQhuW/tea6kOaWvOWPr+aMgee6jOeZvOWxleWPiuWFseiejeamguW/te+8jOS4puaOoeeU
+qOWJteaWsOeahOetluWxleaWueazle+8jOWwh+eSsOWig+S/neiCsuOAgeiXneihk+WPiuW2hOaW
+sOaKgOihk+eEoee4q+e1kOWQiO+8jOiuk+WQhOW5tOm9oeWxpOeahOmBiuWuouWPiuWkmuWFg+S6
+uuWjq+WPr+S6q+eNqOeJueeahOOAjOWomyvlrbjjgI3pq5TpqZfjgIINCg0KDQrnq4vljbPmlrzl
+oLHlkI3pgKPntZDpoJDntITlsI7os57lnJjjgIINCg0KPGh0dHBzOi8vdC5lbmV3cy5jaGluYWNo
+ZW1ncm91cC5jb20vdC5hc3B4L3N1YmlkLzE3MDk4Nzg5NC9jYW1pZC8yODk5NTAwL2xpbmtpZC80
+NDYxMjIvRGVmYXVsdC5hc3B4Pg0KDQoqUHJvZ3JhbW1lIFJ1bmRvd24g5rS75YuV6K2w56iLICoN
+CkNsaWNrIHRvIGNoZWNrIG91dCBvdXIgc3BlYWtlcnMgYW5kIHRoZSBwcm9ncmFtbWUgcnVuZG93
+biBmb3INCkNoaW5hY2hlbSBHcm91cCBTdXN0YWluYWJpbGl0eSBDb25mZXJlbmNlIDIwMjQNCum7
+nuaTiuafpemWseiPr+aHi+mbhuWcmOWPr+aMgee6jOeZvOWxleirluWjhyAyMDI0DQrih5PmvJTo
+rJvlmInos5Plj4rmtLvli5XorbDnqIvih5MNCg0KPGh0dHBzOi8vdC5lbmV3cy5jaGluYWNoZW1n
+cm91cC5jb20vdC5hc3B4L3N1YmlkLzE3MDk4Nzg5NC9jYW1pZC8yODk5NTAwL2xpbmtpZC80NDYx
+MjUvRGVmYXVsdC5hc3B4Pg0KRm9yIGVucXVpcmllcywgcGxlYXNlIGNvbnRhY3Qg5aaC5pyJ5p+l
+6Kmi77yM6KuL6IGv57WhOg0KDQoqUHJvZ3JhbW1lIOitsOeoiyoNCk1zIE1hZ2dpZSBMYW0g5p6X
+56Kn5YSA5aWz5aOrIChtYWdnaWVsYW1AYmVjLm9yZy5oayAvIDI3ODQgMzkzOSkNCk1yIFR1YmEg
+TGVlIOWIqeWBpeacl+WFiOeUnyAodHViYWxlZUBjaGluYWNoZW1ncm91cC5jb20gLyAyNTAwIDcx
+NDIpDQoNCipSZWdpc3RyYXRpb24g5aCx5ZCNKg0KTXMgS2F0IEx1ZW4g5qyS5rW355Cq5aWz5aOr
+IChlbnF1aXJ5X2NjZ0BhbWVnYS1wcm8uY29tIC8gNjY3MSA5OTY5KQ0KDQoqQ1BEIEhvdXIg5oyB
+57qM5bCI5qWt6YCy5L+u5pmC5pW4Kg0KTXMgSmlsbCBDaG93IOWRqOWwkeaso+Wls+WjqyAoamls
+bEBiZWMub3JnLmhrIC8gMjc4NCAzOTQyKQ0KDQrCqTIwMjQgQ2hpbmFjaGVtIEdyb3VwDQrlhY3o
+sqzogbLmmI4NCjxodHRwczovL3QuZW5ld3MuY2hpbmFjaGVtZ3JvdXAuY29tL3QuYXNweC9zdWJp
+ZC8xNzA5ODc4OTQvY2FtaWQvMjg5OTUwMC9saW5raWQvNDQ2MTI2L0RlZmF1bHQuYXNweD4NCiAg
+fCAg56eB6Zqx5pS/562WDQo8aHR0cHM6Ly90LmVuZXdzLmNoaW5hY2hlbWdyb3VwLmNvbS90LmFz
+cHgvc3ViaWQvMTcwOTg3ODk0L2NhbWlkLzI4OTk1MDAvbGlua2lkLzQ0NjEyNy9EZWZhdWx0LmFz
+cHg+DQogIHwgIOWPlua2iOiogumWsQ0KPGh0dHBzOi8vcy5lbmV3cy5jaGluYWNoZW1ncm91cC5j
+b20vVW5zdWJzY3JpYmUuYXNweD9zdWI9MTcwOTg3ODk0JnVzZXI9ODIxOTMmY2FtcGlkPTI4OTk1
+MDAmdHlwZT1oPg0KPGh0dHBzOi8vdC5lbmV3cy5jaGluYWNoZW1ncm91cC5jb20vdC5hc3B4L3N1
+YmlkLzE3MDk4Nzg5NC9jYW1pZC8yODk5NTAwL2xpbmtpZC80NDYxMjgvRGVmYXVsdC5hc3B4Pg0K
+PGh0dHBzOi8vdC5lbmV3cy5jaGluYWNoZW1ncm91cC5jb20vdC5hc3B4L3N1YmlkLzE3MDk4Nzg5
+NC9jYW1pZC8yODk5NTAwL2xpbmtpZC80NDYxMjkvRGVmYXVsdC5hc3B4Pg0KPGh0dHBzOi8vdC5l
+bmV3cy5jaGluYWNoZW1ncm91cC5jb20vdC5hc3B4L3N1YmlkLzE3MDk4Nzg5NC9jYW1pZC8yODk5
+NTAwL2xpbmtpZC80NDYxMzAvRGVmYXVsdC5hc3B4Pg0K
+--000000000000d9ab8206261f3f83
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Edmund,=C2=A0<div><br></div><div>I also puzzled cannot =
+find your email or whatsapp.=C2=A0 Since I have registered prior to your no=
+tice, you can try to register again (they send this reminder plus a notific=
+ation to visit a few days ago to me).</div><div><br></div><div>Maurice<br><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">-------=
+--- Forwarded message ---------<br>=E5=AF=84=E4=BB=B6=E8=80=85=EF=BC=9A <st=
+rong class=3D"gmail_sendername" dir=3D"auto">Chinachem Group</strong> <span=
+ dir=3D"auto">&lt;<a href=3D"mailto:noreply@enews.chinachemgroup.com">norep=
+ly@enews.chinachemgroup.com</a>&gt;</span><br>Date: 2024=E5=B9=B411=E6=9C=
+=885=E6=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8A=E5=8D=883:44<br>Subject: =E3=80=
+=90Final Call =E6=9C=80=E5=BE=8C=E6=A9=9F=E6=9C=83=E3=80=91Chinachem Group =
+Sustainability Conference =E5=8F=AF=E6=8C=81=E7=BA=8C=E7=99=BC=E5=B1=95=E8=
+=AB=96=E5=A3=87 2024<br>To: <a href=3D"mailto:mauricewong2002@gmail.com">ma=
+uricewong2002@gmail.com</a> &lt;<a href=3D"mailto:mauricewong2002@gmail.com=
+">mauricewong2002@gmail.com</a>&gt;<br></div><br><br>
+<div style=3D"display:none;font-size:1px;color:#ffffff;line-height:1px;max-=
+height:0px;max-width:0px;opacity:0;overflow:hidden"> =09
+
+</div><div>
+  <table width=3D"100%" align=3D"center" border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0">
+    <tbody>
+      <tr>
+        <td align=3D"center"><table width=3D"600" align=3D"center" bgcolor=
+=3D"#ffffff" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+           =20
+           =20
+           =20
+            <tbody>
+           =20
+             =20
+              <tr>
+                <td align=3D"center"><table width=3D"600" style=3D"clear:bo=
+th" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+                    <tbody>
+                      <tr>
+                        <td><table width=3D"600" align=3D"center" border=3D=
+"0" cellspacing=3D"0" cellpadding=3D"0">
+                            <tbody>
+                              <tr>
+                                <td>
+								=09
+									<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+                                    <tbody>
+                                      <tr>
+                                        <td align=3D"center" valign=3D"top"=
+ rowspan=3D"1" colspan=3D"1"><table width=3D"100%" style=3D"background-colo=
+r:white" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+                                            <tbody>
+                                              <tr>
+                                                <td style=3D"text-align:cen=
+ter">
+                                                  <div align=3D"center"><im=
+g width=3D"100%" src=3D"https://enews.chinachemgroup.com/SpreaderFiles/8219=
+3/files/upload/templates/2024/Sep/SC2024_KV_h_1920x1080_edm_EN_final_white_=
+1.jpg" border=3D"0" style=3D"display:block;text-align:center" alt=3D""></di=
+v>
+                                                 </td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" width=3D"100%" style=3D"background-color:rgb(255,255,255);bo=
+rder-left:solid 4px #0d333c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td><table align=3D"left" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"background-=
+color:rgb(255,255,255)">
+                                            <tbody>
+                                              <tr>
+                                                <td align=3D"justify" valig=
+n=3D"top" style=3D"padding:10px 15px;text-align:justify"><span><span style=
+=3D"font-size:16px;font-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,ca=
+libri,Arial,Helvetica,sans-serif;color:#000000">
+<span style=3D"font-size:16px;font-family:Arial,Helvetica,sans-serif;color:=
+#000000;line-height:22px">
+	The highly anticipated <font style=3D"color:#00b050"><strong>Chinachem Gro=
+up Sustainability Conference</strong></font> will be held this Thursday! Co=
+-organised by Business Environment Council (BEC) and Hong Kong Green Buildi=
+ng Council (HKGBC), the Conference will explore holistic solutions to tackl=
+e the interconnected challenges of (1) climate change, (2) sustainable fina=
+ncing, and (3) impact investment, under the overarching theme of  =E2=80=9C=
+<font style=3D"color:#00b050"><strong>Integrating Sustainability Solutions =
+towards a Resilient Future</strong></font>=E2=80=9D. With over 4,000 indust=
+ry practitioners already registered, we eagerly anticipate your participati=
+on.<br>=C2=A0<br>
+
+=09
+
+	<div align=3D"left">										=09
+<strong>Date:</strong> 7 November 2024 (Thursday)<br>
+<strong>Time:</strong> 9:30am - 5:00pm (Registration starts at 9:00am)<br>
+<strong>Venue:</strong> Nina Ballroom, 7/F, Nina Hotel Tsuen Wan West, 8 Ye=
+ung Uk Rd, Tsuen Wan | Online<br>
+<strong>Language:</strong> English (with simultaneous interpretation to Can=
+tonese &amp; Mandarin; Cantonese sign-language interpretation)<br>
+<strong>Fee:</strong> Free of charge (pre-registration required)<br>=C2=A0
+</div>=09
+</span>
+<font style=3D"color:#00b050"><strong>=E8=8F=AF=E6=87=8B=E9=9B=86=E5=9C=98=
+=E5=8F=AF=E6=8C=81=E7=BA=8C=E7=99=BC=E5=B1=95=E8=AB=96=E5=A3=87</strong></f=
+ont>=E5=8D=B3=E5=B0=87=E6=96=BC=E6=9C=AC=E9=80=B1=E5=9B=9B=E8=88=89=E8=A1=
+=8C=EF=BC=81=E6=9C=AC=E5=B1=86=E8=AB=96=E5=A3=87=E7=94=B1=E5=95=86=E7=95=8C=
+=E7=92=B0=E4=BF=9D=E5=8D=94=E6=9C=83=EF=BC=88BEC=EF=BC=89=E5=8F=8A=E9=A6=99=
+=E6=B8=AF=E7=B6=A0=E8=89=B2=E5=BB=BA=E7=AF=89=E8=AD=B0=E6=9C=83=EF=BC=88HKG=
+BC=EF=BC=89=E5=85=B1=E5=90=8C=E5=8D=94=E8=BE=A6=EF=BC=8C=E4=BB=A5=E3=80=8C<=
+font style=3D"color:#00b050"><strong>=E5=A4=9A=E5=85=83=E5=8F=AF=E6=8C=81=
+=E7=BA=8C=E7=99=BC=E5=B1=95=E6=96=B9=E6=A1=88  =E6=87=89=E5=B0=8D=E6=9C=AA=
+=E4=BE=86=E6=8C=91=E6=88=B0</strong></font>=E3=80=8D=E7=82=BA=E4=B8=BB=E9=
+=A1=8C=EF=BC=8C=E8=81=9A=E7=84=A6 (1) =E6=B0=A3=E5=80=99=E8=AE=8A=E5=8C=96=
+=E3=80=81 (2) =E5=8F=AF=E6=8C=81=E7=BA=8C=E8=9E=8D=E8=B3=87=E3=80=81 (3) =
+=E5=89=B5=E6=95=88=E6=8A=95=E8=B3=87=E7=AD=89=E7=92=B0=E7=92=B0=E7=9B=B8=E6=
+=89=A3=E7=9A=84=E8=AD=B0=E9=A1=8C=EF=BC=8C=E6=8E=A2=E8=A8=8E=E5=85=B7=E5=BD=
+=B1=E9=9F=BF=E5=8A=9B=E7=9A=84=E8=A7=A3=E6=B1=BA=E6=96=B9=E6=A1=88=EF=BC=8C=
+=E6=87=89=E5=B0=8D=E5=90=84=E7=A8=AE=E6=8C=91=E6=88=B0=E3=80=82=E8=AB=96=E5=
+=A3=87=E5=B7=B2=E5=90=B8=E5=BC=95=E9=80=BE4,000=E4=BD=8D=E6=A5=AD=E7=95=8C=
+=E4=BA=BA=E5=A3=AB=E5=A0=B1=E5=90=8D=EF=BC=8C=E6=88=91=E5=80=91=E7=86=B1=E5=
+=88=87=E6=9C=9F=E5=BE=85=E4=BD=A0=E7=9A=84=E5=8F=83=E8=88=87=E3=80=82<br>=
+=C2=A0<br>	=09
+												=09
+										=09
+
+<strong>=E6=97=A5=E6=9C=9F=EF=BC=9A</strong>2024=E5=B9=B411=E6=9C=887=E6=97=
+=A5=EF=BC=88=E6=98=9F=E6=9C=9F=E5=9B=9B=EF=BC=89<br>
+<strong>=E6=99=82=E9=96=93=EF=BC=9A</strong>=E4=B8=8A=E5=8D=889=E6=99=8230=
+=E5=88=86=E8=87=B3=E4=B8=8B=E5=8D=885=E6=99=82 =EF=BC=88=E4=B8=8A=E5=8D=889=
+=E6=99=82=E8=B5=B7=E9=96=8B=E5=A7=8B=E7=99=BB=E8=A8=98=EF=BC=89<br>
+<strong>=E5=9C=B0=E9=BB=9E=EF=BC=9A</strong>=E8=8D=83=E7=81=A3=E6=A5=8A=E5=
+=B1=8B=E9=81=938=E8=99=9F=E8=8D=83=E7=81=A3=E8=A5=BF=E5=A6=82=E5=BF=83=E9=
+=85=92=E5=BA=977=E6=A8=93=E5=AE=B4=E6=9C=83=E5=BB=B3 | =E8=A8=AD=E6=9C=89=
+=E7=B7=9A=E4=B8=8A=E7=9B=B4=E6=92=AD<br>
+<strong>=E8=AA=9E=E8=A8=80=EF=BC=9A</strong>=E8=8B=B1=E6=96=87=EF=BC=88=E8=
+=A8=AD=E6=9C=89=E5=BB=A3=E6=9D=B1=E8=A9=B1=E5=92=8C=E6=99=AE=E9=80=9A=E8=A9=
+=B1=E5=8D=B3=E6=99=82=E5=82=B3=E8=AD=AF=EF=BC=9B=E5=BB=A3=E6=9D=B1=E8=A9=B1=
+=E6=89=8B=E8=AA=9E=E5=82=B3=E8=AD=AF=EF=BC=89<br>
+<strong>=E8=B2=BB=E7=94=A8=EF=BC=9A</strong>=E5=85=8D=E8=B2=BB=EF=BC=88=E9=
+=A0=88=E9=A0=90=E5=85=88=E5=A0=B1=E5=90=8D=EF=BC=89<br>
+
+</span></span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+									<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"background-color:rgb(255,255,255);border-left:solid 4px #0d=
+333c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td align=3D"center" valign=3D"top"=
+ rowspan=3D"1" colspan=3D"1"><table width=3D"100%" style=3D"background-colo=
+r:white" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+                                            <tbody>
+                                              <tr>
+                                                <td style=3D"text-align:cen=
+ter;padding-top:20px;padding-bottom:30px">
+                                                  <div align=3D"center"><a =
+href=3D"https://t.enews.chinachemgroup.com/t.aspx/subid/170987894/camid/289=
+9500/linkid/446122/Default.aspx" target=3D"_blank"><img width=3D"40%" src=
+=3D"https://enews.chinachemgroup.com/SpreaderFiles/82193/files/upload/templ=
+ates/2024/Sep/REACT_button_Register_now4.png" border=3D"0" style=3D"display=
+:block;text-align:center" alt=3D""></a></div>
+                                                 </td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+								=09
+										 <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" bgcolor=
+=3D"#0d333c" width=3D"100%" style=3D"background-color:#0d333c;min-width:100=
+%!important;width:100%!important;border-left:solid 4px #0d333c;border-right=
+:solid 4px #0d333c">
+                                    <tbody bgcolor=3D"#0d333c">
+                                      <tr>
+                                        <td align=3D"center"><div width=3D"=
+100%" style=3D"background-color:#0d333c">
+                                            </div><table align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"bac=
+kground-color:#0d333c"><tbody>
+                                              <tr>
+                                                <td width=3D"100%" align=3D=
+"center" style=3D"padding-top:20px;padding-right:20px;padding-bottom:20px;p=
+adding-left:20px;min-width:100%!important;width:100%!important;text-align:c=
+enter!important" valign=3D"top"><p style=3D"text-align:center"><span style=
+=3D"font-size:20px;font-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,ca=
+libri,Arial,Helvetica,sans-serif;color:#ffffff"><strong><span style=3D"font=
+-size:18px;font-family:Arial;color:#ffffff">Special F&amp;B and Accommodati=
+on Offer</span> =E7=89=B9=E5=88=A5=E9=A4=90=E9=A3=B2=E5=8F=8A=E4=BD=8F=E5=
+=AE=BF=E5=84=AA=E6=83=A0
+
+</strong></span> </p></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+									  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" style=3D"background-color:rgb(255,255,255);border-left:solid 4px #0d=
+333c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td><table align=3D"left" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"background-=
+color:rgb(255,255,255)">
+                                            <tbody>
+                                              <tr>
+                                                <td align=3D"justify" valig=
+n=3D"top" style=3D"padding:10px 15px;text-align:justify"><span><span style=
+=3D"font-size:16px;font-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,ca=
+libri,Arial,Helvetica,sans-serif;color:#000000">
+<span style=3D"font-size:16px;font-family:Arial,Helvetica,sans-serif;color:=
+#000000;line-height:22px">Present your registration confirmation or confere=
+nce name badge to enjoy exclusive F&amp;B and accommodation discounts at Ni=
+na Hotel Tsuen Wan West on the Conference day:<br><br>
+<strong>Caf=C3=A9 Circles (9/F)</strong><br>
+=C2=A0<strong>=E2=80=A2</strong> 20% off lunch and dinner buffets<br>
+=C2=A0<strong>=E2=80=A2</strong> 15% off =C3=A0 la carte menus for lunch an=
+d dinner<br>
+=C2=A0<strong>=E2=80=A2</strong> Special express set lunch at HK$198 + 10% =
+service charge* <br><br>
+ <strong>Nina Patisserie (G/F)</strong><br>
+=C2=A0<strong>=E2=80=A2</strong> 10% off the F&amp;B menu<br>=C2=A0<br>
+<strong>Hotel Accommodation	</strong><br>
+	=C2=A0<strong>=E2=80=A2</strong> Special discount for bookings made before=
+ 5  November 2024 via this <a href=3D"https://t.enews.chinachemgroup.com/t.=
+aspx/subid/170987894/camid/2899500/linkid/446123/Default.aspx" target=3D"_b=
+lank">link</a>
+	<br><br>
+</span>
+<span style=3D"font-size:12px;font-family:Arial,Helvetica,sans-serif;color:=
+#000000;line-height:20px">
+	*Not eligible for additional discounts<br><br>
+</span>												=09
+<span style=3D"font-size:16px;font-family:Arial,Helvetica,sans-serif;color:=
+#000000;line-height:22px">=E6=96=BC=E8=AB=96=E5=A3=87=E7=95=B6=E6=97=A5=E5=
+=87=BA=E7=A4=BA=E7=A2=BA=E8=AA=8D=E9=9B=BB=E9=83=B5=E6=88=96=E8=AB=96=E5=A3=
+=87=E5=90=8D=E7=89=8C=E5=8F=AF=E4=BA=AB=E8=8D=83=E7=81=A3=E8=A5=BF=E5=A6=82=
+=E5=BF=83=E9=85=92=E5=BA=97=E9=A4=90=E9=A3=B2=E5=8F=8A=E4=BD=8F=E5=AE=BF=E5=
+=84=AA=E6=83=A0=EF=BC=9A<br><br>
+<strong>Caf=C3=A9 Circles=EF=BC=889=E6=A8=93=EF=BC=89</strong><br>
+=C2=A0<strong>=E2=80=A2</strong>  =E5=8D=88=E5=B8=82=E5=8F=8A=E6=99=9A=E5=
+=B8=82=E8=87=AA=E5=8A=A9=E9=A4=90=E5=85=AB=E6=8A=98=E5=84=AA=E6=83=A0<br>
+=C2=A0<strong>=E2=80=A2</strong>  =E5=8D=88=E5=B8=82=E5=8F=8A=E6=99=9A=E5=
+=B8=82=E5=96=AE=E9=BB=9E=E8=8F=9C=E5=96=AE=E5=85=AB=E4=BA=94=E6=8A=98=E5=84=
+=AA=E6=83=A0<br>
+=C2=A0<strong>=E2=80=A2</strong>  =E7=89=B9=E5=88=A5=E5=8D=88=E5=B8=82=E5=
+=A5=97=E9=A4=90 HK$198=E5=8F=A6=E6=94=B6=E5=8A=A0=E4=B8=80=E6=9C=8D=E5=8B=
+=99=E8=B2=BB*<br>
+<strong> Nina Patisserie=EF=BC=88=E5=9C=B0=E4=B8=8B=E5=A4=A7=E5=A0=82=EF=BC=
+=89</strong><br>
+=C2=A0<strong>=E2=80=A2</strong>  =E9=A4=90=E9=A3=B2=E8=8F=9C=E5=96=AE=E4=
+=B9=9D=E6=8A=98=E5=84=AA=E6=83=A0<br>=C2=A0<br>
+	<strong> =E9=85=92=E5=BA=97=E4=BD=8F=E5=AE=BF</strong><br>
+=C2=A0<strong>=E2=80=A2</strong>  2024=E5=B9=B411=E6=9C=885=E6=97=A5=E6=88=
+=96=E4=B9=8B=E5=89=8D=E6=96=BC=E6=AD=A4<a href=3D"https://t.enews.chinachem=
+group.com/t.aspx/subid/170987894/camid/2899500/linkid/446124/Default.aspx" =
+target=3D"_blank">=E9=80=A3=E7=B5=90</a>=E9=A0=90=E8=A8=82=E6=88=BF=E9=96=
+=93=E5=8F=AF=E4=BA=AB=E7=89=B9=E5=88=A5=E5=84=AA=E6=83=A0<br>=C2=A0<br>
+=09
+</span>
+<span style=3D"font-size:12px;font-family:Arial,Helvetica,sans-serif;color:=
+#000000;line-height:20px">
+	*=E4=B8=8D=E5=8F=AF=E8=88=87=E5=85=B6=E4=BB=96=E5=84=AA=E6=83=A0=E5=90=8C=
+=E6=99=82=E4=BD=BF=E7=94=A8<br>=C2=A0<br>
+</span>=09
+
+</span></span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+										 <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" bgcolor=
+=3D"#0d333c" width=3D"100%" style=3D"background-color:#0d333c;min-width:100=
+%!important;width:100%!important;border-left:solid 4px #0d333c;border-right=
+:solid 4px #0d333c">
+                                    <tbody bgcolor=3D"#0d333c">
+                                      <tr>
+                                        <td align=3D"center"><div width=3D"=
+100%" style=3D"background-color:#0d333c">
+                                            </div><table align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"bac=
+kground-color:#0d333c"><tbody>
+                                              <tr>
+                                                <td width=3D"100%" align=3D=
+"center" style=3D"padding-top:20px;padding-right:20px;padding-bottom:20px;p=
+adding-left:20px;min-width:100%!important;width:100%!important;text-align:c=
+enter!important" valign=3D"top"><p style=3D"text-align:center"><span style=
+=3D"font-size:20px;font-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,ca=
+libri,Arial,Helvetica,sans-serif;color:#ffffff"><strong><span style=3D"font=
+-size:18px;font-family:Arial;color:#ffffff">Guided Tours to Nina Park</span=
+> =E5=A6=82=E5=BF=83=E5=9C=92=E5=B0=8E=E8=B3=9E=E5=9C=98
+
+</strong></span> </p></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+									  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" style=3D"background-color:rgb(255,255,255);border-left:solid 4px #0d=
+333c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td><table align=3D"left" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"background-=
+color:rgb(255,255,255)">
+                                            <tbody>
+                                              <tr>
+                                                <td align=3D"justify" valig=
+n=3D"top" style=3D"padding:10px 15px;text-align:justify"><span><span style=
+=3D"font-size:16px;font-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,ca=
+libri,Arial,Helvetica,sans-serif;color:#000000">
+<span style=3D"font-size:16px;font-family:Arial,Helvetica,sans-serif;color:=
+#000000;line-height:22px">Docent visits are specially arranged on the Confe=
+rence day to Hong Kong=E2=80=99s first and only wood fossil park that are g=
+uided by the design concept of sustainability and inclusivity. The Nina Par=
+k employs innovative curatorial methods that seamlessly integrate environme=
+ntal conservation, art, and advanced technology, providing engaging =E2=80=
+=9Cedutainment=E2=80=9D experiences for visitors of all ages and varying ph=
+ysical abilities.<br><br>Reserve your spot now in the registration form.<br=
+><br>
+
+=E8=AB=96=E5=A3=87=E7=95=B6=E6=97=A5=E7=89=B9=E8=A8=AD=E5=B0=8E=E8=B3=9E=E5=
+=9C=98=E5=8F=83=E8=A7=80=E9=A6=99=E6=B8=AF=E9=A6=96=E5=80=8B=E5=8F=8A=E5=94=
+=AF=E4=B8=80=E7=9A=84=E6=9C=A8=E5=8C=96=E7=9F=B3=E5=85=AC=E5=9C=92 =E2=80=
+=94 =E5=A6=82=E5=BF=83=E5=9C=92=E7=9A=84=E8=A8=AD=E8=A8=88=E7=90=86=E5=BF=
+=B5=E6=BA=90=E6=96=BC=E5=8F=AF=E6=8C=81=E7=BA=8C=E7=99=BC=E5=B1=95=E5=8F=8A=
+=E5=85=B1=E8=9E=8D=E6=A6=82=E5=BF=B5=EF=BC=8C=E4=B8=A6=E6=8E=A1=E7=94=A8=E5=
+=89=B5=E6=96=B0=E7=9A=84=E7=AD=96=E5=B1=95=E6=96=B9=E6=B3=95=EF=BC=8C=E5=B0=
+=87=E7=92=B0=E5=A2=83=E4=BF=9D=E8=82=B2=E3=80=81=E8=97=9D=E8=A1=93=E5=8F=8A=
+=E5=B6=84=E6=96=B0=E6=8A=80=E8=A1=93=E7=84=A1=E7=B8=AB=E7=B5=90=E5=90=88=EF=
+=BC=8C=E8=AE=93=E5=90=84=E5=B9=B4=E9=BD=A1=E5=B1=A4=E7=9A=84=E9=81=8A=E5=AE=
+=A2=E5=8F=8A=E5=A4=9A=E5=85=83=E4=BA=BA=E5=A3=AB=E5=8F=AF=E4=BA=AB=E7=8D=A8=
+=E7=89=B9=E7=9A=84=E3=80=8C=E5=A8=9B+=E5=AD=B8=E3=80=8D=E9=AB=94=E9=A9=97=
+=E3=80=82
+
+ <br><br>
+
+=E7=AB=8B=E5=8D=B3=E6=96=BC=E5=A0=B1=E5=90=8D=E9=80=A3=E7=B5=90=E9=A0=90=E7=
+=B4=84=E5=B0=8E=E8=B3=9E=E5=9C=98=E3=80=82
+=09
+</span>												=09
+
+</span></span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+										<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"background-color:rgb(255,255,255);border-left:solid 4px #0d=
+333c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td align=3D"center" valign=3D"top"=
+ rowspan=3D"1" colspan=3D"1"><table width=3D"100%" style=3D"background-colo=
+r:white" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+                                            <tbody>
+                                              <tr>
+                                                <td style=3D"text-align:cen=
+ter;padding-top:20px;padding-bottom:30px">
+                                                  <div align=3D"center"><a =
+href=3D"https://t.enews.chinachemgroup.com/t.aspx/subid/170987894/camid/289=
+9500/linkid/446122/Default.aspx" target=3D"_blank"><img width=3D"40%" src=
+=3D"https://enews.chinachemgroup.com/SpreaderFiles/82193/files/upload/templ=
+ates/2024/Sep/REACT_button_Register_now4.png" border=3D"0" style=3D"display=
+:block;text-align:center" alt=3D""></a></div>
+                                                 </td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+									 <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" bgcolor=
+=3D"#0d333c" width=3D"100%" style=3D"background-color:#0d333c;min-width:100=
+%!important;width:100%!important;border-left:solid 4px #0d333c;border-right=
+:solid 4px #0d333c">
+                                    <tbody bgcolor=3D"#0d333c">
+                                      <tr>
+                                        <td align=3D"center"><div width=3D"=
+100%" style=3D"background-color:#0d333c">
+                                            </div><table align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"bac=
+kground-color:#0d333c"><tbody>
+                                              <tr>
+                                                <td width=3D"100%" align=3D=
+"center" style=3D"padding-top:20px;padding-right:20px;padding-bottom:20px;p=
+adding-left:20px;min-width:100%!important;width:100%!important;text-align:c=
+enter!important" valign=3D"top"><p style=3D"text-align:center"><span style=
+=3D"font-size:20px;font-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,ca=
+libri,Arial,Helvetica,sans-serif;color:#ffffff"><strong><span style=3D"font=
+-size:18px;font-family:Arial;color:#ffffff">Programme Rundown</span> =E6=B4=
+=BB=E5=8B=95=E8=AD=B0=E7=A8=8B
+
+</strong></span> </p></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+									  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" style=3D"background-color:rgb(255,255,255);border-left:solid 4px #0d=
+333c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td><table align=3D"left" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"background-=
+color:rgb(255,255,255)">
+                                            <tbody>
+                                              <tr>
+                                                <td align=3D"center" valign=
+=3D"top" style=3D"padding:20px 15px"><span><span style=3D"font-size:16px;fo=
+nt-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,calibri,Arial,Helvetica=
+,sans-serif;color:#000000">
+<span style=3D"font-size:16px;font-family:Arial,Helvetica,sans-serif;color:=
+#0d333c;line-height:28px;font-weight:bold">
+Click to check out our speakers and the programme rundown for <br>
+	<font style=3D"color:#00b050">Chinachem Group Sustainability Conference 20=
+24 <br></font>
+=E9=BB=9E=E6=93=8A=E6=9F=A5=E9=96=B1<font style=3D"color:#00b050">=E8=8F=AF=
+=E6=87=8B=E9=9B=86=E5=9C=98=E5=8F=AF=E6=8C=81=E7=BA=8C=E7=99=BC=E5=B1=95=E8=
+=AB=96=E5=A3=87 2024<br></font>=E2=87=93=E6=BC=94=E8=AC=9B=E5=98=89=E8=B3=
+=93=E5=8F=8A=E6=B4=BB=E5=8B=95=E8=AD=B0=E7=A8=8B=E2=87=93
+</span>
+</span></span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+										<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"background-color:rgb(255,255,255);border-left:solid 4px #0d=
+333c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td align=3D"center" valign=3D"top"=
+ rowspan=3D"1" colspan=3D"1"><table width=3D"100%" style=3D"background-colo=
+r:white" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+                                            <tbody>
+                                              <tr>
+                                                <td style=3D"text-align:cen=
+ter;padding-top:20px;padding-bottom:40px">
+                                                  <div align=3D"center"><a =
+href=3D"https://t.enews.chinachemgroup.com/t.aspx/subid/170987894/camid/289=
+9500/linkid/446125/Default.aspx" target=3D"_blank"><img width=3D"40%" src=
+=3D"https://enews.chinachemgroup.com/SpreaderFiles/82193/files/upload/templ=
+ates/2024/Sep/REACT_button_read_more3.png" border=3D"0" style=3D"display:bl=
+ock;text-align:center" alt=3D""></a></div>
+                                                 </td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+								  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%" style=3D"background-color:rgb(255,255,255);border-left:solid 4px #0d3=
+33c;border-right:solid 4px #0d333c">
+                                    <tbody>
+                                      <tr>
+                                        <td><table align=3D"left" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"background-=
+color:rgb(255,255,255)">
+                                            <tbody>
+                                              <tr>
+                                                <td align=3D"left" valign=
+=3D"top" style=3D"padding:0px 15px"><span><span style=3D"font-size:16px;fon=
+t-family:&#39;Noto Sans TC&#39;,=E9=BB=91=E4=BD=93,calibri,Arial,Helvetica,=
+sans-serif;color:#000000">
+<span style=3D"font-size:16px;font-family:Arial,Helvetica,sans-serif;color:=
+#000000;line-height:22px">
+For enquiries, please contact =E5=A6=82=E6=9C=89=E6=9F=A5=E8=A9=A2=EF=BC=8C=
+=E8=AB=8B=E8=81=AF=E7=B5=A1:<br>
+<br>
+
+<strong>Programme =E8=AD=B0=E7=A8=8B</strong><br>
+Ms Maggie Lam =E6=9E=97=E7=A2=A7=E5=84=80=E5=A5=B3=E5=A3=AB (<a href=3D"mai=
+lto:maggielam@bec.org.hk" style=3D"font-family:Arial,Helvetica,sans-serif" =
+target=3D"_blank">maggielam@bec.org.hk</a> / 2784 3939)<br>
+Mr Tuba Lee =E5=88=A9=E5=81=A5=E6=9C=97=E5=85=88=E7=94=9F (<a href=3D"mailt=
+o:tubalee@chinachemgroup.com" style=3D"font-family:Arial,Helvetica,sans-ser=
+if" target=3D"_blank">tubalee@chinachemgroup.com</a> / 2500 7142)<br><br>
+
+<strong>Registration =E5=A0=B1=E5=90=8D</strong><br>
+Ms Kat Luen =E6=AC=92=E6=B5=B7=E7=90=AA=E5=A5=B3=E5=A3=AB (<a href=3D"mailt=
+o:enquiry_ccg@amega-pro.com" style=3D"font-family:Arial,Helvetica,sans-seri=
+f" target=3D"_blank">enquiry_ccg@amega-pro.com</a> / 6671 9969) <br><br>
+
+<strong>CPD Hour =E6=8C=81=E7=BA=8C=E5=B0=88=E6=A5=AD=E9=80=B2=E4=BF=AE=E6=
+=99=82=E6=95=B8</strong><br>
+Ms Jill Chow =E5=91=A8=E5=B0=91=E6=AC=A3=E5=A5=B3=E5=A3=AB (<a href=3D"mail=
+to:jill@bec.org.hk" style=3D"font-family:Arial,Helvetica,sans-serif" target=
+=3D"_blank">jill@bec.org.hk</a> / 2784 3942)
+
+
+											=09
+</span>
+
+												=09
+<br>=C2=A0<br>
+
+</span></span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                             =20
+                               </td>
+                              </tr>
+                            </tbody>
+                          </table></td>
+                      </tr>
+                    </tbody>
+                  </table></td>
+              </tr>
+             =20
+				  =20
+          =20
+               =20
+              =20
+                <tr>
+                <td align=3D"center" bgcolor=3D"#0d333c" style=3D"padding-t=
+op:20px;padding-bottom:20px;background-color:#0d333c"><table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" width=3D"600">
+                    <tbody>
+                      <tr>
+                        <td><table cellpadding=3D"0" cellspacing=3D"0" bord=
+er=3D"0" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td width=3D"78%" style=3D"padding-left:20p=
+x"><table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                                    <tbody>
+                                      <tr>
+                                     =20
+                                        <td align=3D"left" height=3D"35" va=
+lign=3D"middle" width=3D"366" style=3D"padding-bottom:5px;font-family:Arial=
+,Helvetica,sans-serif;color:#ffffff"><div align=3D"left"><span style=3D"fon=
+t-size:13px">=C2=A92024 Chinachem Group<br><a href=3D"https://t.enews.china=
+chemgroup.com/t.aspx/subid/170987894/camid/2899500/linkid/446126/Default.as=
+px" style=3D"color:#ffffff;text-decoration:none" target=3D"_blank">=E5=85=
+=8D=E8=B2=AC=E8=81=B2=E6=98=8E</a>=C2=A0=C2=A0|=C2=A0=C2=A0<a href=3D"https=
+://t.enews.chinachemgroup.com/t.aspx/subid/170987894/camid/2899500/linkid/4=
+46127/Default.aspx" style=3D"color:#ffffff;text-decoration:none" target=3D"=
+_blank">=E7=A7=81=E9=9A=B1=E6=94=BF=E7=AD=96</a>=C2=A0=C2=A0|=C2=A0=C2=A0<a=
+ href=3D"https://s.enews.chinachemgroup.com/Unsubscribe.aspx?sub=3D17098789=
+4&amp;user=3D82193&amp;campid=3D2899500&amp;type=3Dh" style=3D"color:#fffff=
+f;text-decoration:none" target=3D"_blank">=E5=8F=96=E6=B6=88=E8=A8=82=E9=96=
+=B1</a></span></div></td>
+                                      </tr>
+                                  =20
+                                    </tbody>
+                                  </table></td>
+                                <td width=3D"20%" bgcolor=3D"#12322A" heigh=
+t=3D"35" style=3D"padding-right:15px;background-color:#12322a!important"><t=
+able width=3D"100%" bgcolor=3D"#12322A" cellpadding=3D"0" cellspacing=3D"0"=
+ border=3D"0">
+                                    <tbody>
+                                    =20
+                                      <tr>
+                                        <td><table width=3D"100%" cellpaddi=
+ng=3D"0" cellspacing=3D"0" border=3D"0">
+                                            <tbody>
+                                              <tr>
+                                                <td style=3D"padding-right:=
+8px!important" align=3D"right"><a href=3D"https://t.enews.chinachemgroup.co=
+m/t.aspx/subid/170987894/camid/2899500/linkid/446128/Default.aspx" target=
+=3D"_blank"><span style=3D"text-decoration:none"><img border=3D"0" src=3D"h=
+ttps://app6.rspread.net/SpreaderFiles/82193/files/upload/templates/2024/Apr=
+/facebook2.png" width=3D"22"></span></a></td>
+                                              =20
+                                                <td colspan=3D"2" align=3D"=
+right" style=3D"padding-right:8px!important"><a href=3D"https://t.enews.chi=
+nachemgroup.com/t.aspx/subid/170987894/camid/2899500/linkid/446129/Default.=
+aspx" target=3D"_blank"><span style=3D"text-decoration:none"><img border=3D=
+"0" src=3D"https://app6.rspread.net/SpreaderFiles/82193/files/upload/templa=
+tes/2024/Apr/ig.png" width=3D"22"></span></a></td>
+                                              =20
+                                                <td colspan=3D"2" align=3D"=
+right"><a href=3D"https://t.enews.chinachemgroup.com/t.aspx/subid/170987894=
+/camid/2899500/linkid/446130/Default.aspx" target=3D"_blank"><span style=3D=
+"text-decoration:none"><img border=3D"0" src=3D"https://app6.rspread.net/Sp=
+readerFiles/82193/files/upload/templates/2024/Apr/linkedin2.png" width=3D"2=
+2"></span></a></td>
+                                              </tr>
+                                            </tbody>
+                                          </table></td>
+                                      </tr>
+                                    </tbody>
+                                  </table></td>
+                              </tr>
+                            </tbody>
+                          </table></td>
+                      </tr>
+                    </tbody>
+                  </table></td>
+              </tr>
+           =20
+           =20
+             =20
+             =20
+             =20
+            </tbody>
+          </table></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<img src=3D"https://t.enews.chinachemgroup.com//o.aspx/s/170987894/c/289950=
+0" width=3D"1" height=3D"1">
+
+</div></div></div>
+
+--000000000000d9ab8206261f3f83--

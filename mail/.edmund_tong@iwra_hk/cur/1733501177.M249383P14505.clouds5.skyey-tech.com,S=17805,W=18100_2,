@@ -1,0 +1,295 @@
+Return-Path: <uraweb-no-reply@mail1.ura.org.hk>
+Delivered-To: edmund.tong@iwra.hk
+Received: from clouds5.skyey-tech.com
+	by clouds5.skyey-tech.com with LMTP
+	id EBWvDfkgU2epOAAA07NIEQ
+	(envelope-from <uraweb-no-reply@mail1.ura.org.hk>)
+	for <edmund.tong@iwra.hk>; Sat, 07 Dec 2024 00:06:17 +0800
+Return-path: <uraweb-no-reply@mail1.ura.org.hk>
+Envelope-to: edmund.tong@iwra.hk
+Delivery-date: Sat, 07 Dec 2024 00:06:17 +0800
+Received: from mail-sg2apc01on2119.outbound.protection.outlook.com ([40.107.215.119]:10528 helo=APC01-SG2-obe.outbound.protection.outlook.com)
+	by clouds5.skyey-tech.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <uraweb-no-reply@mail1.ura.org.hk>)
+	id 1tJaqP-0003p5-0r
+	for edmund.tong@iwra.hk;
+	Sat, 07 Dec 2024 00:06:17 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=O7UsIji5yM1oExSoKMs8cOI+gBDHy59k0ARleluWzdch6WR0Kz0s73i0qZ7FUBI51ScdPZbuAOAs92AeHNZtkKGtv9UT0l9LYzEkxb/TqBOVOY0yDj4cAyL4vbUUxQ2W0OR1xOBNwZbVi2osv2IYBK6AvzidAK/Xyz5WXqr0Kik7howKokCC2RFyiqyEBTvUPsfdCD/9omxbjB8zZKyBpwjDU6iaWr/95l4TczT45mK8JFduhwSTCz8nmXnAXmawfsFVLt26its/nKs+ybIKwv2iyS0cM9hYdlfMwYY3i+aZN+5kiYWJtrRGFdHPaWTs6p04o/j0MiMaLxkKpNtwlw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YqKABJr9Grq3R9YYvF50zo1PYR+kHdBs2wrTlE1F72M=;
+ b=ywIPhablTlt264Axr0pAoY6/uf9ozPPz2hJ1Ngfcuo4PObnGC0oEeTbWwBqeWTKLm672ocQWtI8Arc5Ox20nTzCO0RRlANz4oe1DXGCnkrrq6YQ7SMoRI69R4mAt0vPudg7cQgdrGomwMH7APB+4kUrqkkxnBZ2J8hKdtzYntwqfgDM8PcpeYEF8sGuCJ7ZnDGeK1hIldgjevRgvlDr6IvLIgJ1b9iBvE/nfCwtC3nt4e5QUQ4VlS60V6qcKHouk27zMU1pHE/RLvKwtCFhXrvIc7C3pubvgbi1w1N+3BiuVkrdnhi7U0X0UqHnkCRmBuOsDsNs+2NCEP4ZLqTTrzg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 13.75.116.248) smtp.rcpttodomain=iwra.hk smtp.mailfrom=mail1.ura.org.hk;
+ dmarc=none action=none header.from=mail1.ura.org.hk; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=urahk.onmicrosoft.com;
+ s=selector2-urahk-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YqKABJr9Grq3R9YYvF50zo1PYR+kHdBs2wrTlE1F72M=;
+ b=dmZ+OpETMVVG+lhLMa4yvqewxun7zMkd8urBn5RDlxxaE71o3U72Oz7coJl+JF9rbh3N5JCOrkm2KNEqeiAY64SK/dL49KCNCZpsIQSsY9kCt8VS+OXMLpThz648Q3tjZEBuu7g7/Bgu0Vz7x/lHuIz7iRfQA5dt1KaBXcFarMc=
+Received: from SG2PR06CA0207.apcprd06.prod.outlook.com (2603:1096:4:68::15) by
+ KL1PR02MB6257.apcprd02.prod.outlook.com (2603:1096:820:da::11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8207.19; Fri, 6 Dec 2024 16:06:03 +0000
+Received: from SG1PEPF000082E7.apcprd02.prod.outlook.com
+ (2603:1096:4:68:cafe::3b) by SG2PR06CA0207.outlook.office365.com
+ (2603:1096:4:68::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8230.12 via Frontend Transport; Fri,
+ 6 Dec 2024 16:06:03 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 13.75.116.248)
+ smtp.mailfrom=mail1.ura.org.hk; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=mail1.ura.org.hk;
+Received-SPF: Fail (protection.outlook.com: domain of mail1.ura.org.hk does
+ not designate 13.75.116.248 as permitted sender)
+ receiver=protection.outlook.com; client-ip=13.75.116.248;
+ helo=urawebprod.localdomain;
+Received: from urawebprod.localdomain (13.75.116.248) by
+ SG1PEPF000082E7.mail.protection.outlook.com (10.167.240.10) with Microsoft
+ SMTP Server id 15.20.8230.7 via Frontend Transport; Fri, 6 Dec 2024 16:06:03
+ +0000
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by urawebprod.localdomain (Postfix) with ESMTP id 1113360706E5
+	for <edmund.tong@iwra.hk>; Sat,  7 Dec 2024 00:06:03 +0800 (HKT)
+Date: Sat, 7 Dec 2024 00:06:03 +0800
+From: "Urban Renewal Authority" <uraweb-no-reply@mail1.ura.org.hk>
+To: edmund.tong@iwra.hk
+Subject: =?UTF-8?Q?=E3=80=90=E6=9C=80=E6=96=B0=4C=61=74=65=73=74=E3=80=91=E5=B8=82?= =?UTF-8?Q?=E5=BB=BA=E5=B1=80=E6=96=B0=E8=81=9E=E7=99=BC=E5=B8=83=20=55=52?= =?UTF-8?Q?=41=20=50=72=65=73=73=20=52=65=6C=65=61=73=65?=
+Reply-To: <uraweb-no-reply@mail1.ura.org.hk>
+User-Agent: CodeIgniter
+X-Sender: uraweb-no-reply@mail1.ura.org.hk
+X-Mailer: CodeIgniter
+X-Priority: 3 (Normal)
+Message-ID: <675320eb106ee@mail1.ura.org.hk>
+Mime-Version: 1.0
+Content-Type: multipart/alternative; boundary="B_ALT_675320eb10736"
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SG1PEPF000082E7:EE_|KL1PR02MB6257:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2e07735e-2817-4539-229a-08dd160fe270
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|4022899009|36860700013|376014|82310400026|61400799027|8096899003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?YS9YNVBTRWovdjBiVEpUcG9aRzhzbnNaVWNzTG5GMGNMZW5TaVptajRvTmcw?=
+ =?utf-8?B?OUxUVVc5Zk5PU2JoYXZPWDgvNTdHbzlPaDB2SzBuYm1xRk54U0w0RlN1Zm1V?=
+ =?utf-8?B?TWU2R3JrWGQ2U3dWWXhuTWZPNGtFQVYzSkhCcmhtL05RNHc4R0RKTlp2V084?=
+ =?utf-8?B?RlZBNDVQdVc1QU53QnRaTGRSNzFSbHQyLzQvbzZpbVNjbXR2MSs1VCtJRXZt?=
+ =?utf-8?B?SW5QTUV2Z242UUVjVUMyK3QwS1NoOFdPOTBhdzhWZkZ6UE90TzRiYUxDNXIz?=
+ =?utf-8?B?SlpyUTRoZmdHQzF4MUFTdXhING4rcGVYMTc4aXFOZ2g2WDlzdU9CYkRLMnI4?=
+ =?utf-8?B?SHhpN2owVjE2SHFacld0K0hPVHp4cTFraUJSK3JpTTd0dWQ0ME5uY0hDV3BH?=
+ =?utf-8?B?dHBYclFKVTRxVTk5U0FSVFFEZERWV2w4cENVTmdFMWQ1cjVjbVZyY25FaFJs?=
+ =?utf-8?B?Z0QvVGd3NXFmWCsrMHZ5czh3N1M3UDEwTUtVajJ4bVo1c1JZWkZ0OUpYaHFD?=
+ =?utf-8?B?MGx4L1I1OXluQ0lpOWp4YWpvdWs5OEtpZTlWMlRidlVKVDBFVE5VMXp3Yjdj?=
+ =?utf-8?B?REhvTDQ4Tkt1MHNzazVDTHlFUGNzYmwzNXRETlAvc0FHK3lYbXZRdGxWbS9Z?=
+ =?utf-8?B?QVVQY01UTzUvRVpuclhXMElhNTZWT3FUTWRrYVhDRDQxZzY2WCtnWEZuYlA4?=
+ =?utf-8?B?bVlMTis3aVJTR1VFejJaWG5PZGN2Y0JQQk13T0pwMmtnTWg2L2gydTJKZjBs?=
+ =?utf-8?B?MWw5NEVIZ1JoQVdkdHhNNkQzeUMyak5SVEZwdldIaTJnK3NJQWNjT09BSkNo?=
+ =?utf-8?B?RlB5WitqeEppWWtNOE1rYlVzSVh5N2gxN2poTnh0TlVwdTJKMXZXdFpKUlMy?=
+ =?utf-8?B?Z3VRUnZKUFl1T2VTVjd3QzM0aHFBNzRqSisxdDdtOXMxUHJ4dzdTNGhIL2NU?=
+ =?utf-8?B?WEQwd1ZGcmg1WTU1dTVRNk0vUXFtRHJ1ZUxkaE9ub05DTm5acnNON05BTXBT?=
+ =?utf-8?B?Q0JMbHd4djRNdzFUeFhyYXRCUzlZMVBuL2YvRXZmZUNaZjZnM3JLbjdIbllr?=
+ =?utf-8?B?NFJGOEpiOVVOdlFnOE13UUs4VCtlRTRGZXVRM1A2UUdxRzVUamh2S3JKUm8v?=
+ =?utf-8?B?a3hOK2FGTHdNVUlpUWRSbnNzTDR3L2FKd1lNUlVyZDdxK3gwWDRXdjhydms2?=
+ =?utf-8?B?dHhmQ0hhNDVnTXpablg4Y01yOVJLVWZydG5nSStnelBSbkhrcXVGSVFSMytr?=
+ =?utf-8?B?TFFZeFVZUm55aXlNdDVDQ1h3Y3Q1TjltRThyMFR1bGZyYSs2eUduKzErckNF?=
+ =?utf-8?B?bHdYR2o4a2FsVURFZXJmY09QS3huNlRZN0NzSTBjK2t3SUFSbU4xd1B3cVUx?=
+ =?utf-8?B?SHg1bzRnZHBVTFl0bXppbWcxMmxzQVIrZUdweHAyS0s4MWtINjh5YkpnTUNL?=
+ =?utf-8?B?NXdBRGFlSGVPcWpkWE4rOTkzR2llblhmWG5qZUVrTi9OUTBMeXBXUUhRelk4?=
+ =?utf-8?B?VlFiWkdmQ3QvWVpoNmJ6WVZybENrdklYRDh4RU9XeFZ0QmExeGp6Y0NGc3ZH?=
+ =?utf-8?B?cCsxQ3RLVXVPa1UyNnVCa3gwZ1N5aGJBZkc4QW52TzZMNWlWeVhFb2J3YUJ1?=
+ =?utf-8?B?ZlJyb3J5dFhLYVdwaXNJbkhrQzZ0YzJyc1BTSUxoZXVqZlMwT2VxOVYyUnlW?=
+ =?utf-8?B?dUtmZmlCcDYzdlBhNGsrajhFOFZob0JXdzE3WEdMcWRMN1o3Vm9lQ1d2eUh4?=
+ =?utf-8?B?ZlBwZ0tYUlRvbUdLcHlTR2RJWU5KbXpQWDlwSHJqQklEbUlLa2daWnBRZ3Jt?=
+ =?utf-8?B?SGlvNHlwTjQ5Wk5BZ2xUcHlJZWpDRnJkTGN4bFQ5V0FiUjZ2WEVVa0FnQTJG?=
+ =?utf-8?B?TXV0ZEhtOVQ1bVpxQXZUZGY0UUQ4Y2QvVHJXUnVwTnhpdGc9PQ==?=
+X-Forefront-Antispam-Report:
+	CIP:13.75.116.248;CTRY:HK;LANG:zh-tw;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:urawebprod.localdomain;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(4022899009)(36860700013)(376014)(82310400026)(61400799027)(8096899003);DIR:OUT;SFP:1102;
+X-OriginatorOrg: mail1.ura.org.hk
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2024 16:06:03.4704
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2e07735e-2817-4539-229a-08dd160fe270
+X-MS-Exchange-CrossTenant-Id: 549feb0c-7188-466f-ac38-41eedc2612f0
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=549feb0c-7188-466f-ac38-41eedc2612f0;Ip=[13.75.116.248];Helo=[urawebprod.localdomain]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SG1PEPF000082E7.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6257
+X-Spam-Status: No, score=0.4
+X-Spam-Score: 4
+X-Spam-Bar: /
+X-Ham-Report: Spam detection software, running on the system "clouds5.skyey-tech.com",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ root\@localhost for details.
+ Content preview:  如果您無法正確閱讀此電郵，請按此<http://www.ura.org.hk/subscription/track/1b2f4c65dabedf0ebf16b297252b5a33/7644?url=http%3A%2F%2Fwww.ura.org.hk%2Fsubscription%2Fread%2F9ee4c69f026820f1
+    [...] 
+ Content analysis details:   (0.4 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was
+                             blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+                              for more information.
+                             [URIs: ura.org.hk]
+  0.0 RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to
+                             DNSWL was blocked.  See
+                             http://wiki.apache.org/spamassassin/DnsBlocklists#DnsBlocklists-dnsbl-block
+                              for more information.
+                             [40.107.215.119 listed in list.dnswl.org]
+  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE:
+                             The query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [40.107.215.119 listed in sa-accredit.habeas.com]
+ -0.0 SPF_HELO_PASS          SPF: HELO matches SPF record
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                            [40.107.215.119 listed in bl.score.senderscore.com]
+ -0.0 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [40.107.215.119 listed in wl.mailspike.net]
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+  0.0 HTML_OBFUSCATE_05_10   BODY: Message is 5% to 10% HTML obfuscation
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+  0.1 KAM_UNSUB1             Unsubscription Spams
+  0.2 KAM_LOTSOFHASH         Emails with lots of hash-like gibberish
+X-Spam-Flag: NO
+
+--B_ALT_675320eb10736
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+=E5=A6=82=E6=9E=9C=E6=82=A8=E7=84=A1=E6=B3=95=E6=AD=A3=E7=A2=BA=E9=96=B1=E8=
+=AE=80=E6=AD=A4=E9=9B=BB=E9=83=B5=EF=BC=8C=E8=AB=8B=E6=8C=89=E6=AD=A4<http:=
+//www.ura.org.hk/subscription/track/1b2f4c65dabedf0ebf16b297252b5a33/7644?u=
+rl=3Dhttp%3A%2F%2Fwww.ura.org.hk%2Fsubscription%2Fread%2F9ee4c69f026820f1cb=
+8489fd843de3931ea3d258>=E3=80=82
+If you cannot view this message properly, please click here<http://www.ura.=
+org.hk/subscription/track/1B2F4C65DABEDF0EBF16B297252B5A33/7644?url=3Dhttp%=
+3A%2F%2Fwww.ura.org.hk%2Fsubscription%2Fread%2F9ee4c69f026820f1cb8489fd843d=
+e3931ea3d258>.
+
+=E5=B7=BF=E5=BB=BA=E5=B1=80=E3=80=8CWINTER TRANSFORM=E3=80=8D=E8=81=96=E8=
+=AA=95=E7=86=8A=E8=B2=93=E8=A3=9D=E7=BD=AE=E4=BA=AE=E7=87=88=E5=84=80=E5=BC=
+=8F
+
+=E9=96=B1=E8=AE=80=E6=9B=B4=E5=A4=9A: http://www.ura.org.hk/tc/news-centre/=
+press-releases/20241206_2<http://www.ura.org.hk/subscription/track/ddcc45b9=
+410912e7daba4343571b9210/7644?url=3Dhttp%3A%2F%2Fwww.ura.org.hk%2Ftc%2Fnews=
+-centre%2Fpress-releases%2F20241206_2>
+
+
+
+Lighting Ceremony for Christmas Panda Installations of the URA=E2=80=99s =
+=E2=80=9CWINTER TRANSFORM=E2=80=9D Festive Event
+
+Read more: http://www.ura.org.hk/en/news-centre/press-releases/20241206_2<h=
+ttp://www.ura.org.hk/subscription/track/9ad892234e157fb62d1895756660937e/76=
+44?url=3Dhttp%3A%2F%2Fwww.ura.org.hk%2Fen%2Fnews-centre%2Fpress-releases%2F=
+20241206_2>
+
+________________________________
+
+=E5=A6=82=E6=9E=9C=E6=82=A8=E6=83=B3=E5=8F=96=E6=B6=88=E8=A8=82=E9=96=B1=EF=
+=BC=8C=E8=AB=8B=E6=8C=89=E6=AD=A4<http://www.ura.org.hk/subscription/track/=
+cf3dddab8588bc2ead0bb4f61527f5b3/7644?url=3Dhttp%3A%2F%2Fwww.ura.org.hk%2Fs=
+ubscription%2Funsubscribe&uid=3D54a0cc515e5e61e961b257a3ceb4491540492b22>=
+=E3=80=82
+If you want to unsubscribe, please click here<http://www.ura.org.hk/subscri=
+ption/track/CF3DDDAB8588BC2EAD0BB4F61527F5B3/7644?url=3Dhttp%3A%2F%2Fwww.ur=
+a.org.hk%2Fsubscription%2Funsubscribe&uid=3D54a0cc515e5e61e961b257a3ceb4491=
+540492b22>.
+
+________________________________
+This email and any attachments are for the addressee only and may contain c=
+onfidential information. If you are not the intended recipient, you must no=
+t use, retain, disseminate, or copy this email or any attachments. If you h=
+ave received this email in error, please notify the sender immediately by r=
+eply email and delete this email and all attachments from your system immed=
+iately. Email transmission may not be completely secure or error free as in=
+formation could be intercepted, corrupted, lost or destroyed or may contain=
+ viruses. Please consider the environment before printing this e-mail.
+________________________________
+
+--B_ALT_675320eb10736
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+</head>
+<body>
+<div style=3D"color: #404040;font-size: 15px;font-family: lato,'Arial','san=
+s-serif','PingFang TC','Microsoft JhengHei','=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=
+=BB=91=E9=AB=94','Microsoft YaHei','=E5=BE=AE=E8=BB=9F=E9=9B=85=E9=BB=91','=
+STXihei';-moz-osx-font-smoothing: grayscale;-webkit-font-smoothing: antiali=
+ased;">
+<p style=3D"text-align: center;font-size: 12px;">=E5=A6=82=E6=9E=9C=E6=82=
+=A8=E7=84=A1=E6=B3=95=E6=AD=A3=E7=A2=BA=E9=96=B1=E8=AE=80=E6=AD=A4=E9=9B=BB=
+=E9=83=B5=EF=BC=8C=E8=AB=8B<a href=3D"http://www.ura.org.hk/subscription/tr=
+ack/1b2f4c65dabedf0ebf16b297252b5a33/7644?url=3Dhttp%3A%2F%2Fwww.ura.org.hk=
+%2Fsubscription%2Fread%2F9ee4c69f026820f1cb8489fd843de3931ea3d258" style=3D=
+"color: #3385b8;text-decoration: none;">=E6=8C=89=E6=AD=A4</a>=E3=80=82<br>
+If you cannot view this message properly, please <a href=3D"http://www.ura.=
+org.hk/subscription/track/1B2F4C65DABEDF0EBF16B297252B5A33/7644?url=3Dhttp%=
+3A%2F%2Fwww.ura.org.hk%2Fsubscription%2Fread%2F9ee4c69f026820f1cb8489fd843d=
+e3931ea3d258" style=3D"color: #3385b8;text-decoration: none;">
+click here</a>.</p>
+<h1 style=3D"font-size: 22.5px;color: #0067a6;">=E5=B7=BF=E5=BB=BA=E5=B1=80=
+=E3=80=8CWINTER TRANSFORM=E3=80=8D=E8=81=96=E8=AA=95=E7=86=8A=E8=B2=93=E8=
+=A3=9D=E7=BD=AE=E4=BA=AE=E7=87=88=E5=84=80=E5=BC=8F</h1>
+<p>=E9=96=B1=E8=AE=80=E6=9B=B4=E5=A4=9A: <a href=3D"http://www.ura.org.hk/s=
+ubscription/track/ddcc45b9410912e7daba4343571b9210/7644?url=3Dhttp%3A%2F%2F=
+www.ura.org.hk%2Ftc%2Fnews-centre%2Fpress-releases%2F20241206_2" style=3D"c=
+olor: #3385b8;text-decoration: none;">
+http://www.ura.org.hk/tc/news-centre/press-releases/20241206_2</a></p>
+<p>&nbsp;</p>
+<h1 style=3D"font-size: 22.5px;color: #0067a6;">Lighting Ceremony for Chris=
+tmas Panda Installations of the URA=E2=80=99s =E2=80=9CWINTER TRANSFORM=E2=
+=80=9D Festive Event</h1>
+<p>Read more: <a href=3D"http://www.ura.org.hk/subscription/track/9ad892234=
+e157fb62d1895756660937e/7644?url=3Dhttp%3A%2F%2Fwww.ura.org.hk%2Fen%2Fnews-=
+centre%2Fpress-releases%2F20241206_2" style=3D"color: #3385b8;text-decorati=
+on: none;">
+http://www.ura.org.hk/en/news-centre/press-releases/20241206_2</a></p>
+<hr>
+<p style=3D"font-size: 12px;">=E5=A6=82=E6=9E=9C=E6=82=A8=E6=83=B3=E5=8F=96=
+=E6=B6=88=E8=A8=82=E9=96=B1=EF=BC=8C=E8=AB=8B<a href=3D"http://www.ura.org.=
+hk/subscription/track/cf3dddab8588bc2ead0bb4f61527f5b3/7644?url=3Dhttp%3A%2=
+F%2Fwww.ura.org.hk%2Fsubscription%2Funsubscribe&amp;uid=3D54a0cc515e5e61e96=
+1b257a3ceb4491540492b22" style=3D"color: #3385b8;text-decoration: none;">=
+=E6=8C=89=E6=AD=A4</a>=E3=80=82<br>
+If you want to unsubscribe, please <a href=3D"http://www.ura.org.hk/subscri=
+ption/track/CF3DDDAB8588BC2EAD0BB4F61527F5B3/7644?url=3Dhttp%3A%2F%2Fwww.ur=
+a.org.hk%2Fsubscription%2Funsubscribe&amp;uid=3D54a0cc515e5e61e961b257a3ceb=
+4491540492b22" style=3D"color: #3385b8;text-decoration: none;">
+click here</a>.</p>
+</div>
+<hr width=3D"100%&quot;" color=3D"grey" align=3D"center">
+This email and any attachments are for the addressee only and may contain c=
+onfidential information. If you are not the intended recipient, you must no=
+t use, retain, disseminate, or copy this email or any attachments. If you h=
+ave received this email in error,
+ please notify the sender immediately by reply email and delete this email =
+and all attachments from your system immediately. Email transmission may no=
+t be completely secure or error free as information could be intercepted, c=
+orrupted, lost or destroyed or may
+ contain viruses. Please consider the environment before printing this e-ma=
+il.
+<hr width=3D"100%&quot;" color=3D"grey" align=3D"center">
+</body>
+</html>
+
+--B_ALT_675320eb10736--
